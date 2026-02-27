@@ -1,0 +1,168 @@
+name: Hugging Face Transformers
+description: 'APIs and resources for Hugging Face Transformers library - a state-of-the-art  machine learning library for Natural Language Processing, Computer Vision, and  Audio processing tasks.
+
+  '
+image: https://huggingface.co/front/assets/huggingface_logo.svg
+created: '2024'
+modified: '2024'
+specificationVersion: '0.18'
+url: https://huggingface.co/apis.json
+tags:
+- machine learning
+- artificial intelligence
+- transformers
+- natural language processing
+- computer vision
+- nlp
+- deep learning
+apis:
+- name: Hugging Face Inference API
+  description: 'Serverless API for running inference on thousands of models hosted on  Hugging Face. Supports NLP, computer vision, audio, and multimodal tasks.
+
+    '
+  image: https://huggingface.co/front/assets/huggingface_logo.svg
+  humanURL: https://huggingface.co/inference-api
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - inference
+  - api
+  - serverless
+  - predictions
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/api-inference/index
+  - type: OpenAPI
+    url: https://huggingface.co/api-inference/openapi.json
+  - type: Authentication
+    url: https://huggingface.co/docs/api-inference/quicktour#authentication
+  - type: Pricing
+    url: https://huggingface.co/pricing
+  contact:
+  - type: Support
+    url: https://huggingface.co/support
+  - type: Twitter
+    url: https://twitter.com/huggingface
+- name: Hugging Face Hub API
+  description: 'REST API for interacting with the Hugging Face Hub - upload, download,  and manage models, datasets, and spaces programmatically.
+
+    '
+  image: https://huggingface.co/front/assets/huggingface_logo.svg
+  humanURL: https://huggingface.co/docs/hub/api
+  baseURL: https://huggingface.co/api
+  tags:
+  - hub
+  - models
+  - datasets
+  - repositories
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: API Reference
+    url: https://huggingface.co/docs/hub/api
+  contact:
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- name: Transformers Pipeline API
+  description: 'High-level Python API for easy-to-use inference pipelines covering tasks  like text generation, classification, translation, and more.
+
+    '
+  image: https://huggingface.co/front/assets/huggingface_logo.svg
+  humanURL: https://huggingface.co/docs/transformers/main_classes/pipelines
+  baseURL: https://github.com/huggingface/transformers
+  tags:
+  - pipelines
+  - python
+  - inference
+  - library
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/transformers/index
+  - type: GitHub Repository
+    url: https://github.com/huggingface/transformers
+  - type: Quick Tour
+    url: https://huggingface.co/docs/transformers/quicktour
+  - type: Task Guide
+    url: https://huggingface.co/docs/transformers/task_summary
+  - type: PyPI Package
+    url: https://pypi.org/project/transformers/
+  contact:
+  - type: GitHub Issues
+    url: https://github.com/huggingface/transformers/issues
+- name: Hugging Face Spaces API
+  description: 'API for deploying and managing machine learning applications and demos  using Gradio, Streamlit, or Docker.
+
+    '
+  image: https://huggingface.co/front/assets/huggingface_logo.svg
+  humanURL: https://huggingface.co/spaces
+  baseURL: https://huggingface.co/api/spaces
+  tags:
+  - spaces
+  - deployment
+  - gradio
+  - streamlit
+  - demos
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/hub/spaces-overview
+  - type: Gradio Documentation
+    url: https://gradio.app/docs/
+  - type: Examples
+    url: https://huggingface.co/spaces
+  contact:
+  - type: Discord
+    url: https://discord.gg/hugging-face
+- name: Text Generation Inference API
+  description: 'High-performance inference server for large language models with features  like continuous batching, token streaming, and tensor parallelism.
+
+    '
+  image: https://huggingface.co/front/assets/huggingface_logo.svg
+  humanURL: https://huggingface.co/docs/text-generation-inference/index
+  baseURL: https://api-inference.huggingface.co/models
+  tags:
+  - text generation
+  - llm
+  - inference server
+  - streaming
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/text-generation-inference/index
+  - type: GitHub Repository
+    url: https://github.com/huggingface/text-generation-inference
+  - type: API Reference
+    url: https://huggingface.co/docs/text-generation-inference/basic_tutorials/consuming_tgi
+  - type: Supported Models
+    url: https://huggingface.co/docs/text-generation-inference/supported_models
+  contact:
+  - type: GitHub
+    url: https://github.com/huggingface/text-generation-inference/issues
+maintainers:
+- name: Hugging Face
+  email: api@huggingface.co
+  url: https://huggingface.co
+common:
+- type: Website
+  url: https://huggingface.co
+- type: Blog
+  url: https://huggingface.co/blog
+- type: Documentation
+  url: https://huggingface.co/docs
+- type: Discord
+  url: https://discord.gg/hugging-face
+- type: GitHub Organization
+  url: https://github.com/huggingface
+- type: Twitter
+  url: https://twitter.com/huggingface
+- type: LinkedIn
+  url: https://www.linkedin.com/company/huggingface
+- type: YouTube
+  url: https://www.youtube.com/c/HuggingFace
+- type: Terms of Service
+  url: https://huggingface.co/terms-of-service
+- type: Privacy Policy
+  url: https://huggingface.co/privacy
+- type: Sign Up
+  url: https://huggingface.co/join
