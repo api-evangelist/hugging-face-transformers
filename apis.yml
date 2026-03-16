@@ -4,7 +4,7 @@ description: 'APIs and resources for Hugging Face Transformers library - a state
   '
 image: https://huggingface.co/front/assets/huggingface_logo.svg
 created: '2024'
-modified: '2024'
+modified: '2026-03-16'
 specificationVersion: '0.18'
 url: https://huggingface.co/apis.json
 tags:
