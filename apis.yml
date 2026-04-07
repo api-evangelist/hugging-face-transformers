@@ -9,13 +9,13 @@ modified: '2026-03-16'
 specificationVersion: '0.18'
 url: https://huggingface.co/apis.json
 tags:
-  - machine learning
-  - artificial intelligence
-  - transformers
-  - natural language processing
-  - computer vision
-  - nlp
-  - deep learning
+  - Artificial Intelligence
+  - Computer Vision
+  - Deep Learning
+  - Machine Learning
+  - Natural Language Processing
+  - Nlp
+  - Transformers
 apis:
   - name: Hugging Face Inference API
     description: >-
@@ -25,10 +25,9 @@ apis:
     humanURL: https://huggingface.co/inference-api
     baseURL: https://api-inference.huggingface.co
     tags:
-      - inference
-      - api
-      - serverless
-      - predictions
+      - Inference
+      - Predictions
+      - Serverless
     properties:
       - type: Documentation
         url: https://huggingface.co/docs/api-inference/index
@@ -51,16 +50,15 @@ apis:
     humanURL: https://huggingface.co/docs/hub/api
     baseURL: https://huggingface.co/api
     tags:
-      - hub
-      - models
-      - datasets
-      - repositories
+      - Datasets
+      - Hub
+      - Models
+      - Repositories
     properties:
       - type: Documentation
         url: https://huggingface.co/docs/huggingface_hub/index
       - type: Python Client
-        url: 
-          https://huggingface.co/docs/huggingface_hub/package_reference/overview
+        url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
       - type: JavaScript Client
         url: https://huggingface.co/docs/huggingface.js/index
       - type: API Reference
@@ -76,10 +74,10 @@ apis:
     humanURL: https://huggingface.co/docs/transformers/main_classes/pipelines
     baseURL: https://github.com/huggingface/transformers
     tags:
-      - pipelines
-      - python
-      - inference
-      - library
+      - Inference
+      - Library
+      - Pipelines
+      - Python
     properties:
       - type: Documentation
         url: https://huggingface.co/docs/transformers/index
@@ -102,11 +100,11 @@ apis:
     humanURL: https://huggingface.co/spaces
     baseURL: https://huggingface.co/api/spaces
     tags:
-      - spaces
-      - deployment
-      - gradio
-      - streamlit
-      - demos
+      - Demos
+      - Deployment
+      - Gradio
+      - Spaces
+      - Streamlit
     properties:
       - type: Documentation
         url: https://huggingface.co/docs/hub/spaces-overview
@@ -125,21 +123,19 @@ apis:
     humanURL: https://huggingface.co/docs/text-generation-inference/index
     baseURL: https://api-inference.huggingface.co/models
     tags:
-      - text generation
-      - llm
-      - inference server
-      - streaming
+      - Inference Server
+      - Llm
+      - Streaming
+      - Text Generation
     properties:
       - type: Documentation
         url: https://huggingface.co/docs/text-generation-inference/index
       - type: GitHub Repository
         url: https://github.com/huggingface/text-generation-inference
       - type: API Reference
-        url: 
-          https://huggingface.co/docs/text-generation-inference/basic_tutorials/consuming_tgi
+        url: https://huggingface.co/docs/text-generation-inference/basic_tutorials/consuming_tgi
       - type: Supported Models
-        url: 
-          https://huggingface.co/docs/text-generation-inference/supported_models
+        url: https://huggingface.co/docs/text-generation-inference/supported_models
     contact:
       - type: GitHub
         url: https://github.com/huggingface/text-generation-inference/issues
