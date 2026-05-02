@@ -1,0 +1,99 @@
+aid: hugging-face-transformers
+name: Hugging Face Transformers Rules
+description: >-
+  Operational rules and guardrails for working with the Hugging Face
+  Transformers ecosystem - the open-source library, the Inference API,
+  the Hub API, Spaces, and Text Generation Inference. Codifies model
+  trust, authentication, content policy, and write-action policies for
+  agents and integrations.
+modified: '2026-04-28'
+rules:
+  - id: hf-token-auth
+    name: User Access Token Authentication
+    description: >-
+      Calls to the Inference API, the Hub API write endpoints, and gated
+      model downloads require a Hugging Face user access token in the
+      Authorization header (Bearer scheme). Tokens must be scoped (read,
+      write, fine-grained) and never embedded in source control or logs.
+    applies_to:
+      - hugging-face-transformers:inference-api
+      - hugging-face-transformers:hub-api
+      - hugging-face-transformers:spaces-api
+    severity: required
+  - id: hf-model-trust
+    name: Model Source Trust
+    description: >-
+      Loading a model from the Hub executes code defined by the model
+      author when `trust_remote_code=True`. Treat unknown repositories as
+      untrusted, prefer official organizations, and never enable remote
+      code execution without explicit user confirmation.
+    applies_to:
+      - hugging-face-transformers:transformers-library
+      - hugging-face-transformers:hub-api
+    severity: required
+  - id: hf-license-compliance
+    name: Respect Model and Dataset Licenses
+    description: >-
+      Models and datasets on the Hub carry per-repo licenses (Apache,
+      MIT, OpenRAIL, Llama Community, gated, etc.). Verify license terms
+      before redistribution, fine-tuning, or commercial use, and surface
+      the license to the user when downloading new artifacts.
+    applies_to:
+      - hugging-face-transformers:transformers-library
+      - hugging-face-transformers:hub-api
+    severity: required
+  - id: hf-gated-models
+    name: Gated Model Access
+    description: >-
+      Some repositories require accepting terms or being granted access
+      by the owner. Agents must not attempt to bypass gating and should
+      surface the gate URL to the user when access is denied.
+    applies_to:
+      - hugging-face-transformers:hub-api
+      - hugging-face-transformers:inference-api
+    severity: required
+  - id: hf-pii-and-prompts
+    name: PII and Prompt Hygiene
+    description: >-
+      Prompts and uploaded files sent to the Inference API or hosted
+      Spaces leave the local environment. Strip secrets, credentials,
+      and personally identifiable information before sending, and prefer
+      local inference for sensitive workloads.
+    applies_to:
+      - hugging-face-transformers:inference-api
+      - hugging-face-transformers:spaces-api
+      - hugging-face-transformers:text-generation-inference
+    severity: required
+  - id: hf-destructive-confirm
+    name: Confirm Destructive Hub Actions
+    description: >-
+      Deleting models, datasets, or Spaces, transferring repository
+      ownership, or changing visibility from public to private requires
+      explicit user confirmation. Agents must not call DELETE or
+      ownership-change endpoints unattended.
+    applies_to:
+      - hugging-face-transformers:hub-api
+      - hugging-face-transformers:spaces-api
+    severity: required
+  - id: hf-rate-limits
+    name: Respect Rate and Compute Limits
+    description: >-
+      The Inference API enforces per-token rate and compute limits and
+      may return HTTP 429 or 503 (model loading). Implement exponential
+      backoff with jitter and avoid retry storms.
+    applies_to:
+      - hugging-face-transformers:inference-api
+    severity: required
+  - id: hf-cost-awareness
+    name: Inference Endpoint Cost Awareness
+    description: >-
+      Dedicated Inference Endpoints and GPU-backed Spaces generate
+      ongoing compute costs. Surface estimated cost and require user
+      confirmation before provisioning, scaling, or upgrading hardware.
+    applies_to:
+      - hugging-face-transformers:inference-api
+      - hugging-face-transformers:spaces-api
+    severity: required
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

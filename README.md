@@ -1,66 +1,33 @@
 # Hugging Face Transformers (hugging-face-transformers)
-APIs and resources for Hugging Face Transformers library - a state-of-the-art  machine learning library for Natural Language Processing, Computer Vision, and  Audio processing tasks.
+Hugging Face Transformers is an open-source machine learning library providing thousands of pretrained models and pipelines for Natural Language Processing, Computer Vision, Audio, and multimodal tasks. This index covers the Transformers library and the surrounding Hugging Face APIs that developers use to run inference, manage models, deploy demos, and serve LLMs at scale.
 
+**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/hugging-face-transformers/refs/heads/main/apis.yml)
 
-**URL:** [Visit APIs.json URL](https://huggingface.co/apis.json)
+## Scope
+
+- **Type:** Index
+- **Position:** Consuming
+- **Access:** Open Source / 3rd-Party
 
 ## Tags:
 
- - machine learning, artificial intelligence, transformers, natural language processing, computer vision, nlp, deep learning
+ - Machine Learning, Artificial Intelligence, Transformers, Natural Language Processing, Computer Vision, Deep Learning, Open Source
 
 ## Timestamps
 
-- **Created:** 2024 
-- **Modified:** 2024 
+- **Created:** 2024
+- **Modified:** 2026-04-28
 
 ## APIs
 
-### Hugging Face Inference API
-Serverless API for running inference on thousands of models hosted on  Hugging Face. Supports NLP, computer vision, audio, and multimodal tasks.
+### Hugging Face Transformers Library
+Open-source Python library that provides pretrained models, tokenizers, and pipelines for inference and fine-tuning across NLP, vision, audio, and multimodal tasks.
 
-
-**Human URL:** [https://huggingface.co/inference-api](https://huggingface.co/inference-api)
-
+**Human URL:** [https://huggingface.co/docs/transformers/index](https://huggingface.co/docs/transformers/index)
 
 #### Tags:
 
- - inference, api, serverless, predictions
-
-#### Properties
-
-- [Documentation](https://huggingface.co/docs/api-inference/index)
-- [OpenAPI](https://huggingface.co/api-inference/openapi.json)
-- [Authentication](https://huggingface.co/docs/api-inference/quicktour#authentication)
-- [Pricing](https://huggingface.co/pricing)
-
-### Hugging Face Hub API
-REST API for interacting with the Hugging Face Hub - upload, download,  and manage models, datasets, and spaces programmatically.
-
-
-**Human URL:** [https://huggingface.co/docs/hub/api](https://huggingface.co/docs/hub/api)
-
-
-#### Tags:
-
- - hub, models, datasets, repositories
-
-#### Properties
-
-- [Documentation](https://huggingface.co/docs/huggingface_hub/index)
-- [Python Client](https://huggingface.co/docs/huggingface_hub/package_reference/overview)
-- [JavaScript Client](https://huggingface.co/docs/huggingface.js/index)
-- [API Reference](https://huggingface.co/docs/hub/api)
-
-### Transformers Pipeline API
-High-level Python API for easy-to-use inference pipelines covering tasks  like text generation, classification, translation, and more.
-
-
-**Human URL:** [https://huggingface.co/docs/transformers/main_classes/pipelines](https://huggingface.co/docs/transformers/main_classes/pipelines)
-
-
-#### Tags:
-
- - pipelines, python, inference, library
+ - Library, Open Source, Pipelines, Python
 
 #### Properties
 
@@ -69,17 +36,54 @@ High-level Python API for easy-to-use inference pipelines covering tasks  like t
 - [Quick Tour](https://huggingface.co/docs/transformers/quicktour)
 - [Task Guide](https://huggingface.co/docs/transformers/task_summary)
 - [PyPI Package](https://pypi.org/project/transformers/)
+- [Issues](https://github.com/huggingface/transformers/issues)
 
-### Hugging Face Spaces API
-API for deploying and managing machine learning applications and demos  using Gradio, Streamlit, or Docker.
+### Hugging Face Inference API
+Serverless inference API for running predictions against thousands of models hosted on the Hugging Face Hub.
 
+**Human URL:** [https://huggingface.co/docs/api-inference/index](https://huggingface.co/docs/api-inference/index)
 
-**Human URL:** [https://huggingface.co/spaces](https://huggingface.co/spaces)
-
+**Base URL:** `https://api-inference.huggingface.co`
 
 #### Tags:
 
- - spaces, deployment, gradio, streamlit, demos
+ - Inference, Predictions, Serverless
+
+#### Properties
+
+- [Documentation](https://huggingface.co/docs/api-inference/index)
+- [Authentication](https://huggingface.co/docs/api-inference/quicktour#authentication)
+- [Pricing](https://huggingface.co/pricing)
+
+### Hugging Face Hub API
+REST API for interacting with the Hugging Face Hub - upload, download, and manage models, datasets, and spaces programmatically.
+
+**Human URL:** [https://huggingface.co/docs/hub/api](https://huggingface.co/docs/hub/api)
+
+**Base URL:** `https://huggingface.co/api`
+
+#### Tags:
+
+ - Hub, Models, Datasets, Repositories
+
+#### Properties
+
+- [Documentation](https://huggingface.co/docs/huggingface_hub/index)
+- [Python Client](https://huggingface.co/docs/huggingface_hub/package_reference/overview)
+- [JavaScript Client](https://huggingface.co/docs/huggingface.js/index)
+- [API Reference](https://huggingface.co/docs/hub/api)
+- [GitHub](https://github.com/huggingface/huggingface_hub)
+
+### Hugging Face Spaces API
+API for deploying and managing machine learning applications and demos using Gradio, Streamlit, or Docker on Hugging Face Spaces.
+
+**Human URL:** [https://huggingface.co/spaces](https://huggingface.co/spaces)
+
+**Base URL:** `https://huggingface.co/api/spaces`
+
+#### Tags:
+
+ - Spaces, Deployment, Gradio, Streamlit, Demos
 
 #### Properties
 
@@ -87,16 +91,14 @@ API for deploying and managing machine learning applications and demos  using Gr
 - [Gradio Documentation](https://gradio.app/docs/)
 - [Examples](https://huggingface.co/spaces)
 
-### Text Generation Inference API
-High-performance inference server for large language models with features  like continuous batching, token streaming, and tensor parallelism.
-
+### Text Generation Inference (TGI)
+High-performance inference server for large language models with continuous batching, token streaming, tensor parallelism, and OpenAI-compatible chat completions endpoints.
 
 **Human URL:** [https://huggingface.co/docs/text-generation-inference/index](https://huggingface.co/docs/text-generation-inference/index)
 
-
 #### Tags:
 
- - text generation, llm, inference server, streaming
+ - Text Generation, LLM, Inference Server, Streaming
 
 #### Properties
 
@@ -118,9 +120,10 @@ High-performance inference server for large language models with features  like 
 - [Terms of Service](https://huggingface.co/terms-of-service)
 - [Privacy Policy](https://huggingface.co/privacy)
 - [Sign Up](https://huggingface.co/join)
+- [Rules](https://raw.githubusercontent.com/api-evangelist/hugging-face-transformers/refs/heads/main/hugging-face-transformers-rules.yml)
 
 ## Maintainers
 
-**FN:** Hugging Face
+**FN:** Kin Lane
 
-**Email:** api@huggingface.co
+**Email:** kin@apievangelist.com
