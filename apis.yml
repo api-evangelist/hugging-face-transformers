@@ -159,6 +159,11 @@ common:
   - type: Rules
     url: >-
       https://raw.githubusercontent.com/api-evangelist/hugging-face-transformers/refs/heads/main/hugging-face-transformers-rules.yml
+  - type: Integrations
+    url: https://huggingface.co/integrations
+integrations:
+  - name: models 0
+  - name: datasets 0
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
