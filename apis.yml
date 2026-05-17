@@ -40,7 +40,7 @@ apis:
     properties:
       - type: Documentation
         url: https://huggingface.co/docs/transformers/index
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/huggingface/transformers
       - type: Quick Tour
         url: https://huggingface.co/docs/transformers/quicktour
@@ -88,7 +88,7 @@ apis:
         url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
       - type: JavaScript Client
         url: https://huggingface.co/docs/huggingface.js/index
-      - type: API Reference
+      - type: APIReference
         url: https://huggingface.co/docs/hub/api
       - type: GitHub
         url: https://github.com/huggingface/huggingface_hub
@@ -127,9 +127,9 @@ apis:
     properties:
       - type: Documentation
         url: https://huggingface.co/docs/text-generation-inference/index
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/huggingface/text-generation-inference
-      - type: API Reference
+      - type: APIReference
         url: https://huggingface.co/docs/text-generation-inference/basic_tutorials/consuming_tgi
       - type: Supported Models
         url: https://huggingface.co/docs/text-generation-inference/supported_models
@@ -142,7 +142,7 @@ common:
     url: https://huggingface.co/docs
   - type: Discord
     url: https://discord.gg/hugging-face
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/huggingface
   - type: Twitter
     url: https://twitter.com/huggingface
@@ -150,11 +150,11 @@ common:
     url: https://www.linkedin.com/company/huggingface
   - type: YouTube
     url: https://www.youtube.com/c/HuggingFace
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://huggingface.co/terms-of-service
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://huggingface.co/privacy
-  - type: Sign Up
+  - type: SignUp
     url: https://huggingface.co/join
   - type: Rules
     url: >-
