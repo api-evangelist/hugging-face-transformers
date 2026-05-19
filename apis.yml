@@ -20,7 +20,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/hugging-face-transformers/refs/heads/main/apis.yml
 created: '2024'
-modified: '2026-04-28'
+modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
   - aid: hugging-face-transformers:transformers-library
@@ -161,6 +161,9 @@ common:
       https://raw.githubusercontent.com/api-evangelist/hugging-face-transformers/refs/heads/main/hugging-face-transformers-rules.yml
   - type: Integrations
     url: https://huggingface.co/integrations
+  - name: Agent Skills
+    url: https://github.com/huggingface/transformers-to-mlx
+    type: AgentSkill
 integrations:
   - name: models 0
   - name: datasets 0
