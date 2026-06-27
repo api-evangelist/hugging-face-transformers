@@ -154,7 +154,7 @@ common:
     url: https://huggingface.co/terms-of-service
   - type: PrivacyPolicy
     url: https://huggingface.co/privacy
-  - type: SignUp
+  - type: Signup
     url: https://huggingface.co/join
   - type: Rules
     url: >-
@@ -163,7 +163,7 @@ common:
     url: https://huggingface.co/integrations
   - name: Agent Skills
     url: https://github.com/huggingface/transformers-to-mlx
-    type: AgentSkill
+    type: AgentSkills
 integrations:
   - name: models 0
   - name: datasets 0
