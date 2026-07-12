@@ -134,6 +134,12 @@ apis:
       - type: Supported Models
         url: https://huggingface.co/docs/text-generation-inference/supported_models
 common:
+  - type: VulnerabilityDisclosure
+    url: security/hugging-face-transformers-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/hugging-face-transformers-domain-security.yml
+  - type: Authentication
+    url: authentication/hugging-face-transformers-authentication.yml
   - type: Website
     url: https://huggingface.co
   - type: Blog
