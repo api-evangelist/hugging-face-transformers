@@ -1,0 +1,71 @@
+generated: '2026-06-20'
+method: searched
+source: openapi/hugging-face-transformers-openapi.json
+docs: https://huggingface.co/docs/hub/oauth
+notes: >-
+  The Hub OpenAPI declares only http bearer (User Access Token) auth, but
+  Hugging Face runs a full OAuth 2.0 / OIDC authorization server (Sign in with
+  Hugging Face) whose scopes are documented at the docs URL above and whose
+  discovery metadata is at /.well-known/openid-configuration. PKCE (S256) is
+  supported; public apps may omit a client secret. Enterprise plans add
+  RFC 8693 token exchange for keyless per-member token issuance.
+schemes:
+  - name: OAuth2 / OIDC
+    source: https://huggingface.co/.well-known/openid-configuration
+    issuer: https://huggingface.co
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://huggingface.co/oauth/authorize
+        tokenUrl: https://huggingface.co/oauth/token
+        pkce: S256
+      - flow: deviceCode
+        deviceAuthorizationUrl: https://huggingface.co/oauth/device
+        tokenUrl: https://huggingface.co/oauth/token
+    grant_types:
+      - authorization_code
+      - refresh_token
+      - urn:ietf:params:oauth:grant-type:device_code
+      - urn:ietf:params:oauth:grant-type:token-exchange
+scopes:
+  - scope: openid
+    description: Get the ID token in addition to the access token.
+  - scope: profile
+    description: Get the user's profile information (username, avatar, etc.).
+  - scope: email
+    description: Get the user's email address.
+  - scope: read-billing
+    description: Know whether the user has a payment method set up.
+  - scope: read-repos
+    description: Get read access to the user's personal repos.
+  - scope: gated-repos
+    description: >-
+      Get read access to the content of public gated repos the user has been
+      granted access to. Does not grant access to private repos.
+  - scope: contribute-repos
+    description: >-
+      Create repositories and access those created by this app; cannot access
+      other repositories unless additional permissions are granted.
+  - scope: write-repos
+    description: Get write/read access to the user's personal repos.
+  - scope: manage-repos
+    description: >-
+      Full access to the user's personal repos, including repo creation and
+      deletion.
+  - scope: read-collections
+    description: Get read access to the user's personal collections.
+  - scope: write-collections
+    description: >-
+      Write/read access to the user's personal collections, including creation
+      and deletion.
+  - scope: inference-api
+    description: >-
+      Access Inference Providers and make inference requests on behalf of the
+      user.
+  - scope: jobs
+    description: Run jobs.
+  - scope: webhooks
+    description: Manage webhooks.
+  - scope: write-discussions
+    description: >-
+      Open discussions and Pull Requests on behalf of the user and interact
+      with discussions (reactions, comments, closing, etc.).

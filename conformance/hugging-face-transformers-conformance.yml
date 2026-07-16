@@ -1,0 +1,49 @@
+generated: '2026-06-20'
+method: derived
+source: >-
+  openapi/hugging-face-transformers-openapi.json + /.well-known discovery +
+  https://huggingface.co/docs/hub/oauth
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      Full OAuth 2.0 authorization server; /.well-known/oauth-authorization-server
+      (RFC 8414) returned 200; authorization_code + device_code + refresh_token
+      + token-exchange grants.
+  - id: oidc
+    conforms: true
+    evidence: >-
+      /.well-known/openid-configuration returned 200; id_token RS256, userinfo
+      endpoint, openid/profile/email scopes.
+  - id: oauth2-pkce
+    conforms: true
+    evidence: code_challenge_methods_supported = [S256]
+  - id: rfc8414-oauth-as-metadata
+    conforms: true
+    evidence: /.well-known/oauth-authorization-server returned 200
+  - id: rfc8693-token-exchange
+    conforms: true
+    evidence: >-
+      grant_types_supported includes urn:ietf:params:oauth:grant-type:token-exchange;
+      documented Enterprise token exchange.
+  - id: rfc8628-device-authorization
+    conforms: true
+    evidence: device_authorization_endpoint present; POST /oauth/device operation.
+  - id: scim2
+    conforms: true
+    evidence: >-
+      /api/organizations/{name}/scim/v2/* paths implement ServiceProviderConfig,
+      ResourceTypes, Schemas, Users, and Groups per SCIM 2.0.
+  - id: rfc9116-security-txt
+    conforms: true
+    evidence: /.well-known/security.txt returned 200 with Contact + Expires.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 4xx responses use application/json, not application/problem+json.
+  - id: cursor-pagination
+    conforms: true
+    evidence: List endpoints expose `cursor` and `limit` query parameters.
+  - id: fhir-r4
+    conforms: false
+  - id: json-api
+    conforms: false

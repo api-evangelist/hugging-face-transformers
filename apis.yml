@@ -20,7 +20,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/hugging-face-transformers/refs/heads/main/apis.yml
 created: '2024'
-modified: '2026-05-19'
+modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
   - aid: hugging-face-transformers:transformers-library
@@ -90,6 +90,8 @@ apis:
         url: https://huggingface.co/docs/huggingface.js/index
       - type: APIReference
         url: https://huggingface.co/docs/hub/api
+      - type: OpenAPI
+        url: openapi/hugging-face-transformers-openapi.json
       - type: GitHub
         url: https://github.com/huggingface/huggingface_hub
   - aid: hugging-face-transformers:spaces-api
@@ -142,6 +144,36 @@ common:
     url: security/hugging-face-transformers-domain-security.yml
   - type: Authentication
     url: authentication/hugging-face-transformers-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hugging-face-transformers-scopes.yml
+  - type: Packages
+    url: packages/hugging-face-transformers-packages.yml
+  - type: WellKnown
+    url: well-known/hugging-face-transformers-well-known.yml
+  - type: SecurityTxt
+    url: well-known/hugging-face-transformers-security.txt
+  - type: MCPServer
+    url: mcp/hugging-face-transformers-mcp.yml
+  - type: LLMsTxt
+    url: llms/hugging-face-transformers-llms.txt
+  - type: Overlay
+    url: overlays/hugging-face-transformers-hub-overlay.yaml
+  - type: Conformance
+    url: conformance/hugging-face-transformers-conformance.yml
+  - type: ErrorCatalog
+    url: errors/hugging-face-transformers-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/hugging-face-transformers-lifecycle.yml
+  - type: Conventions
+    url: conventions/hugging-face-transformers-conventions.yml
+  - type: ChangeLog
+    url: changelog/hugging-face-transformers-changelog.yml
+  - type: CLI
+    url: cli/hugging-face-transformers-cli.yml
+  - type: Components
+    url: components/hugging-face-transformers-components.yml
+  - type: DataModel
+    url: data-model/hugging-face-transformers-data-model.yml
   - type: Website
     url: https://huggingface.co
   - type: Blog

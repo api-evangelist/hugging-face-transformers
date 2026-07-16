@@ -1,0 +1,27 @@
+generated: '2026-06-20'
+method: searched
+host: https://huggingface.co
+documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: hugging-face-transformers-openid-configuration.json
+    note: OpenID Connect discovery (OIDC)
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: hugging-face-transformers-oauth-authorization-server.json
+    note: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+  - path: /.well-known/security.txt
+    status: 200
+    file: hugging-face-transformers-security.txt
+    note: RFC 9116 security contact
+  - path: /.well-known/openapi.md
+    status: 200
+    note: >-
+      Markdown rendering of the Hub OpenAPI spec, advertised in the OpenAPI
+      description as an agent-friendly surface. Not saved verbatim (large).
+  - path: /.well-known/api-catalog
+    status: 401
+    note: Present but requires authentication.
+  - path: /.well-known/ai-plugin.json
+    status: 401
+    note: Present but requires authentication.

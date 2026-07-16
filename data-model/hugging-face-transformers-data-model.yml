@@ -1,0 +1,77 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/hugging-face-transformers-openapi.json (schemas + path hierarchy)
+notes: >-
+  The Hub OpenAPI declares only two named component schemas (RepoId, Job); the
+  remaining entities are derived from the URL path hierarchy of the 231 paths.
+  A Repo is polymorphic over type = model | dataset | space | bucket | kernel
+  (from the RepoId schema enum). id form is `namespace/name`.
+entities:
+  - name: Repo
+    id_form: '{namespace}/{name}'
+    types: [model, dataset, space, bucket, kernel]
+    evidence: components.schemas.RepoId
+  - name: Organization
+    id_form: '{name}'
+    evidence: /api/organizations/{name}
+  - name: User
+    evidence: /api/whoami-v2, /api/organizations/{name}/members/{username}
+  - name: Job
+    evidence: components.schemas.Job, /api/jobs
+  - name: Webhook
+    evidence: /api/settings/webhooks/{webhookId}
+  - name: Collection
+    evidence: hf CLI collections + write-collections scope
+  - name: ResourceGroup
+    evidence: /api/organizations/{name}/resource-groups
+  - name: Paper
+    evidence: /api/settings/papers/claim, paperId param
+  - name: Notification
+    evidence: /api/notifications
+  - name: ScimUser
+    evidence: /api/organizations/{name}/scim/v2/Users/{userId}
+  - name: ScimGroup
+    evidence: /api/organizations/{name}/scim/v2/Groups/{groupId}
+  - name: AgenticResource
+    evidence: /api/agentic/provisioning/resources/{id}
+relationships:
+  - from: Organization
+    to: Repo
+    kind: has_many
+    via: namespace
+  - from: User
+    to: Repo
+    kind: has_many
+    via: namespace
+  - from: Organization
+    to: User
+    kind: has_many
+    via: members
+  - from: Organization
+    to: ResourceGroup
+    kind: has_many
+    via: resource-groups
+  - from: Organization
+    to: ScimUser
+    kind: has_many
+    via: scim/v2/Users
+  - from: Organization
+    to: ScimGroup
+    kind: has_many
+    via: scim/v2/Groups
+  - from: ScimGroup
+    to: ScimUser
+    kind: has_many
+    via: members
+  - from: User
+    to: Webhook
+    kind: has_many
+    via: settings/webhooks
+  - from: User
+    to: Notification
+    kind: has_many
+    via: notifications
+  - from: Repo
+    to: Job
+    kind: has_many
+    via: repo

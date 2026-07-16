@@ -1,0 +1,29 @@
+generated: '2026-06-20'
+method: searched
+source: >-
+  https://huggingface.co/docs/hub/api + https://status.huggingface.co +
+  openapi/hugging-face-transformers-openapi.json
+versioning:
+  scheme: endpoint-suffix
+  notes: >-
+    The Hub API is unversioned at the base path (https://huggingface.co/api);
+    newer endpoint variants are introduced with suffixes (e.g. /api/whoami-v2,
+    /api/organizations/{name}/billing/usage-v2). SCIM follows /scim/v2/. OAuth
+    endpoints are unversioned under /oauth/.
+  current: unversioned
+  docs: https://huggingface.co/docs/hub/api
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: >-
+    No formal Sunset/Deprecation (RFC 8594) header policy is documented for the
+    Hub API. Deprecated *v1* endpoint variants coexist with v2 replacements.
+sla:
+  url: null
+  uptime_target: null
+  notes: >-
+    Enterprise Hub offers support commitments; no public numeric API SLA is
+    published.
+status_page: https://status.huggingface.co
+changelog: https://huggingface.co/changelog
+deprecated_operations: []

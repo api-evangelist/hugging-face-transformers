@@ -1,0 +1,48 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Hugging Face Hub API
+  version: 1.0.0
+extends: openapi/hugging-face-transformers-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: hugging-face-transformers
+      x-apievangelist-artifacts:
+        authentication: authentication/hugging-face-transformers-authentication.yml
+        scopes: scopes/hugging-face-transformers-scopes.yml
+        conventions: conventions/hugging-face-transformers-conventions.yml
+        errors: errors/hugging-face-transformers-problem-types.yml
+        lifecycle: lifecycle/hugging-face-transformers-lifecycle.yml
+        data-model: data-model/hugging-face-transformers-data-model.yml
+        mcp: mcp/hugging-face-transformers-mcp.yml
+  - target: $.info
+    update:
+      x-apievangelist-notes: >-
+        Hub API is unversioned at https://huggingface.co/api. Auth is bearer
+        User Access Token; a full OAuth 2.0 / OIDC server backs Sign in with HF.
+        SCIM 2.0 org provisioning and an agentic provisioning surface are
+        included. Errors are application/json (not RFC 9457). Pagination is
+        cursor-based (cursor + limit) with Link rel=next.
+  - target: $.components.securitySchemes
+    update:
+      OAuth2:
+        type: oauth2
+        description: >-
+          Sign in with Hugging Face (added by API Evangelist from the published
+          OIDC discovery document; not declared in the harvested spec, which
+          only carries bearerAuth).
+        flows:
+          authorizationCode:
+            authorizationUrl: https://huggingface.co/oauth/authorize
+            tokenUrl: https://huggingface.co/oauth/token
+            scopes:
+              openid: Get the ID token in addition to the access token.
+              profile: Get the user's profile information.
+              email: Get the user's email address.
+              read-repos: Read access to the user's personal repos.
+              write-repos: Write/read access to the user's personal repos.
+              manage-repos: Full access incl. repo creation and deletion.
+              inference-api: Make inference requests on behalf of the user.
+              jobs: Run jobs.
+              webhooks: Manage webhooks.
+              write-discussions: Open discussions and Pull Requests.

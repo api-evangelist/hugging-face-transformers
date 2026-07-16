@@ -1,0 +1,59 @@
+generated: '2026-06-20'
+method: searched
+source: PyPI + npm registries and huggingface.co docs
+packages:
+  - language: python
+    registry: pypi
+    name: transformers
+    url: https://pypi.org/project/transformers/
+    install: pip install transformers
+    version: 5.14.1
+    official: true
+    description: >-
+      State-of-the-art machine learning model-definition framework for text,
+      vision, audio, video, and multimodal models — inference and training.
+  - language: python
+    registry: pypi
+    name: huggingface_hub
+    url: https://pypi.org/project/huggingface_hub/
+    install: pip install huggingface_hub
+    version: 1.23.0
+    official: true
+    description: >-
+      Python client for the Hugging Face Hub API and the `hf` CLI — download,
+      upload, and manage models, datasets, and Spaces.
+  - language: python
+    registry: pypi
+    name: text-generation
+    url: https://pypi.org/project/text-generation/
+    install: pip install text-generation
+    version: 0.7.0
+    official: true
+    description: Python client for Text Generation Inference (TGI) servers.
+  - language: javascript
+    registry: npm
+    name: "@huggingface/transformers"
+    url: https://www.npmjs.com/package/@huggingface/transformers
+    install: npm i @huggingface/transformers
+    version: 4.2.0
+    official: true
+    description: >-
+      Transformers.js — run Hugging Face Transformers models directly in the
+      browser or Node.js with no server, functionally equivalent to the Python
+      transformers pipeline API.
+  - language: javascript
+    registry: npm
+    name: "@huggingface/inference"
+    url: https://www.npmjs.com/package/@huggingface/inference
+    install: npm i @huggingface/inference
+    version: 4.13.23
+    official: true
+    description: JS client for Hugging Face Inference Providers and endpoints.
+  - language: javascript
+    registry: npm
+    name: "@huggingface/hub"
+    url: https://www.npmjs.com/package/@huggingface/hub
+    install: npm i @huggingface/hub
+    version: 2.13.3
+    official: true
+    description: JS client for the Hugging Face Hub API (repos, files, commits).

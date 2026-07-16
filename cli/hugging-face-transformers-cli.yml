@@ -1,0 +1,61 @@
+generated: '2026-06-20'
+method: searched
+source: >-
+  https://huggingface.co/docs/huggingface_hub/guides/cli +
+  https://huggingface.co/blog/hf-cli-for-agents
+name: hf
+former_name: huggingface-cli
+description: >-
+  The Hugging Face Hub CLI. Ships with the huggingface_hub Python package and
+  as a standalone binary. Redesigned in 2026 to be agent-optimized: it detects
+  agent usage and emits compact structured output (rich tables for humans),
+  cutting tokens 1.3x–6x versus curl or the Python SDK on multi-step Hub tasks.
+install:
+  - method: standalone-installer
+    command: 'curl -LsSf https://hf.co/cli/install.sh | bash'
+    platforms: [macos, linux]
+  - method: standalone-installer
+    command: 'powershell -ExecutionPolicy ByPass -c "irm https://hf.co/cli/install.ps1 | iex"'
+    platforms: [windows]
+  - method: pip
+    command: pip install -U huggingface_hub
+binary_ref: packages/hugging-face-transformers-packages.yml
+commands:
+  - name: auth
+    description: Manage authentication (login, logout, whoami, switch, token).
+  - name: buckets
+    description: Interact with Hub storage buckets.
+  - name: cache
+    description: Manage the local cache directory.
+  - name: collections
+    description: Interact with collections on the Hub.
+  - name: datasets
+    description: Interact with datasets on the Hub.
+  - name: download
+    description: Download files from the Hub.
+  - name: endpoints
+    description: Manage Hugging Face Inference Endpoints.
+  - name: extensions
+    description: Manage hf CLI extensions.
+  - name: jobs
+    description: Run and manage Jobs on the Hub.
+  - name: models
+    description: Interact with models on the Hub.
+  - name: papers
+    description: Interact with papers on the Hub.
+  - name: repo
+    description: Manage repos on the Hub.
+  - name: skills
+    description: Manage Agent Skills for AI assistants (hf skills add [--claude]).
+  - name: spaces
+    description: Interact with Spaces on the Hub.
+  - name: sync
+    description: Sync files between a local directory and a bucket.
+  - name: upload
+    description: Upload a file or a folder to the Hub.
+  - name: upload-large-folder
+    description: "[Deprecated] Use 'hf upload' instead."
+  - name: env
+    description: Print information about the environment.
+  - name: version
+    description: Print information about the hf version.

@@ -1,0 +1,32 @@
+generated: '2026-06-20'
+method: searched
+source: >-
+  https://gradio.app/guides/sharing-your-app +
+  https://huggingface.co/docs/hub/models-widgets
+notes: >-
+  Client-side / embeddable UI surfaces distinct from the server-side SDKs in
+  packages/. Gradio ships a web component for embedding Spaces; the Hub renders
+  interactive inference widgets on model pages.
+families:
+  - name: Gradio embed
+    kind: web-component
+    tag: <gradio-app>
+    loader: https://gradio.app/assets/js/gradio.js
+    description: >-
+      Embed any Gradio Space in an external web page via the <gradio-app>
+      custom element pointing at a Space URL. Supports full-page or inline
+      embedding.
+    docs: https://www.gradio.app/guides/sharing-your-app#embedding-hosted-spaces
+  - name: Hub inference widgets
+    kind: hosted-widget
+    description: >-
+      Interactive task widgets automatically rendered on model pages (text
+      generation, classification, image, audio, etc.), backed by Inference
+      Providers.
+    docs: https://huggingface.co/docs/hub/models-widgets
+  - name: Sign in with Hugging Face
+    kind: embed-button
+    description: >-
+      Drop-in OAuth sign-in badges/buttons (SVG) for adding "Sign in with HF"
+      to any app; built into Gradio for Spaces.
+    docs: https://huggingface.co/docs/hub/oauth

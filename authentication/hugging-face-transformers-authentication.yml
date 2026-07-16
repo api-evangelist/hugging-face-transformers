@@ -1,12 +1,38 @@
-generated: '2026-07-11'
-method: derived
+generated: '2026-06-20'
+method: searched
 source: openapi/hugging-face-transformers-openapi.json
+docs: https://huggingface.co/docs/hub/security-tokens
 summary:
   types:
   - http
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+  - deviceCode
+  - tokenExchange
 schemes:
 - name: bearerAuth
   type: http
   scheme: bearer
+  description: >-
+    User Access Token (hf_...) or OAuth access token (hf_oauth_...) passed as
+    `Authorization: Bearer <token>`. User Access Tokens are created in account
+    settings and can be fine-grained (scoped to repos/permissions) or classic
+    (read / write / fine-grained). As of Jul 2026 tokens can be created from
+    presets (Read-Only, Inference, Write, CI/CD, Full Access).
   sources:
   - openapi/hugging-face-transformers-openapi.json
+- name: OAuth2
+  type: oauth2
+  description: >-
+    Sign in with Hugging Face — full OAuth 2.0 / OIDC authorization server.
+    Authorization Code (PKCE S256), Device Code, and RFC 8693 Token Exchange
+    (Enterprise) grants. See scopes/hugging-face-transformers-scopes.yml.
+  issuer: https://huggingface.co
+  authorizationUrl: https://huggingface.co/oauth/authorize
+  tokenUrl: https://huggingface.co/oauth/token
+  deviceAuthorizationUrl: https://huggingface.co/oauth/device
+  userinfoUrl: https://huggingface.co/oauth/userinfo
+  jwksUri: https://huggingface.co/oauth/jwks
+  sources:
+  - https://huggingface.co/.well-known/openid-configuration

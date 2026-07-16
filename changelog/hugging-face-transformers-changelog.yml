@@ -1,0 +1,28 @@
+generated: '2026-06-20'
+method: searched
+source: https://huggingface.co/changelog
+scheme: dated product changelog (per-entry slug at /changelog/<slug>)
+current: rolling
+entries:
+  - date: '2026-07-16'
+    title: Build Spaces with AI Agents
+    highlights: Space creation page adds an option to build with an AI agent.
+    breaking: false
+  - date: '2026-07-14'
+    title: Fine-Grained Token Presets
+    highlights: >-
+      Create access tokens from presets — Read-Only, Inference, Write, CI/CD,
+      or Full Access.
+    breaking: false
+  - date: '2026-06-30'
+    title: Filter Models page by Hardware
+    highlights: New Hardware filter to find models compatible with specific GPUs, CPUs, or Apple Silicon.
+    breaking: false
+  - date: '2026-06-26'
+    title: Share your feedback with us
+    highlights: Submit feedback directly from the user menu.
+    breaking: false
+  - date: '2026-06-12'
+    title: Service Accounts for Enterprise organizations
+    highlights: Enterprise orgs can create dedicated service accounts for programmatic (CI/CD) access.
+    breaking: false

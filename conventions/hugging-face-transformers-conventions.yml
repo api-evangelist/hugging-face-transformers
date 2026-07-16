@@ -1,0 +1,41 @@
+generated: '2026-06-20'
+method: derived
+source: >-
+  openapi/hugging-face-transformers-openapi.json +
+  https://huggingface.co/docs/hub/api
+authentication:
+  style: bearer
+  header: 'Authorization: Bearer hf_...'
+  ref: authentication/hugging-face-transformers-authentication.yml
+pagination:
+  style: cursor
+  params: [cursor, limit]
+  alt_params: [p, num]
+  scim_params: [startIndex, count]
+  response: >-
+    Cursor-paginated list endpoints return a Link header (rel="next") for the
+    next page; `limit` caps page size. SCIM list endpoints use startIndex/count
+    with totalResults per SCIM 2.0.
+  notes: >-
+    Derived from `cursor` (11 ops) and `limit` (25 ops) query parameters across
+    the Hub list endpoints.
+expansion:
+  param: expand
+  notes: >-
+    Several endpoints accept an `expand` query parameter to include additional
+    fields (7 operations).
+filtering:
+  params: [search, q, filter, sort, type, repoType]
+error_envelope:
+  content_type: application/json
+  shape: '{ "error": "<message>" }'
+  ref: errors/hugging-face-transformers-problem-types.yml
+versioning:
+  ref: lifecycle/hugging-face-transformers-lifecycle.yml
+  scheme: unversioned base path with -v2 endpoint variants
+rate_limits:
+  ref: rate-limits/hugging-face-transformers-rate-limits.yml
+content_negotiation:
+  notes: >-
+    Some endpoints honor Accept and Range headers (e.g. file resolution and
+    streaming usage endpoints).

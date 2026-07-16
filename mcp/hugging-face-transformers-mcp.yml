@@ -1,0 +1,37 @@
+generated: '2026-06-20'
+method: searched
+status: published
+source: https://huggingface.co/docs/hub/en/hf-mcp-server
+server:
+  name: hugging-face
+  transport: [stdio, streamable-http]
+  url: https://huggingface.co/mcp
+  settings: https://huggingface.co/settings/mcp
+  source_code: https://github.com/huggingface/hf-mcp-server
+  auth: >-
+    Bearer User Access Token (hf_...) or OAuth. Anonymous access is available
+    for read/search tools; authenticated access unlocks jobs and private repos.
+notes: >-
+  Official Hugging Face remote MCP server. Connects MCP-compatible clients
+  (Claude Desktop, Cursor, VS Code, Zed, Codex, ChatGPT) to the Hub. Beyond the
+  built-in tools below, users can add MCP-compatible Gradio Spaces as additional
+  runtime tools from the settings page.
+tools:
+  - name: Spaces Semantic Search
+    description: Find the best AI apps (Spaces) via natural language queries.
+  - name: Papers Semantic Search
+    description: Find ML research papers via natural language queries.
+  - name: Model Search
+    description: Search for ML models with filters for task, library, and more.
+  - name: Dataset Search
+    description: Search for datasets with filters for author, tags, and more.
+  - name: Documentation Semantic Search
+    description: >-
+      Search the Hugging Face documentation using natural language across all
+      Hugging Face libraries.
+  - name: Run and Manage Jobs
+    description: Run, monitor, and schedule jobs on Hugging Face infrastructure.
+  - name: Hub Repository Details
+    description: >-
+      Get detailed information about models, datasets, and Spaces, optionally
+      including README content.

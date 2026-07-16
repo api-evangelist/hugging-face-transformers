@@ -1,0 +1,35 @@
+generated: '2026-06-20'
+method: derived
+format: json
+source: openapi/hugging-face-transformers-openapi.json
+notes: >-
+  Derived from the Hub OpenAPI 4xx responses. The Hub does NOT use RFC 9457
+  application/problem+json; error bodies are application/json, typically an
+  object with an `error` string (and sometimes SCIM 2.0 error envelopes on
+  /scim/v2/* paths). Status codes observed across 283 operations: 400 (8),
+  404 (3), 409 (11), 422 (4).
+envelope:
+  content_type: application/json
+  shape: '{ "error": "<message>" }'
+  scim_shape: >-
+    On /scim/v2/* paths, errors follow SCIM 2.0:
+    { "schemas": ["urn:ietf:params:scim:api:messages:2.0:Error"], "detail": ..., "status": ... }
+problems:
+  - status: 400
+    title: Bad request
+    description: >-
+      Malformed request or invalid parameters (e.g. "Account request error" on
+      agentic provisioning account requests).
+  - status: 404
+    title: Not found
+    description: >-
+      Resource, repo, or user not found (e.g. "User not found or not
+      provisioned").
+  - status: 409
+    title: Conflict
+    description: >-
+      Resource already exists or state conflict (e.g. "SCIM User already
+      exists").
+  - status: 422
+    title: Unprocessable entity
+    description: The request is syntactically valid but semantically invalid.
