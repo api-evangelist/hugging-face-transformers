@@ -1,0 +1,282 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning docs API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: docs
+  x-displayName: Documentation
+  description: The following endpoints are for interacting with the Hub's documentation.
+paths:
+  /api/docs:
+    get:
+      description: Get list of available documentation
+      summary: List docs
+      tags:
+      - docs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    url:
+                      type: string
+                    category:
+                      type: string
+                  required:
+                  - id
+                  - url
+                  additionalProperties: false
+          description: List of available documentation
+  /api/docs/search:
+    get:
+      description: Search any Hugging Face documentation
+      summary: Search docs
+      tags:
+      - docs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    _vectors:
+                      type: object
+                      properties:
+                        embeddings:
+                          type: array
+                          items:
+                            type: number
+                      required:
+                      - embeddings
+                      additionalProperties: false
+                    heading1:
+                      type: string
+                    text:
+                      type: string
+                    product:
+                      type: string
+                    source_page_url:
+                      type: string
+                    source_page_title:
+                      type: string
+                    heading2:
+                      type: string
+                    heading3:
+                      type: string
+                    heading4:
+                      type: string
+                    heading5:
+                      type: string
+                  required:
+                  - id
+                  - _vectors
+                  - heading1
+                  - text
+                  - product
+                  - source_page_url
+                  - source_page_title
+                  additionalProperties: false
+          description: Search results
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: string
+          maxLength: 250
+        required: true
+      - name: product
+        in: query
+        schema:
+          enum:
+          - hub
+          - transformers
+          - diffusers
+          - datasets
+          - gradio
+          - trackio
+          - smolagents
+          - huggingface_hub
+          - cli
+          - huggingface.js
+          - transformers.js
+          - inference-providers
+          - inference-endpoints
+          - peft
+          - accelerate
+          - optimum
+          - optimum-habana
+          - optimum-neuron
+          - optimum-intel
+          - optimum-executorch
+          - optimum-tpu
+          - tokenizers
+          - llm-course
+          - context-course
+          - robotics-course
+          - mcp-course
+          - smol-course
+          - agents-course
+          - deep-rl-course
+          - computer-vision-course
+          - evaluate
+          - tasks
+          - dataset-viewer
+          - trl
+          - simulate
+          - sagemaker
+          - timm
+          - safetensors
+          - tgi
+          - setfit
+          - audio-course
+          - lerobot
+          - reachy_mini
+          - autotrain
+          - tei
+          - bitsandbytes
+          - cookbook
+          - sentence_transformers
+          - ml-games-course
+          - diffusion-course
+          - ml-for-3d-course
+          - chat-ui
+          - leaderboards
+          - lighteval
+          - argilla
+          - distilabel
+          - microsoft-azure
+          - kernels
+          - google-cloud
+          - xet
+        required: false
+      - name: limit
+        in: query
+        schema:
+          default: 10
+          type: integer
+          minimum: 1
+          maximum: 25
+        required: false
+  /api/docs/search/full-text:
+    get:
+      description: Full-text search across Hugging Face documentation
+      summary: Full-text search docs
+      tags:
+      - docs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  hits:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                        hierarchy_lvl0:
+                          type: string
+                        hierarchy_lvl1:
+                          type: string
+                        hierarchy_lvl2:
+                          type: string
+                        hierarchy_lvl3:
+                          type: string
+                        hierarchy_lvl4:
+                          type: string
+                        hierarchy_lvl5:
+                          type: string
+                        hierarchy_lvl6:
+                          type: string
+                        content:
+                          type: string
+                        anchor:
+                          type: string
+                        _formatted:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                            hierarchy_lvl0:
+                              type: string
+                            hierarchy_lvl1:
+                              type: string
+                            hierarchy_lvl2:
+                              type: string
+                            hierarchy_lvl3:
+                              type: string
+                            hierarchy_lvl4:
+                              type: string
+                            hierarchy_lvl5:
+                              type: string
+                            hierarchy_lvl6:
+                              type: string
+                            content:
+                              type: string
+                            anchor:
+                              type: string
+                          additionalProperties: false
+                      required:
+                      - url
+                      additionalProperties: false
+                required:
+                - hits
+                additionalProperties: false
+          description: Full-text search results
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: string
+          maxLength: 250
+        required: true
+      - name: limit
+        in: query
+        schema:
+          default: 9
+          type: integer
+          minimum: 1
+          maximum: 100
+        required: false
+      - name: domain
+        in: query
+        schema:
+          type: string
+          maxLength: 100
+        required: false
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

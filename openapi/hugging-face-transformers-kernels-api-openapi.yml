@@ -1,0 +1,637 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning kernels API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: kernels
+  x-displayName: Kernels
+  description: Get information from all kernels on the Hub.
+paths:
+  /api/kernels/{namespace}/{repo}/lfs-files/duplicate:
+    post:
+      description: Duplicate xet-stored files from this repo (source) into another repo (target) by xet hash, without re-uploading file bytes. The caller must then commit the files with their sha256/size as usual.
+      summary: Duplicate xet files
+      tags:
+      - kernels
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                target:
+                  type: object
+                  properties:
+                    type:
+                      enum:
+                      - dataset
+                      - model
+                      - space
+                      - kernel
+                    name:
+                      type: string
+                      minLength: 1
+                  required:
+                  - type
+                  - name
+                files:
+                  minItems: 1
+                  maxItems: 1000
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      xetHash:
+                        type: string
+                        minLength: 64
+                        maxLength: 64
+                        pattern: ^[0-9a-fA-F]{64}$
+                      sha256:
+                        type: string
+                        minLength: 64
+                        maxLength: 64
+                        pattern: ^[0-9a-fA-F]{64}$
+                      filename:
+                        type: string
+                        maxLength: 1000
+                    required:
+                    - xetHash
+                    - sha256
+              required:
+              - target
+              - files
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  success:
+                    description: True if all requested files were duplicated (or already present)
+                    type: boolean
+                  processed:
+                    description: Total number of unique files processed
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  succeeded:
+                    description: Number of files duplicated or already present in the target
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  failed:
+                    description: Per-file failures
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        xetHash:
+                          description: Xet content hash of the file that failed
+                          type: string
+                        sha256:
+                          description: sha256 of the file that failed
+                          type: string
+                        error:
+                          description: Error message
+                          type: string
+                      required:
+                      - xetHash
+                      - sha256
+                      - error
+                      additionalProperties: false
+                required:
+                - success
+                - processed
+                - succeeded
+                - failed
+                additionalProperties: false
+          description: Duplicate xet files response
+        '207':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  success:
+                    description: True if all requested files were duplicated (or already present)
+                    type: boolean
+                  processed:
+                    description: Total number of unique files processed
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  succeeded:
+                    description: Number of files duplicated or already present in the target
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  failed:
+                    description: Per-file failures
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        xetHash:
+                          description: Xet content hash of the file that failed
+                          type: string
+                        sha256:
+                          description: sha256 of the file that failed
+                          type: string
+                        error:
+                          description: Error message
+                          type: string
+                      required:
+                      - xetHash
+                      - sha256
+                      - error
+                      additionalProperties: false
+                required:
+                - success
+                - processed
+                - succeeded
+                - failed
+                additionalProperties: false
+          description: Duplicate xet files response
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/kernels/{namespace}/{repo}:
+    get:
+      summary: Get kernel
+      tags:
+      - kernels
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  author:
+                    type: string
+                  downloads:
+                    type: number
+                  id:
+                    type: string
+                  isLikedByUser:
+                    type: boolean
+                  lastModified:
+                    type: string
+                    format: date-time
+                    pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  likes:
+                    type: number
+                  private:
+                    type: boolean
+                  repoType:
+                    const: kernel
+                  sha:
+                    type: string
+                  gated:
+                    anyOf:
+                    - const: false
+                    - enum:
+                      - auto
+                      - manual
+                  resourceGroup:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      name:
+                        type: string
+                      numUsers:
+                        type: number
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                  authorData:
+                    anyOf:
+                    - type: object
+                      properties:
+                        _id:
+                          type: string
+                          minLength: 24
+                          maxLength: 24
+                          pattern: ^[0-9a-f]{24}$
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        name:
+                          type: string
+                        isHf:
+                          type: boolean
+                        isHfAdmin:
+                          type: boolean
+                        isMod:
+                          type: boolean
+                        followerCount:
+                          type: number
+                        type:
+                          const: org
+                        plan:
+                          enum:
+                          - team
+                          - enterprise
+                          - plus
+                          - academia
+                        isUserFollowing:
+                          type: boolean
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - name
+                      - isHf
+                      - isHfAdmin
+                      - isMod
+                      - type
+                      additionalProperties: false
+                    - type: object
+                      properties:
+                        _id:
+                          type: string
+                          minLength: 24
+                          maxLength: 24
+                          pattern: ^[0-9a-f]{24}$
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        name:
+                          type: string
+                        isHf:
+                          type: boolean
+                        isHfAdmin:
+                          type: boolean
+                        isMod:
+                          type: boolean
+                        followerCount:
+                          type: number
+                        type:
+                          const: user
+                        isPro:
+                          type: boolean
+                        isUserFollowing:
+                          type: boolean
+                        primaryOrg:
+                          type: object
+                          properties:
+                            avatarUrl:
+                              type: string
+                            fullname:
+                              type: string
+                            name:
+                              type: string
+                            type:
+                              const: org
+                            isHf:
+                              type: boolean
+                            isFollowing:
+                              type: boolean
+                            plan:
+                              enum:
+                              - team
+                              - enterprise
+                              - plus
+                              - academia
+                            details:
+                              type: string
+                            hasPrivateMembersList:
+                              type: boolean
+                            userRole:
+                              anyOf:
+                              - enum:
+                                - admin
+                                - write
+                                - contributor
+                                - read
+                                - no_access
+                              - description: Custom role name
+                                type: string
+                            numUsers:
+                              type: number
+                          required:
+                          - avatarUrl
+                          - fullname
+                          - name
+                          - type
+                          - isHf
+                          additionalProperties: false
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - name
+                      - isHf
+                      - isHfAdmin
+                      - isMod
+                      - type
+                      - isPro
+                      additionalProperties: false
+                  files:
+                    type: array
+                    items:
+                      type: string
+                  supportedDriverFamilies:
+                    type: array
+                    items:
+                      enum:
+                      - cuda
+                      - rocm
+                      - metal
+                      - xpu
+                      - cpu
+                  trustedPublisher:
+                    type: boolean
+                required:
+                - _id
+                - author
+                - downloads
+                - id
+                - isLikedByUser
+                - lastModified
+                - likes
+                - private
+                - repoType
+                - sha
+                - gated
+                additionalProperties: false
+          description: Kernel overview information
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/kernels/{namespace}/{repo}/revision/{rev}:
+    get:
+      summary: Get kernel
+      tags:
+      - kernels
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  author:
+                    type: string
+                  downloads:
+                    type: number
+                  id:
+                    type: string
+                  isLikedByUser:
+                    type: boolean
+                  lastModified:
+                    type: string
+                    format: date-time
+                    pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  likes:
+                    type: number
+                  private:
+                    type: boolean
+                  repoType:
+                    const: kernel
+                  sha:
+                    type: string
+                  gated:
+                    anyOf:
+                    - const: false
+                    - enum:
+                      - auto
+                      - manual
+                  resourceGroup:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      name:
+                        type: string
+                      numUsers:
+                        type: number
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                  authorData:
+                    anyOf:
+                    - type: object
+                      properties:
+                        _id:
+                          type: string
+                          minLength: 24
+                          maxLength: 24
+                          pattern: ^[0-9a-f]{24}$
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        name:
+                          type: string
+                        isHf:
+                          type: boolean
+                        isHfAdmin:
+                          type: boolean
+                        isMod:
+                          type: boolean
+                        followerCount:
+                          type: number
+                        type:
+                          const: org
+                        plan:
+                          enum:
+                          - team
+                          - enterprise
+                          - plus
+                          - academia
+                        isUserFollowing:
+                          type: boolean
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - name
+                      - isHf
+                      - isHfAdmin
+                      - isMod
+                      - type
+                      additionalProperties: false
+                    - type: object
+                      properties:
+                        _id:
+                          type: string
+                          minLength: 24
+                          maxLength: 24
+                          pattern: ^[0-9a-f]{24}$
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        name:
+                          type: string
+                        isHf:
+                          type: boolean
+                        isHfAdmin:
+                          type: boolean
+                        isMod:
+                          type: boolean
+                        followerCount:
+                          type: number
+                        type:
+                          const: user
+                        isPro:
+                          type: boolean
+                        isUserFollowing:
+                          type: boolean
+                        primaryOrg:
+                          type: object
+                          properties:
+                            avatarUrl:
+                              type: string
+                            fullname:
+                              type: string
+                            name:
+                              type: string
+                            type:
+                              const: org
+                            isHf:
+                              type: boolean
+                            isFollowing:
+                              type: boolean
+                            plan:
+                              enum:
+                              - team
+                              - enterprise
+                              - plus
+                              - academia
+                            details:
+                              type: string
+                            hasPrivateMembersList:
+                              type: boolean
+                            userRole:
+                              anyOf:
+                              - enum:
+                                - admin
+                                - write
+                                - contributor
+                                - read
+                                - no_access
+                              - description: Custom role name
+                                type: string
+                            numUsers:
+                              type: number
+                          required:
+                          - avatarUrl
+                          - fullname
+                          - name
+                          - type
+                          - isHf
+                          additionalProperties: false
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - name
+                      - isHf
+                      - isHfAdmin
+                      - isMod
+                      - type
+                      - isPro
+                      additionalProperties: false
+                  files:
+                    type: array
+                    items:
+                      type: string
+                  supportedDriverFamilies:
+                    type: array
+                    items:
+                      enum:
+                      - cuda
+                      - rocm
+                      - metal
+                      - xpu
+                      - cpu
+                  trustedPublisher:
+                    type: boolean
+                required:
+                - _id
+                - author
+                - downloads
+                - id
+                - isLikedByUser
+                - lastModified
+                - likes
+                - private
+                - repoType
+                - sha
+                - gated
+                additionalProperties: false
+          description: Kernel overview information
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: rev
+        in: path
+        required: true
+        schema:
+          type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

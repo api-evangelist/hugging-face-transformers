@@ -1,0 +1,1631 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning papers API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: papers
+  x-displayName: Paper pages
+  description: The following endpoint gets information about papers.
+paths:
+  /api/settings/papers/claim:
+    post:
+      summary: Claim paper authorship
+      tags:
+      - papers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                paperId:
+                  description: ArXiv paper identifier being claimed.
+                  type: string
+                claimAuthorId:
+                  description: Author entry on the paper being claimed.
+                  type: string
+                  minLength: 24
+                  maxLength: 24
+                  pattern: ^[0-9a-fA-F]{24}$
+                targetUserId:
+                  description: HF user who should receive the claim.
+                  type: string
+                  minLength: 24
+                  maxLength: 24
+                  pattern: ^[0-9a-fA-F]{24}$
+              required:
+              - paperId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  claimedPaperId:
+                    type: string
+                required:
+                - ok
+                - claimedPaperId
+                additionalProperties: false
+          description: Paper authorship claim result, including the claimed paper id
+  /api/daily_papers:
+    get:
+      summary: Get Daily Papers
+      tags:
+      - papers
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  description: Daily paper data for API responses
+                  type: object
+                  properties:
+                    paper:
+                      description: Paper data with metadata
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        authors:
+                          type: array
+                          items:
+                            description: Paper author information
+                            type: object
+                            properties:
+                              _id:
+                                type: string
+                              name:
+                                type: string
+                              status:
+                                type: string
+                              statusLastChangedAt:
+                                type: string
+                                format: date-time
+                                pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                              user:
+                                description: User overview information
+                                type: object
+                                properties:
+                                  _id:
+                                    type: string
+                                  avatarUrl:
+                                    type: string
+                                  fullname:
+                                    type: string
+                                  isPro:
+                                    type: boolean
+                                  name:
+                                    type: string
+                                  type:
+                                    type: string
+                                  user:
+                                    type: string
+                                  isHf:
+                                    type: boolean
+                                  isHfAdmin:
+                                    type: boolean
+                                  isMod:
+                                    type: boolean
+                                  followerCount:
+                                    type: number
+                                required:
+                                - _id
+                                - avatarUrl
+                                - fullname
+                                - isPro
+                                - name
+                                - type
+                                additionalProperties: false
+                              hidden:
+                                type: boolean
+                            required:
+                            - _id
+                            - name
+                            - hidden
+                            additionalProperties: false
+                        mediaUrls:
+                          type: array
+                          items:
+                            type: string
+                        publishedAt:
+                          type: string
+                          format: date-time
+                          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                        submittedOnDailyAt:
+                          type: string
+                          format: date-time
+                          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                        title:
+                          type: string
+                        submittedOnDailyBy:
+                          description: User overview information
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                            avatarUrl:
+                              type: string
+                            fullname:
+                              type: string
+                            isPro:
+                              type: boolean
+                            name:
+                              type: string
+                            type:
+                              type: string
+                            user:
+                              type: string
+                            isHf:
+                              type: boolean
+                            isHfAdmin:
+                              type: boolean
+                            isMod:
+                              type: boolean
+                            followerCount:
+                              type: number
+                          required:
+                          - _id
+                          - avatarUrl
+                          - fullname
+                          - isPro
+                          - name
+                          - type
+                          additionalProperties: false
+                        summary:
+                          type: string
+                        upvotes:
+                          type: number
+                        withdrawnAt:
+                          type: string
+                          format: date-time
+                          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                        discussionId:
+                          type: string
+                        projectPage:
+                          type: string
+                        githubRepo:
+                          type: string
+                        ai_summary:
+                          type: string
+                        ai_keywords:
+                          type: array
+                          items:
+                            type: string
+                        githubStars:
+                          type: number
+                      required:
+                      - id
+                      - authors
+                      - publishedAt
+                      - title
+                      - summary
+                      - upvotes
+                      - discussionId
+                      additionalProperties: false
+                    publishedAt:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    title:
+                      type: string
+                    summary:
+                      type: string
+                    mediaUrls:
+                      type: array
+                      items:
+                        type: string
+                    thumbnail:
+                      type: string
+                    numComments:
+                      type: number
+                    submittedBy:
+                      description: User overview information
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        isPro:
+                          type: boolean
+                        name:
+                          type: string
+                        type:
+                          type: string
+                        user:
+                          type: string
+                        isHf:
+                          type: boolean
+                        isHfAdmin:
+                          type: boolean
+                        isMod:
+                          type: boolean
+                        followerCount:
+                          type: number
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - isPro
+                      - name
+                      - type
+                      additionalProperties: false
+                    isAuthorParticipating:
+                      type: boolean
+                  required:
+                  - paper
+                  - publishedAt
+                  - title
+                  - summary
+                  - thumbnail
+                  - numComments
+                  - submittedBy
+                  - isAuthorParticipating
+                  additionalProperties: false
+          description: List of daily papers
+      parameters:
+      - name: p
+        in: query
+        schema:
+          default: 0
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        required: false
+      - name: limit
+        in: query
+        schema:
+          default: 50
+          type: integer
+          minimum: 1
+          maximum: 100
+        required: false
+      - name: date
+        in: query
+        schema:
+          type: string
+          format: date
+          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))$
+        required: false
+      - name: week
+        in: query
+        schema:
+          type: string
+          pattern: ^\d{4}-W(0[1-9]|[1-4][0-9]|5[0-2])$
+        required: false
+      - name: month
+        in: query
+        schema:
+          type: string
+          pattern: ^\d{4}-(0[1-9]|1[0-2])$
+        required: false
+      - name: submitter
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: sort
+        in: query
+        schema:
+          default: publishedAt
+          enum:
+          - publishedAt
+          - trending
+        required: false
+  /api/papers:
+    get:
+      description: List arXiv papers sorted by published date
+      summary: List papers
+      tags:
+      - papers
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    upvotes:
+                      type: number
+                    publishedAt:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    thumbnailUrl:
+                      type: string
+                    authors:
+                      type: array
+                      items:
+                        description: Paper author information
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                          name:
+                            type: string
+                          status:
+                            type: string
+                          statusLastChangedAt:
+                            type: string
+                            format: date-time
+                            pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                          user:
+                            description: User overview information
+                            type: object
+                            properties:
+                              _id:
+                                type: string
+                              avatarUrl:
+                                type: string
+                              fullname:
+                                type: string
+                              isPro:
+                                type: boolean
+                              name:
+                                type: string
+                              type:
+                                type: string
+                              user:
+                                type: string
+                              isHf:
+                                type: boolean
+                              isHfAdmin:
+                                type: boolean
+                              isMod:
+                                type: boolean
+                              followerCount:
+                                type: number
+                            required:
+                            - _id
+                            - avatarUrl
+                            - fullname
+                            - isPro
+                            - name
+                            - type
+                            additionalProperties: false
+                          hidden:
+                            type: boolean
+                        required:
+                        - _id
+                        - name
+                        - hidden
+                        additionalProperties: false
+                    summary:
+                      type: string
+                    projectPage:
+                      type: string
+                    githubRepo:
+                      type: string
+                    ai_summary:
+                      type: string
+                    organization:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        name:
+                          type: string
+                        fullname:
+                          type: string
+                        avatar:
+                          type: string
+                      required:
+                      - _id
+                      - name
+                      additionalProperties: false
+                  required:
+                  - id
+                  - title
+                  - upvotes
+                  - publishedAt
+                  - authors
+                  - summary
+                  additionalProperties: false
+          description: List of papers
+      parameters:
+      - name: cursor
+        in: query
+        schema:
+          description: Pagination cursor
+          type: string
+        required: false
+      - name: limit
+        in: query
+        schema:
+          default: 50
+          type: integer
+          minimum: 1
+          maximum: 100
+        required: false
+  /api/papers/search:
+    get:
+      description: Perform a hybrid semantic / full-text-search on papers
+      summary: Search papers
+      tags:
+      - papers
+      parameters:
+      - name: q
+        in: query
+        schema:
+          default: ''
+          type: string
+          maxLength: 250
+        required: false
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 120
+        required: false
+  /api/papers/index:
+    post:
+      description: Index a paper from arXiv by its ID. If the paper is already indexed, only its authors can re-index it.
+      summary: Index a paper
+      tags:
+      - papers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                arxivId:
+                  description: The arXiv ID of the paper to index (e.g. 2301.00001)
+                  type: string
+                  pattern: ^\d{4}\.\d{4,5}$
+              required:
+              - arxivId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties: {}
+                additionalProperties: false
+          description: Empty object on success
+  /api/papers/{paperId}:
+    get:
+      summary: Get a paper
+      tags:
+      - papers
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  id:
+                    type: string
+                  authors:
+                    type: array
+                    items:
+                      description: Paper author information
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        name:
+                          type: string
+                        status:
+                          type: string
+                        statusLastChangedAt:
+                          type: string
+                          format: date-time
+                          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                        user:
+                          description: User overview information
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                            avatarUrl:
+                              type: string
+                            fullname:
+                              type: string
+                            isPro:
+                              type: boolean
+                            name:
+                              type: string
+                            type:
+                              type: string
+                            user:
+                              type: string
+                            isHf:
+                              type: boolean
+                            isHfAdmin:
+                              type: boolean
+                            isMod:
+                              type: boolean
+                            followerCount:
+                              type: number
+                          required:
+                          - _id
+                          - avatarUrl
+                          - fullname
+                          - isPro
+                          - name
+                          - type
+                          additionalProperties: false
+                        hidden:
+                          type: boolean
+                      required:
+                      - _id
+                      - name
+                      - hidden
+                      additionalProperties: false
+                  mediaUrls:
+                    type: array
+                    items:
+                      type: string
+                  publishedAt:
+                    type: string
+                    format: date-time
+                    pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  submittedOnDailyAt:
+                    type: string
+                    format: date-time
+                    pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  title:
+                    type: string
+                  submittedOnDailyBy:
+                    description: User overview information
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                      avatarUrl:
+                        type: string
+                      fullname:
+                        type: string
+                      isPro:
+                        type: boolean
+                      name:
+                        type: string
+                      type:
+                        type: string
+                      user:
+                        type: string
+                      isHf:
+                        type: boolean
+                      isHfAdmin:
+                        type: boolean
+                      isMod:
+                        type: boolean
+                      followerCount:
+                        type: number
+                    required:
+                    - _id
+                    - avatarUrl
+                    - fullname
+                    - isPro
+                    - name
+                    - type
+                    additionalProperties: false
+                  summary:
+                    type: string
+                  upvotes:
+                    type: number
+                  withdrawnAt:
+                    type: string
+                    format: date-time
+                    pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  discussionId:
+                    type: string
+                  projectPage:
+                    type: string
+                  githubRepo:
+                    type: string
+                  ai_summary:
+                    type: string
+                  ai_keywords:
+                    type: array
+                    items:
+                      type: string
+                  githubStars:
+                    type: number
+                  submissionDeadline:
+                    description: only available when field contains 'submissionDeadline'
+                    type: string
+                    format: date-time
+                    pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  linkedModels:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        author:
+                          type: string
+                        downloads:
+                          type: number
+                        id:
+                          type: string
+                        availableInferenceProviders:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              provider:
+                                enum:
+                                - baseten
+                                - black-forest-labs
+                                - cerebras
+                                - clarifai
+                                - cohere
+                                - deepinfra
+                                - fal-ai
+                                - featherless-ai
+                                - fireworks-ai
+                                - groq
+                                - hf-inference
+                                - hyperbolic
+                                - nebius
+                                - novita
+                                - nscale
+                                - nvidia
+                                - openai
+                                - ovhcloud
+                                - publicai
+                                - replicate
+                                - sambanova
+                                - scaleway
+                                - together
+                                - wavespeed
+                                - zai-org
+                              providerStatus:
+                                enum:
+                                - live
+                                - staging
+                                - error
+                              modelStatus:
+                                enum:
+                                - live
+                                - staging
+                                - error
+                              providerId:
+                                type: string
+                              task:
+                                enum:
+                                - text-classification
+                                - token-classification
+                                - table-question-answering
+                                - question-answering
+                                - zero-shot-classification
+                                - translation
+                                - summarization
+                                - feature-extraction
+                                - text-generation
+                                - fill-mask
+                                - sentence-similarity
+                                - text-to-speech
+                                - text-to-audio
+                                - automatic-speech-recognition
+                                - audio-to-audio
+                                - audio-classification
+                                - audio-text-to-text
+                                - voice-activity-detection
+                                - depth-estimation
+                                - image-classification
+                                - object-detection
+                                - image-segmentation
+                                - text-to-image
+                                - image-to-text
+                                - image-to-image
+                                - image-to-video
+                                - unconditional-image-generation
+                                - video-classification
+                                - reinforcement-learning
+                                - robotics
+                                - tabular-classification
+                                - tabular-regression
+                                - tabular-to-text
+                                - table-to-text
+                                - multiple-choice
+                                - text-ranking
+                                - text-retrieval
+                                - time-series-forecasting
+                                - text-to-video
+                                - image-text-to-text
+                                - image-text-to-image
+                                - image-text-to-video
+                                - visual-question-answering
+                                - document-question-answering
+                                - zero-shot-image-classification
+                                - graph-ml
+                                - mask-generation
+                                - zero-shot-object-detection
+                                - text-to-3d
+                                - image-to-3d
+                                - image-feature-extraction
+                                - video-text-to-text
+                                - keypoint-detection
+                                - visual-document-retrieval
+                                - any-to-any
+                                - video-to-video
+                                - other
+                                - conversational
+                              adapterType:
+                                const: lora
+                              adapterWeightsPath:
+                                type: string
+                              features:
+                                type: object
+                                properties:
+                                  toolCalling:
+                                    type: boolean
+                                additionalProperties: false
+                              isCheapestPricingOutput:
+                                type: boolean
+                              isFastestThroughput:
+                                type: boolean
+                              isModelAuthor:
+                                type: boolean
+                              tokensPerSecond:
+                                type: number
+                              pricingOutput:
+                                type: number
+                            required:
+                            - provider
+                            - providerStatus
+                            - modelStatus
+                            - providerId
+                            - task
+                            - isCheapestPricingOutput
+                            - isFastestThroughput
+                            - isModelAuthor
+                            additionalProperties: false
+                        isLikedByUser:
+                          type: boolean
+                        lastModified:
+                          type: string
+                          format: date-time
+                          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                        likes:
+                          type: number
+                        pipeline_tag:
+                          type: string
+                        private:
+                          type: boolean
+                        repoType:
+                          const: model
+                        gated:
+                          anyOf:
+                          - const: false
+                          - enum:
+                            - auto
+                            - manual
+                        resourceGroup:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 24
+                              maxLength: 24
+                              pattern: ^[0-9a-f]{24}$
+                            name:
+                              type: string
+                            numUsers:
+                              type: number
+                          required:
+                          - id
+                          - name
+                          additionalProperties: false
+                        numParameters:
+                          type: number
+                        authorData:
+                          anyOf:
+                          - type: object
+                            properties:
+                              _id:
+                                type: string
+                                minLength: 24
+                                maxLength: 24
+                                pattern: ^[0-9a-f]{24}$
+                              avatarUrl:
+                                type: string
+                              fullname:
+                                type: string
+                              name:
+                                type: string
+                              isHf:
+                                type: boolean
+                              isHfAdmin:
+                                type: boolean
+                              isMod:
+                                type: boolean
+                              followerCount:
+                                type: number
+                              type:
+                                const: org
+                              plan:
+                                enum:
+                                - team
+                                - enterprise
+                                - plus
+                                - academia
+                              isUserFollowing:
+                                type: boolean
+                            required:
+                            - _id
+                            - avatarUrl
+                            - fullname
+                            - name
+                            - isHf
+                            - isHfAdmin
+                            - isMod
+                            - type
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              _id:
+                                type: string
+                                minLength: 24
+                                maxLength: 24
+                                pattern: ^[0-9a-f]{24}$
+                              avatarUrl:
+                                type: string
+                              fullname:
+                                type: string
+                              name:
+                                type: string
+                              isHf:
+                                type: boolean
+                              isHfAdmin:
+                                type: boolean
+                              isMod:
+                                type: boolean
+                              followerCount:
+                                type: number
+                              type:
+                                const: user
+                              isPro:
+                                type: boolean
+                              isUserFollowing:
+                                type: boolean
+                              primaryOrg:
+                                type: object
+                                properties:
+                                  avatarUrl:
+                                    type: string
+                                  fullname:
+                                    type: string
+                                  name:
+                                    type: string
+                                  type:
+                                    const: org
+                                  isHf:
+                                    type: boolean
+                                  isFollowing:
+                                    type: boolean
+                                  plan:
+                                    enum:
+                                    - team
+                                    - enterprise
+                                    - plus
+                                    - academia
+                                  details:
+                                    type: string
+                                  hasPrivateMembersList:
+                                    type: boolean
+                                  userRole:
+                                    anyOf:
+                                    - enum:
+                                      - admin
+                                      - write
+                                      - contributor
+                                      - read
+                                      - no_access
+                                    - description: Custom role name
+                                      type: string
+                                  numUsers:
+                                    type: number
+                                required:
+                                - avatarUrl
+                                - fullname
+                                - name
+                                - type
+                                - isHf
+                                additionalProperties: false
+                            required:
+                            - _id
+                            - avatarUrl
+                            - fullname
+                            - name
+                            - isHf
+                            - isHfAdmin
+                            - isMod
+                            - type
+                            - isPro
+                            additionalProperties: false
+                        widgetOutputUrls:
+                          type: array
+                          items:
+                            type: string
+                            format: uri
+                      required:
+                      - author
+                      - downloads
+                      - id
+                      - availableInferenceProviders
+                      - isLikedByUser
+                      - lastModified
+                      - likes
+                      - private
+                      - repoType
+                      - gated
+                      additionalProperties: false
+                  numTotalModels:
+                    type: number
+                  linkedDatasets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        author:
+                          type: string
+                        id:
+                          type: string
+                        isLikedByUser:
+                          type: boolean
+                        likes:
+                          type: number
+                        datasetsServerInfo:
+                          type: object
+                          properties:
+                            viewer:
+                              enum:
+                              - preview
+                              - viewer-partial
+                              - viewer
+                            numRows:
+                              anyOf:
+                              - type: number
+                              - type: 'null'
+                            libraries:
+                              type: array
+                              items:
+                                enum:
+                                - mlcroissant
+                                - webdataset
+                                - datasets
+                                - pandas
+                                - dask
+                                - distilabel
+                                - fiftyone
+                                - lance
+                                - argilla
+                                - polars
+                                - duckdb
+                                - datadesigner
+                            formats:
+                              type: array
+                              items:
+                                enum:
+                                - json
+                                - csv
+                                - parquet
+                                - imagefolder
+                                - audiofolder
+                                - webdataset
+                                - text
+                                - arrow
+                                - optimized-parquet
+                                - agent-traces
+                            modalities:
+                              type: array
+                              items:
+                                enum:
+                                - 3d
+                                - audio
+                                - document
+                                - geospatial
+                                - image
+                                - tabular
+                                - text
+                                - timeseries
+                                - video
+                          required:
+                          - viewer
+                          - numRows
+                          - libraries
+                          - formats
+                          - modalities
+                          additionalProperties: false
+                        private:
+                          type: boolean
+                        repoType:
+                          const: dataset
+                        downloads:
+                          type: number
+                        gated:
+                          anyOf:
+                          - const: false
+                          - enum:
+                            - auto
+                            - manual
+                        lastModified:
+                          type: string
+                          format: date-time
+                          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                        resourceGroup:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              minLength: 24
+                              maxLength: 24
+                              pattern: ^[0-9a-f]{24}$
+                            name:
+                              type: string
+                            numUsers:
+                              type: number
+                          required:
+                          - id
+                          - name
+                          additionalProperties: false
+                        isBenchmark:
+                          type: boolean
+                        isTraces:
+                          type: boolean
+                      required:
+                      - author
+                      - id
+                      - isLikedByUser
+                      - likes
+                      - private
+                      - repoType
+                      - downloads
+                      - gated
+                      - lastModified
+                      additionalProperties: false
+                  numTotalDatasets:
+                    type: number
+                  linkedSpaces:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        emoji:
+                          type: string
+                        running:
+                          type: boolean
+                        shortDescription:
+                          type: string
+                        featured:
+                          type: boolean
+                      required:
+                      - id
+                      - emoji
+                      - running
+                      - featured
+                      additionalProperties: false
+                  numTotalSpaces:
+                    type: number
+                  comments:
+                    description: only available when field contains 'comments'
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        createdAt:
+                          type: string
+                          format: date-time
+                          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                        author:
+                          allOf:
+                          - anyOf:
+                            - type: object
+                              properties:
+                                _id:
+                                  type: string
+                                  minLength: 24
+                                  maxLength: 24
+                                  pattern: ^[0-9a-f]{24}$
+                                avatarUrl:
+                                  type: string
+                                fullname:
+                                  type: string
+                                name:
+                                  type: string
+                                isHf:
+                                  type: boolean
+                                isHfAdmin:
+                                  type: boolean
+                                isMod:
+                                  type: boolean
+                                followerCount:
+                                  type: number
+                                type:
+                                  const: org
+                                plan:
+                                  enum:
+                                  - team
+                                  - enterprise
+                                  - plus
+                                  - academia
+                                isUserFollowing:
+                                  type: boolean
+                              required:
+                              - _id
+                              - avatarUrl
+                              - fullname
+                              - name
+                              - isHf
+                              - isHfAdmin
+                              - isMod
+                              - type
+                              additionalProperties: false
+                            - type: object
+                              properties:
+                                _id:
+                                  type: string
+                                  minLength: 24
+                                  maxLength: 24
+                                  pattern: ^[0-9a-f]{24}$
+                                avatarUrl:
+                                  type: string
+                                fullname:
+                                  type: string
+                                name:
+                                  type: string
+                                isHf:
+                                  type: boolean
+                                isHfAdmin:
+                                  type: boolean
+                                isMod:
+                                  type: boolean
+                                followerCount:
+                                  type: number
+                                type:
+                                  const: user
+                                isPro:
+                                  type: boolean
+                                isUserFollowing:
+                                  type: boolean
+                                primaryOrg:
+                                  type: object
+                                  properties:
+                                    avatarUrl:
+                                      type: string
+                                    fullname:
+                                      type: string
+                                    name:
+                                      type: string
+                                    type:
+                                      const: org
+                                    isHf:
+                                      type: boolean
+                                    isFollowing:
+                                      type: boolean
+                                    plan:
+                                      enum:
+                                      - team
+                                      - enterprise
+                                      - plus
+                                      - academia
+                                    details:
+                                      type: string
+                                    hasPrivateMembersList:
+                                      type: boolean
+                                    userRole:
+                                      anyOf:
+                                      - enum:
+                                        - admin
+                                        - write
+                                        - contributor
+                                        - read
+                                        - no_access
+                                      - description: Custom role name
+                                        type: string
+                                    numUsers:
+                                      type: number
+                                  required:
+                                  - avatarUrl
+                                  - fullname
+                                  - name
+                                  - type
+                                  - isHf
+                                  additionalProperties: false
+                              required:
+                              - _id
+                              - avatarUrl
+                              - fullname
+                              - name
+                              - isHf
+                              - isHfAdmin
+                              - isMod
+                              - type
+                              - isPro
+                              additionalProperties: false
+                          - type: object
+                            properties:
+                              isOwner:
+                                type: boolean
+                              isOrgMember:
+                                type: boolean
+                              oauthApp:
+                                type: object
+                                properties:
+                                  imageUrl:
+                                    type: string
+                                  imageData:
+                                    type: object
+                                    properties:
+                                      emoji:
+                                        type: string
+                                      colorFrom:
+                                        type: string
+                                      colorTo:
+                                        type: string
+                                    required:
+                                    - emoji
+                                    - colorFrom
+                                    - colorTo
+                                    additionalProperties: false
+                                  url:
+                                    type: string
+                                  name:
+                                    type: string
+                                required:
+                                - name
+                                additionalProperties: false
+                            additionalProperties: false
+                        type:
+                          const: comment
+                        data:
+                          type: object
+                          properties:
+                            edited:
+                              type: boolean
+                            hidden:
+                              type: boolean
+                            hiddenBy:
+                              type: string
+                            hiddenReason:
+                              enum:
+                              - Spam
+                              - Abuse
+                              - Graphic Content
+                              - Resolved
+                              - Off-Topic
+                              - Low Quality
+                            latest:
+                              type: object
+                              properties:
+                                raw:
+                                  type: string
+                                html:
+                                  type: string
+                                updatedAt:
+                                  type: string
+                                  format: date-time
+                                  pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                                author:
+                                  anyOf:
+                                  - type: object
+                                    properties:
+                                      _id:
+                                        type: string
+                                        minLength: 24
+                                        maxLength: 24
+                                        pattern: ^[0-9a-f]{24}$
+                                      avatarUrl:
+                                        type: string
+                                      fullname:
+                                        type: string
+                                      name:
+                                        type: string
+                                      isHf:
+                                        type: boolean
+                                      isHfAdmin:
+                                        type: boolean
+                                      isMod:
+                                        type: boolean
+                                      followerCount:
+                                        type: number
+                                      type:
+                                        const: org
+                                      plan:
+                                        enum:
+                                        - team
+                                        - enterprise
+                                        - plus
+                                        - academia
+                                      isUserFollowing:
+                                        type: boolean
+                                    required:
+                                    - _id
+                                    - avatarUrl
+                                    - fullname
+                                    - name
+                                    - isHf
+                                    - isHfAdmin
+                                    - isMod
+                                    - type
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      _id:
+                                        type: string
+                                        minLength: 24
+                                        maxLength: 24
+                                        pattern: ^[0-9a-f]{24}$
+                                      avatarUrl:
+                                        type: string
+                                      fullname:
+                                        type: string
+                                      name:
+                                        type: string
+                                      isHf:
+                                        type: boolean
+                                      isHfAdmin:
+                                        type: boolean
+                                      isMod:
+                                        type: boolean
+                                      followerCount:
+                                        type: number
+                                      type:
+                                        const: user
+                                      isPro:
+                                        type: boolean
+                                      isUserFollowing:
+                                        type: boolean
+                                      primaryOrg:
+                                        type: object
+                                        properties:
+                                          avatarUrl:
+                                            type: string
+                                          fullname:
+                                            type: string
+                                          name:
+                                            type: string
+                                          type:
+                                            const: org
+                                          isHf:
+                                            type: boolean
+                                          isFollowing:
+                                            type: boolean
+                                          plan:
+                                            enum:
+                                            - team
+                                            - enterprise
+                                            - plus
+                                            - academia
+                                          details:
+                                            type: string
+                                          hasPrivateMembersList:
+                                            type: boolean
+                                          userRole:
+                                            anyOf:
+                                            - enum:
+                                              - admin
+                                              - write
+                                              - contributor
+                                              - read
+                                              - no_access
+                                            - description: Custom role name
+                                              type: string
+                                          numUsers:
+                                            type: number
+                                        required:
+                                        - avatarUrl
+                                        - fullname
+                                        - name
+                                        - type
+                                        - isHf
+                                        additionalProperties: false
+                                    required:
+                                    - _id
+                                    - avatarUrl
+                                    - fullname
+                                    - name
+                                    - isHf
+                                    - isHfAdmin
+                                    - isMod
+                                    - type
+                                    - isPro
+                                    additionalProperties: false
+                              required:
+                              - raw
+                              - html
+                              - updatedAt
+                              additionalProperties: false
+                            numEdits:
+                              type: number
+                            editors:
+                              type: array
+                              items:
+                                type: string
+                            editorAvatarUrls:
+                              type: array
+                              items:
+                                type: string
+                            reactions:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  reaction:
+                                    enum:
+                                    - 🔥
+                                    - 🚀
+                                    - 👀
+                                    - ❤️
+                                    - 🤗
+                                    - 😎
+                                    - ➕
+                                    - 🧠
+                                    - 👍
+                                    - 🤝
+                                    - 😔
+                                    - 🤯
+                                  users:
+                                    type: array
+                                    items:
+                                      type: string
+                                  count:
+                                    type: number
+                                required:
+                                - reaction
+                                - users
+                                - count
+                                additionalProperties: false
+                            identifiedLanguage:
+                              type: object
+                              properties:
+                                language:
+                                  type: string
+                                probability:
+                                  type: number
+                              required:
+                              - language
+                              - probability
+                              additionalProperties: false
+                            relatedEventId:
+                              type: string
+                            isReport:
+                              type: boolean
+                            parentCommentId:
+                              type: string
+                          required:
+                          - edited
+                          - hidden
+                          - latest
+                          - numEdits
+                          - editors
+                          - editorAvatarUrls
+                          - reactions
+                          additionalProperties: false
+                      required:
+                      - id
+                      - createdAt
+                      - type
+                      - data
+                      additionalProperties: false
+                required:
+                - id
+                - authors
+                - publishedAt
+                - title
+                - summary
+                - upvotes
+                - discussionId
+                - linkedModels
+                - numTotalModels
+                - linkedDatasets
+                - numTotalDatasets
+                - linkedSpaces
+                - numTotalSpaces
+                additionalProperties: false
+          description: Paper data
+      parameters:
+      - name: paperId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: field
+        in: query
+        schema:
+          anyOf:
+          - enum:
+            - submissionDeadline
+            - comments
+          - type: array
+            items:
+              enum:
+              - submissionDeadline
+              - comments
+        required: false
+  /api/papers/{paperId}/links:
+    post:
+      description: Update the project page, GitHub repository, or submitting organization for a paper. Requires the requester to be the paper author, the Daily Papers submitter, or a papers admin.
+      summary: Update paper links
+      tags:
+      - papers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                projectPage:
+                  anyOf:
+                  - type: string
+                    format: uri
+                  - type: 'null'
+                githubRepo:
+                  anyOf:
+                  - type: string
+                    format: uri
+                  - type: 'null'
+                organizationId:
+                  anyOf:
+                  - type: string
+                    minLength: 24
+                    maxLength: 24
+                    pattern: ^[0-9a-fA-F]{24}$
+                  - type: 'null'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties: {}
+                additionalProperties: false
+          description: Paper links updated
+      parameters:
+      - name: paperId
+        in: path
+        required: true
+        schema:
+          type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

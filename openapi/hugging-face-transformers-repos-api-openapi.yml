@@ -1,0 +1,562 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning repos API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: repos
+  x-displayName: Repositories
+  description: The following endpoints manage repository settings like creating and deleting a repository.
+paths:
+  /api/{repoType}/{namespace}/{repo}/duplicate:
+    post:
+      summary: Duplicate a repository
+      tags:
+      - repos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                repository:
+                  type: string
+                private:
+                  type: boolean
+                visibility:
+                  enum:
+                  - private
+                  - public
+                  - protected
+                resourceGroupId:
+                  anyOf:
+                  - anyOf:
+                    - type: string
+                      minLength: 24
+                      maxLength: 24
+                      pattern: ^[0-9a-fA-F]{24}$
+                    - type: 'null'
+                  - type: 'null'
+                hardware:
+                  default: ''
+                  enum:
+                  - cpu-basic
+                  - cpu-upgrade
+                  - cpu-performance
+                  - cpu-xl
+                  - sprx8
+                  - zero-a10g
+                  - t4-small
+                  - t4-medium
+                  - l4x1
+                  - l4x4
+                  - l40sx1
+                  - l40sx4
+                  - l40sx8
+                  - a10g-small
+                  - a10g-large
+                  - a10g-largex2
+                  - a10g-largex4
+                  - a100-large
+                  - a100x4
+                  - a100x8
+                  - h200
+                  - h200x2
+                  - h200x4
+                  - h200x8
+                  - rtx-pro-6000
+                  - rtx-pro-6000x2
+                  - rtx-pro-6000x4
+                  - rtx-pro-6000x8
+                  - inf2x6
+                  - ''
+                sleepTimeSeconds:
+                  anyOf:
+                  - type: integer
+                    exclusiveMinimum: 0
+                    maximum: 9007199254740991
+                  - const: -1
+                secrets:
+                  default: []
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                        pattern: ^[a-zA-Z][_a-zA-Z0-9]*$
+                      description:
+                        type: string
+                      value:
+                        type: string
+                    required:
+                    - key
+                    - value
+                variables:
+                  default: []
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                        pattern: ^[a-zA-Z][_a-zA-Z0-9]*$
+                      description:
+                        type: string
+                      value:
+                        type: string
+                    required:
+                    - key
+                    - value
+                volumes:
+                  description: HuggingFace Buckets or Repos to mount as volumes in the duplicated Space.
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        enum:
+                        - bucket
+                        - model
+                        - dataset
+                        - space
+                      source:
+                        description: Source identifier, e.g. 'username/my-bucket' or 'username/my-model'
+                        type: string
+                      mountPath:
+                        description: Mount path inside the container, e.g. '/data'
+                        type: string
+                        pattern: ^\/.*
+                      revision:
+                        description: Git revision (only for repos, defaults to 'main')
+                        type: string
+                      readOnly:
+                        description: Read-only mount (true for repos, false default for buckets)
+                        type: boolean
+                      path:
+                        description: Subfolder prefix inside the bucket/repo to mount, e.g. 'path/to/dir'
+                        type: string
+                    required:
+                    - type
+                    - source
+                    - mountPath
+              required:
+              - repository
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  url:
+                    type: string
+                required:
+                - url
+                additionalProperties: false
+          description: Repository created, url is given
+      parameters:
+      - name: repoType
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - spaces
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/repos/create:
+    post:
+      summary: Create a new repository
+      tags:
+      - repos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              allOf:
+              - type: object
+                properties:
+                  name:
+                    type: string
+                  organization:
+                    anyOf:
+                    - type: string
+                    - type: 'null'
+                  region:
+                    description: The region where the repository is hosted.
+                    enum:
+                    - us
+                    - eu
+                  license:
+                    description: The license of the repository. You can select 'Other' if your license is not in the list
+                    enum:
+                    - apache-2.0
+                    - mit
+                    - openrail
+                    - bigscience-openrail-m
+                    - creativeml-openrail-m
+                    - bigscience-bloom-rail-1.0
+                    - bigcode-openrail-m
+                    - afl-3.0
+                    - artistic-2.0
+                    - bsl-1.0
+                    - bsd
+                    - bsd-2-clause
+                    - bsd-3-clause
+                    - bsd-3-clause-clear
+                    - c-uda
+                    - cc
+                    - cc0-1.0
+                    - cc-by-2.0
+                    - cc-by-2.5
+                    - cc-by-3.0
+                    - cc-by-4.0
+                    - cc-by-sa-3.0
+                    - cc-by-sa-4.0
+                    - cc-by-nc-2.0
+                    - cc-by-nc-3.0
+                    - cc-by-nc-4.0
+                    - cc-by-nd-4.0
+                    - cc-by-nc-nd-3.0
+                    - cc-by-nc-nd-4.0
+                    - cc-by-nc-sa-2.0
+                    - cc-by-nc-sa-3.0
+                    - cc-by-nc-sa-4.0
+                    - cdla-sharing-1.0
+                    - cdla-permissive-1.0
+                    - cdla-permissive-2.0
+                    - wtfpl
+                    - ecl-2.0
+                    - epl-1.0
+                    - epl-2.0
+                    - etalab-2.0
+                    - eupl-1.1
+                    - eupl-1.2
+                    - agpl-3.0
+                    - gfdl
+                    - gpl
+                    - gpl-2.0
+                    - gpl-3.0
+                    - lgpl
+                    - lgpl-2.1
+                    - lgpl-3.0
+                    - isc
+                    - h-research
+                    - intel-research
+                    - lppl-1.3c
+                    - ms-pl
+                    - apple-ascl
+                    - apple-amlr
+                    - mpl-2.0
+                    - odc-by
+                    - odbl
+                    - openmdw-1.0
+                    - openrail++
+                    - osl-3.0
+                    - postgresql
+                    - ofl-1.1
+                    - ncsa
+                    - unlicense
+                    - zlib
+                    - pddl
+                    - lgpl-lr
+                    - deepfloyd-if-license
+                    - fair-noncommercial-research-license
+                    - llama2
+                    - llama3
+                    - llama3.1
+                    - llama3.2
+                    - llama3.3
+                    - llama4
+                    - grok2-community
+                    - gemma
+                    - unknown
+                    - other
+                  license_name:
+                    type: string
+                    pattern: ^[a-z0-9-.]+$
+                  license_link:
+                    anyOf:
+                    - const: LICENSE
+                    - const: LICENSE.md
+                    - type: string
+                      format: uri
+                  private:
+                    description: Repository visibility. Defaults to public. Cannot be specified along with visibility.
+                    anyOf:
+                    - type: boolean
+                    - type: 'null'
+                  visibility:
+                    description: Repository visibility. `protected` is only supported for Spaces. Cannot be specified along with private.
+                    enum:
+                    - private
+                    - public
+                    - protected
+                  resourceGroupId:
+                    anyOf:
+                    - type: string
+                      minLength: 24
+                      maxLength: 24
+                      pattern: ^[0-9a-fA-F]{24}$
+                    - type: 'null'
+                  files:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        content:
+                          type: string
+                        path:
+                          type: string
+                        encoding:
+                          enum:
+                          - utf-8
+                          - base64
+                      required:
+                      - content
+                      - path
+                required:
+                - name
+              - anyOf:
+                - type: object
+                  properties:
+                    type:
+                      const: dataset
+                  required:
+                  - type
+                - type: object
+                  properties:
+                    type:
+                      default: model
+                      const: model
+                - type: object
+                  properties:
+                    type:
+                      const: kernel
+                  required:
+                  - type
+                - type: object
+                  properties:
+                    type:
+                      const: space
+                    template:
+                      type: string
+                    short_description:
+                      type: string
+                      maxLength: 60
+                    hardware:
+                      description: The hardware flavor of the space. If you select 'zero-a10g' or 'zerogpu', the SDK must be Gradio.
+                      enum:
+                      - cpu-basic
+                      - cpu-upgrade
+                      - cpu-performance
+                      - cpu-xl
+                      - sprx8
+                      - zero-a10g
+                      - t4-small
+                      - t4-medium
+                      - l4x1
+                      - l4x4
+                      - l40sx1
+                      - l40sx4
+                      - l40sx8
+                      - a10g-small
+                      - a10g-large
+                      - a10g-largex2
+                      - a10g-largex4
+                      - a100-large
+                      - a100x4
+                      - a100x8
+                      - h200
+                      - h200x2
+                      - h200x4
+                      - h200x8
+                      - rtx-pro-6000
+                      - rtx-pro-6000x2
+                      - rtx-pro-6000x4
+                      - rtx-pro-6000x8
+                      - inf2x6
+                      - zerogpu
+                    secrets:
+                      default: []
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          key:
+                            type: string
+                            pattern: ^[a-zA-Z][_a-zA-Z0-9]*$
+                          description:
+                            type: string
+                          value:
+                            type: string
+                        required:
+                        - key
+                        - value
+                    variables:
+                      default: []
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          key:
+                            type: string
+                            pattern: ^[a-zA-Z][_a-zA-Z0-9]*$
+                          description:
+                            type: string
+                          value:
+                            type: string
+                        required:
+                        - key
+                        - value
+                    sleepTimeSeconds:
+                      anyOf:
+                      - type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      - const: -1
+                    volumes:
+                      description: HuggingFace Buckets or Repos to mount as volumes in the Space container.
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            enum:
+                            - bucket
+                            - model
+                            - dataset
+                            - space
+                          source:
+                            description: Source identifier, e.g. 'username/my-bucket' or 'username/my-model'
+                            type: string
+                          mountPath:
+                            description: Mount path inside the container, e.g. '/data'
+                            type: string
+                            pattern: ^\/.*
+                          revision:
+                            description: Git revision (only for repos, defaults to 'main')
+                            type: string
+                          readOnly:
+                            description: Read-only mount (true for repos, false default for buckets)
+                            type: boolean
+                          path:
+                            description: Subfolder prefix inside the bucket/repo to mount, e.g. 'path/to/dir'
+                            type: string
+                        required:
+                        - type
+                        - source
+                        - mountPath
+                    sdk:
+                      enum:
+                      - gradio
+                      - docker
+                      - static
+                    sdkVersion:
+                      anyOf:
+                      - type: string
+                      - type: 'null'
+                    devModeEnabled:
+                      type: boolean
+                  required:
+                  - type
+                  - sdk
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  url:
+                    type: string
+                  name:
+                    type: string
+                  id:
+                    type: string
+                    minLength: 24
+                    maxLength: 24
+                    pattern: ^[0-9a-f]{24}$
+                required:
+                - url
+                - name
+                - id
+                additionalProperties: false
+          description: Repository created, url is given
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  error:
+                    type: string
+                  url:
+                    type: string
+                required:
+                - error
+                - url
+                additionalProperties: false
+          description: Repository already exists, url is given
+  /api/repos/move:
+    post:
+      description: Move or rename a repo
+      summary: Move repo
+      tags:
+      - repos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                fromRepo:
+                  examples:
+                  - black-forest-labs/FLUX.1-dev
+                  type: string
+                toRepo:
+                  type: string
+                type:
+                  default: model
+                  enum:
+                  - dataset
+                  - model
+                  - space
+                  - bucket
+                  - kernel
+              required:
+              - fromRepo
+              - toRepo
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

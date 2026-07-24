@@ -1,0 +1,1229 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning webhooks API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: webhooks
+  x-displayName: Webhooks
+  description: The following endpoints are for use with webhooks.
+paths:
+  /api/settings/webhooks:
+    get:
+      summary: List webhooks
+      tags:
+      - webhooks
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      minLength: 24
+                      maxLength: 24
+                      pattern: ^[0-9a-f]{24}$
+                    url:
+                      type: string
+                      format: uri
+                    job:
+                      type: object
+                      properties:
+                        dockerImage:
+                          type: string
+                        spaceId:
+                          type: string
+                        environment:
+                          default: {}
+                          type: object
+                          propertyNames:
+                            type: string
+                            pattern: ^[a-zA-Z][_a-zA-Z0-9]+$
+                          additionalProperties:
+                            type: string
+                        arguments:
+                          type: array
+                          items:
+                            type: string
+                        command:
+                          minItems: 1
+                          type: array
+                          items:
+                            type: string
+                            minLength: 1
+                        flavor:
+                          enum:
+                          - cpu-basic
+                          - cpu-upgrade
+                          - cpu-performance
+                          - cpu-xl
+                          - sprx8
+                          - zero-a10g
+                          - t4-small
+                          - t4-medium
+                          - l4x1
+                          - l4x4
+                          - l40sx1
+                          - l40sx4
+                          - l40sx8
+                          - a10g-small
+                          - a10g-large
+                          - a10g-largex2
+                          - a10g-largex4
+                          - a100-large
+                          - a100x4
+                          - a100x8
+                          - h200
+                          - h200x2
+                          - h200x4
+                          - h200x8
+                          - rtx-pro-6000
+                          - rtx-pro-6000x2
+                          - rtx-pro-6000x4
+                          - rtx-pro-6000x8
+                          - inf2x6
+                        timeoutSeconds:
+                          default: null
+                          anyOf:
+                          - type: integer
+                            exclusiveMinimum: 0
+                            maximum: 9007199254740991
+                          - type: 'null'
+                        labels:
+                          description: Labels for the job as key-value pairs. Both keys and values must be max 100 characters and contain only alphanumeric characters, dots, dashes, and underscores.
+                          type: object
+                          propertyNames:
+                            type: string
+                            maxLength: 100
+                            pattern: ^[a-zA-Z0-9._-]+$
+                          additionalProperties:
+                            type: string
+                            maxLength: 100
+                            pattern: ^[a-zA-Z0-9._-]*$
+                        secrets:
+                          type: array
+                          items:
+                            type: string
+                      required:
+                      - environment
+                      - flavor
+                      - timeoutSeconds
+                      additionalProperties: false
+                    jobSourceId:
+                      type: string
+                    disabled:
+                      anyOf:
+                      - type: boolean
+                      - const: suspended-after-failure
+                    watched:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          type:
+                            enum:
+                            - dataset
+                            - model
+                            - space
+                            - bucket
+                            - kernel
+                            - user
+                            - org
+                          avatarUrl:
+                            type: string
+                        required:
+                        - name
+                        - type
+                        additionalProperties: false
+                    secret:
+                      type: string
+                    domains:
+                      type: array
+                      items:
+                        enum:
+                        - repo
+                        - discussion
+                    lastTriggerAt:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  required:
+                  - id
+                  - disabled
+                  - watched
+                  - domains
+                  additionalProperties: false
+          description: Webhooks
+    post:
+      summary: Create webhook
+      tags:
+      - webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                watched:
+                  minItems: 1
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        enum:
+                        - dataset
+                        - model
+                        - space
+                        - bucket
+                        - kernel
+                        - user
+                        - org
+                      name:
+                        type: string
+                    required:
+                    - type
+                    - name
+                url:
+                  type: string
+                  format: uri
+                job:
+                  type: object
+                  properties:
+                    spaceId:
+                      type: string
+                    dockerImage:
+                      type: string
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    command:
+                      minItems: 1
+                      type: array
+                      items:
+                        type: string
+                        minLength: 1
+                    environment:
+                      default: {}
+                      type: object
+                      propertyNames:
+                        type: string
+                        pattern: ^[a-zA-Z][_a-zA-Z0-9]+$
+                      additionalProperties:
+                        type: string
+                    secrets:
+                      type: object
+                      propertyNames:
+                        type: string
+                        pattern: ^[a-zA-Z][_a-zA-Z0-9]*$
+                      additionalProperties:
+                        type: string
+                    flavor:
+                      enum:
+                      - cpu-basic
+                      - cpu-upgrade
+                      - cpu-performance
+                      - cpu-xl
+                      - sprx8
+                      - zero-a10g
+                      - t4-small
+                      - t4-medium
+                      - l4x1
+                      - l4x4
+                      - l40sx1
+                      - l40sx4
+                      - l40sx8
+                      - a10g-small
+                      - a10g-large
+                      - a10g-largex2
+                      - a10g-largex4
+                      - a100-large
+                      - a100x4
+                      - a100x8
+                      - h200
+                      - h200x2
+                      - h200x4
+                      - h200x8
+                      - rtx-pro-6000
+                      - rtx-pro-6000x2
+                      - rtx-pro-6000x4
+                      - rtx-pro-6000x8
+                      - inf2x6
+                    arch:
+                      enum:
+                      - amd64
+                      - arm64
+                    timeoutSeconds:
+                      default: null
+                      anyOf:
+                      - type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      - type: 'null'
+                    attempts:
+                      description: Max number of attempts to make. For example, if you set this to 3, the job will be retried up to 2 times if it fails.
+                      default: 1
+                      type: integer
+                      minimum: 1
+                      maximum: 9007199254740991
+                    labels:
+                      description: Labels for the job as key-value pairs. Both keys and values must be max 100 characters and contain only alphanumeric characters, dots, dashes, and underscores.
+                      type: object
+                      propertyNames:
+                        type: string
+                        maxLength: 100
+                        pattern: ^[a-zA-Z0-9._-]+$
+                      additionalProperties:
+                        type: string
+                        maxLength: 100
+                        pattern: ^[a-zA-Z0-9._-]*$
+                    volumes:
+                      description: HuggingFace Buckets or Repos to mount as volumes in the job container.
+                      minItems: 1
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            enum:
+                            - bucket
+                            - model
+                            - dataset
+                            - space
+                          source:
+                            description: Source identifier, e.g. 'username/my-bucket' or 'username/my-model'
+                            type: string
+                          mountPath:
+                            description: Mount path inside the container, e.g. '/data'
+                            type: string
+                            pattern: ^\/.*
+                          revision:
+                            description: Git revision (only for repos, defaults to 'main')
+                            type: string
+                          readOnly:
+                            description: Read-only mount (true for repos, false default for buckets)
+                            type: boolean
+                          path:
+                            description: Subfolder prefix inside the bucket/repo to mount, e.g. 'path/to/dir'
+                            type: string
+                        required:
+                        - type
+                        - source
+                        - mountPath
+                  required:
+                  - flavor
+                jobSourceId:
+                  type: string
+                domains:
+                  minItems: 1
+                  type: array
+                  items:
+                    enum:
+                    - repo
+                    - discussion
+                secret:
+                  type: string
+                  pattern: ^[\x20-\x7F]*$
+              required:
+              - watched
+              - domains
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  webhook:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      url:
+                        type: string
+                        format: uri
+                      job:
+                        type: object
+                        properties:
+                          dockerImage:
+                            type: string
+                          spaceId:
+                            type: string
+                          environment:
+                            default: {}
+                            type: object
+                            propertyNames:
+                              type: string
+                              pattern: ^[a-zA-Z][_a-zA-Z0-9]+$
+                            additionalProperties:
+                              type: string
+                          arguments:
+                            type: array
+                            items:
+                              type: string
+                          command:
+                            minItems: 1
+                            type: array
+                            items:
+                              type: string
+                              minLength: 1
+                          flavor:
+                            enum:
+                            - cpu-basic
+                            - cpu-upgrade
+                            - cpu-performance
+                            - cpu-xl
+                            - sprx8
+                            - zero-a10g
+                            - t4-small
+                            - t4-medium
+                            - l4x1
+                            - l4x4
+                            - l40sx1
+                            - l40sx4
+                            - l40sx8
+                            - a10g-small
+                            - a10g-large
+                            - a10g-largex2
+                            - a10g-largex4
+                            - a100-large
+                            - a100x4
+                            - a100x8
+                            - h200
+                            - h200x2
+                            - h200x4
+                            - h200x8
+                            - rtx-pro-6000
+                            - rtx-pro-6000x2
+                            - rtx-pro-6000x4
+                            - rtx-pro-6000x8
+                            - inf2x6
+                          timeoutSeconds:
+                            default: null
+                            anyOf:
+                            - type: integer
+                              exclusiveMinimum: 0
+                              maximum: 9007199254740991
+                            - type: 'null'
+                          labels:
+                            description: Labels for the job as key-value pairs. Both keys and values must be max 100 characters and contain only alphanumeric characters, dots, dashes, and underscores.
+                            type: object
+                            propertyNames:
+                              type: string
+                              maxLength: 100
+                              pattern: ^[a-zA-Z0-9._-]+$
+                            additionalProperties:
+                              type: string
+                              maxLength: 100
+                              pattern: ^[a-zA-Z0-9._-]*$
+                          secrets:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - environment
+                        - flavor
+                        - timeoutSeconds
+                        additionalProperties: false
+                      jobSourceId:
+                        type: string
+                      disabled:
+                        anyOf:
+                        - type: boolean
+                        - const: suspended-after-failure
+                      watched:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            type:
+                              enum:
+                              - dataset
+                              - model
+                              - space
+                              - bucket
+                              - kernel
+                              - user
+                              - org
+                            avatarUrl:
+                              type: string
+                          required:
+                          - name
+                          - type
+                          additionalProperties: false
+                      secret:
+                        type: string
+                      domains:
+                        type: array
+                        items:
+                          enum:
+                          - repo
+                          - discussion
+                      lastTriggerAt:
+                        type: string
+                        format: date-time
+                        pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    required:
+                    - id
+                    - disabled
+                    - watched
+                    - domains
+                    additionalProperties: false
+                required:
+                - webhook
+                additionalProperties: false
+          description: Created webhook
+  /api/settings/webhooks/{webhookId}:
+    get:
+      summary: Get webhook
+      tags:
+      - webhooks
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  webhook:
+                    description: Webhook
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      url:
+                        type: string
+                        format: uri
+                      job:
+                        type: object
+                        properties:
+                          dockerImage:
+                            type: string
+                          spaceId:
+                            type: string
+                          environment:
+                            default: {}
+                            type: object
+                            propertyNames:
+                              type: string
+                              pattern: ^[a-zA-Z][_a-zA-Z0-9]+$
+                            additionalProperties:
+                              type: string
+                          arguments:
+                            type: array
+                            items:
+                              type: string
+                          command:
+                            minItems: 1
+                            type: array
+                            items:
+                              type: string
+                              minLength: 1
+                          flavor:
+                            enum:
+                            - cpu-basic
+                            - cpu-upgrade
+                            - cpu-performance
+                            - cpu-xl
+                            - sprx8
+                            - zero-a10g
+                            - t4-small
+                            - t4-medium
+                            - l4x1
+                            - l4x4
+                            - l40sx1
+                            - l40sx4
+                            - l40sx8
+                            - a10g-small
+                            - a10g-large
+                            - a10g-largex2
+                            - a10g-largex4
+                            - a100-large
+                            - a100x4
+                            - a100x8
+                            - h200
+                            - h200x2
+                            - h200x4
+                            - h200x8
+                            - rtx-pro-6000
+                            - rtx-pro-6000x2
+                            - rtx-pro-6000x4
+                            - rtx-pro-6000x8
+                            - inf2x6
+                          timeoutSeconds:
+                            default: null
+                            anyOf:
+                            - type: integer
+                              exclusiveMinimum: 0
+                              maximum: 9007199254740991
+                            - type: 'null'
+                          labels:
+                            description: Labels for the job as key-value pairs. Both keys and values must be max 100 characters and contain only alphanumeric characters, dots, dashes, and underscores.
+                            type: object
+                            propertyNames:
+                              type: string
+                              maxLength: 100
+                              pattern: ^[a-zA-Z0-9._-]+$
+                            additionalProperties:
+                              type: string
+                              maxLength: 100
+                              pattern: ^[a-zA-Z0-9._-]*$
+                          secrets:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - environment
+                        - flavor
+                        - timeoutSeconds
+                        additionalProperties: false
+                      jobSourceId:
+                        type: string
+                      disabled:
+                        anyOf:
+                        - type: boolean
+                        - const: suspended-after-failure
+                      watched:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            type:
+                              enum:
+                              - dataset
+                              - model
+                              - space
+                              - bucket
+                              - kernel
+                              - user
+                              - org
+                            avatarUrl:
+                              type: string
+                          required:
+                          - name
+                          - type
+                          additionalProperties: false
+                      secret:
+                        type: string
+                      domains:
+                        type: array
+                        items:
+                          enum:
+                          - repo
+                          - discussion
+                      lastTriggerAt:
+                        type: string
+                        format: date-time
+                        pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    required:
+                    - id
+                    - disabled
+                    - watched
+                    - domains
+                    additionalProperties: false
+                required:
+                - webhook
+                additionalProperties: false
+          description: Webhook
+      parameters:
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Update webhook
+      tags:
+      - webhooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                watched:
+                  minItems: 1
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        enum:
+                        - dataset
+                        - model
+                        - space
+                        - bucket
+                        - kernel
+                        - user
+                        - org
+                      name:
+                        type: string
+                    required:
+                    - type
+                    - name
+                url:
+                  type: string
+                  format: uri
+                job:
+                  type: object
+                  properties:
+                    spaceId:
+                      type: string
+                    dockerImage:
+                      type: string
+                    arguments:
+                      type: array
+                      items:
+                        type: string
+                    command:
+                      minItems: 1
+                      type: array
+                      items:
+                        type: string
+                        minLength: 1
+                    environment:
+                      default: {}
+                      type: object
+                      propertyNames:
+                        type: string
+                        pattern: ^[a-zA-Z][_a-zA-Z0-9]+$
+                      additionalProperties:
+                        type: string
+                    secrets:
+                      type: object
+                      propertyNames:
+                        type: string
+                        pattern: ^[a-zA-Z][_a-zA-Z0-9]*$
+                      additionalProperties:
+                        type: string
+                    flavor:
+                      enum:
+                      - cpu-basic
+                      - cpu-upgrade
+                      - cpu-performance
+                      - cpu-xl
+                      - sprx8
+                      - zero-a10g
+                      - t4-small
+                      - t4-medium
+                      - l4x1
+                      - l4x4
+                      - l40sx1
+                      - l40sx4
+                      - l40sx8
+                      - a10g-small
+                      - a10g-large
+                      - a10g-largex2
+                      - a10g-largex4
+                      - a100-large
+                      - a100x4
+                      - a100x8
+                      - h200
+                      - h200x2
+                      - h200x4
+                      - h200x8
+                      - rtx-pro-6000
+                      - rtx-pro-6000x2
+                      - rtx-pro-6000x4
+                      - rtx-pro-6000x8
+                      - inf2x6
+                    arch:
+                      enum:
+                      - amd64
+                      - arm64
+                    timeoutSeconds:
+                      default: null
+                      anyOf:
+                      - type: integer
+                        exclusiveMinimum: 0
+                        maximum: 9007199254740991
+                      - type: 'null'
+                    attempts:
+                      description: Max number of attempts to make. For example, if you set this to 3, the job will be retried up to 2 times if it fails.
+                      default: 1
+                      type: integer
+                      minimum: 1
+                      maximum: 9007199254740991
+                    labels:
+                      description: Labels for the job as key-value pairs. Both keys and values must be max 100 characters and contain only alphanumeric characters, dots, dashes, and underscores.
+                      type: object
+                      propertyNames:
+                        type: string
+                        maxLength: 100
+                        pattern: ^[a-zA-Z0-9._-]+$
+                      additionalProperties:
+                        type: string
+                        maxLength: 100
+                        pattern: ^[a-zA-Z0-9._-]*$
+                    volumes:
+                      description: HuggingFace Buckets or Repos to mount as volumes in the job container.
+                      minItems: 1
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            enum:
+                            - bucket
+                            - model
+                            - dataset
+                            - space
+                          source:
+                            description: Source identifier, e.g. 'username/my-bucket' or 'username/my-model'
+                            type: string
+                          mountPath:
+                            description: Mount path inside the container, e.g. '/data'
+                            type: string
+                            pattern: ^\/.*
+                          revision:
+                            description: Git revision (only for repos, defaults to 'main')
+                            type: string
+                          readOnly:
+                            description: Read-only mount (true for repos, false default for buckets)
+                            type: boolean
+                          path:
+                            description: Subfolder prefix inside the bucket/repo to mount, e.g. 'path/to/dir'
+                            type: string
+                        required:
+                        - type
+                        - source
+                        - mountPath
+                  required:
+                  - flavor
+                jobSourceId:
+                  type: string
+                domains:
+                  minItems: 1
+                  type: array
+                  items:
+                    enum:
+                    - repo
+                    - discussion
+                secret:
+                  type: string
+                  pattern: ^[\x20-\x7F]*$
+              required:
+              - watched
+              - domains
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  webhook:
+                    description: Webhook
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      url:
+                        type: string
+                        format: uri
+                      job:
+                        type: object
+                        properties:
+                          dockerImage:
+                            type: string
+                          spaceId:
+                            type: string
+                          environment:
+                            default: {}
+                            type: object
+                            propertyNames:
+                              type: string
+                              pattern: ^[a-zA-Z][_a-zA-Z0-9]+$
+                            additionalProperties:
+                              type: string
+                          arguments:
+                            type: array
+                            items:
+                              type: string
+                          command:
+                            minItems: 1
+                            type: array
+                            items:
+                              type: string
+                              minLength: 1
+                          flavor:
+                            enum:
+                            - cpu-basic
+                            - cpu-upgrade
+                            - cpu-performance
+                            - cpu-xl
+                            - sprx8
+                            - zero-a10g
+                            - t4-small
+                            - t4-medium
+                            - l4x1
+                            - l4x4
+                            - l40sx1
+                            - l40sx4
+                            - l40sx8
+                            - a10g-small
+                            - a10g-large
+                            - a10g-largex2
+                            - a10g-largex4
+                            - a100-large
+                            - a100x4
+                            - a100x8
+                            - h200
+                            - h200x2
+                            - h200x4
+                            - h200x8
+                            - rtx-pro-6000
+                            - rtx-pro-6000x2
+                            - rtx-pro-6000x4
+                            - rtx-pro-6000x8
+                            - inf2x6
+                          timeoutSeconds:
+                            default: null
+                            anyOf:
+                            - type: integer
+                              exclusiveMinimum: 0
+                              maximum: 9007199254740991
+                            - type: 'null'
+                          labels:
+                            description: Labels for the job as key-value pairs. Both keys and values must be max 100 characters and contain only alphanumeric characters, dots, dashes, and underscores.
+                            type: object
+                            propertyNames:
+                              type: string
+                              maxLength: 100
+                              pattern: ^[a-zA-Z0-9._-]+$
+                            additionalProperties:
+                              type: string
+                              maxLength: 100
+                              pattern: ^[a-zA-Z0-9._-]*$
+                          secrets:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - environment
+                        - flavor
+                        - timeoutSeconds
+                        additionalProperties: false
+                      jobSourceId:
+                        type: string
+                      disabled:
+                        anyOf:
+                        - type: boolean
+                        - const: suspended-after-failure
+                      watched:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            type:
+                              enum:
+                              - dataset
+                              - model
+                              - space
+                              - bucket
+                              - kernel
+                              - user
+                              - org
+                            avatarUrl:
+                              type: string
+                          required:
+                          - name
+                          - type
+                          additionalProperties: false
+                      secret:
+                        type: string
+                      domains:
+                        type: array
+                        items:
+                          enum:
+                          - repo
+                          - discussion
+                      lastTriggerAt:
+                        type: string
+                        format: date-time
+                        pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    required:
+                    - id
+                    - disabled
+                    - watched
+                    - domains
+                    additionalProperties: false
+                required:
+                - webhook
+                additionalProperties: false
+          description: Updated webhook
+      parameters:
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      summary: Delete webhook
+      tags:
+      - webhooks
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties: {}
+                additionalProperties: false
+          description: Deleted webhook
+      parameters:
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/settings/webhooks/{webhookId}/{action}:
+    post:
+      summary: Enable/disable webhook
+      tags:
+      - webhooks
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  webhook:
+                    description: Webhook
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      url:
+                        type: string
+                        format: uri
+                      job:
+                        type: object
+                        properties:
+                          dockerImage:
+                            type: string
+                          spaceId:
+                            type: string
+                          environment:
+                            default: {}
+                            type: object
+                            propertyNames:
+                              type: string
+                              pattern: ^[a-zA-Z][_a-zA-Z0-9]+$
+                            additionalProperties:
+                              type: string
+                          arguments:
+                            type: array
+                            items:
+                              type: string
+                          command:
+                            minItems: 1
+                            type: array
+                            items:
+                              type: string
+                              minLength: 1
+                          flavor:
+                            enum:
+                            - cpu-basic
+                            - cpu-upgrade
+                            - cpu-performance
+                            - cpu-xl
+                            - sprx8
+                            - zero-a10g
+                            - t4-small
+                            - t4-medium
+                            - l4x1
+                            - l4x4
+                            - l40sx1
+                            - l40sx4
+                            - l40sx8
+                            - a10g-small
+                            - a10g-large
+                            - a10g-largex2
+                            - a10g-largex4
+                            - a100-large
+                            - a100x4
+                            - a100x8
+                            - h200
+                            - h200x2
+                            - h200x4
+                            - h200x8
+                            - rtx-pro-6000
+                            - rtx-pro-6000x2
+                            - rtx-pro-6000x4
+                            - rtx-pro-6000x8
+                            - inf2x6
+                          timeoutSeconds:
+                            default: null
+                            anyOf:
+                            - type: integer
+                              exclusiveMinimum: 0
+                              maximum: 9007199254740991
+                            - type: 'null'
+                          labels:
+                            description: Labels for the job as key-value pairs. Both keys and values must be max 100 characters and contain only alphanumeric characters, dots, dashes, and underscores.
+                            type: object
+                            propertyNames:
+                              type: string
+                              maxLength: 100
+                              pattern: ^[a-zA-Z0-9._-]+$
+                            additionalProperties:
+                              type: string
+                              maxLength: 100
+                              pattern: ^[a-zA-Z0-9._-]*$
+                          secrets:
+                            type: array
+                            items:
+                              type: string
+                        required:
+                        - environment
+                        - flavor
+                        - timeoutSeconds
+                        additionalProperties: false
+                      jobSourceId:
+                        type: string
+                      disabled:
+                        anyOf:
+                        - type: boolean
+                        - const: suspended-after-failure
+                      watched:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            type:
+                              enum:
+                              - dataset
+                              - model
+                              - space
+                              - bucket
+                              - kernel
+                              - user
+                              - org
+                            avatarUrl:
+                              type: string
+                          required:
+                          - name
+                          - type
+                          additionalProperties: false
+                      secret:
+                        type: string
+                      domains:
+                        type: array
+                        items:
+                          enum:
+                          - repo
+                          - discussion
+                      lastTriggerAt:
+                        type: string
+                        format: date-time
+                        pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    required:
+                    - id
+                    - disabled
+                    - watched
+                    - domains
+                    additionalProperties: false
+                required:
+                - webhook
+                additionalProperties: false
+          description: Updated webhook
+      parameters:
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - enable
+          - disable
+  /api/settings/webhooks/{webhookId}/replay/{logId}:
+    post:
+      summary: Replay webhook log
+      tags:
+      - webhooks
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  status:
+                    description: Replay HTTP status
+                    type: number
+                required:
+                - status
+                additionalProperties: false
+          description: Replay response
+      parameters:
+      - name: webhookId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: logId
+        in: path
+        required: true
+        schema:
+          type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

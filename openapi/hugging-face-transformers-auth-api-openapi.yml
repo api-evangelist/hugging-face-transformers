@@ -1,0 +1,271 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning auth API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: auth
+  x-displayName: Auth
+  description: The following endpoints get information about your currently used user based on the passed token.
+paths:
+  /api/whoami-v2:
+    get:
+      description: Get information about the user and auth method used
+      summary: Get user info
+      tags:
+      - auth
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                anyOf:
+                - type: object
+                  properties:
+                    auth:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        accessToken:
+                          type: object
+                          properties:
+                            displayName:
+                              type: string
+                            role:
+                              enum:
+                              - read
+                              - write
+                              - god
+                              - fineGrained
+                            fineGrained:
+                              type: object
+                              properties:
+                                scoped:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      entity:
+                                        type: object
+                                        properties:
+                                          _id:
+                                            type: string
+                                            minLength: 24
+                                            maxLength: 24
+                                            pattern: ^[0-9a-f]{24}$
+                                          name:
+                                            type: string
+                                          type:
+                                            enum:
+                                            - dataset
+                                            - model
+                                            - space
+                                            - bucket
+                                            - kernel
+                                            - collection
+                                            - org
+                                            - user
+                                            - resource-group
+                                            - oauth-app
+                                        required:
+                                        - _id
+                                        - type
+                                        additionalProperties: false
+                                      permissions:
+                                        type: array
+                                        items:
+                                          type: string
+                                    required:
+                                    - entity
+                                    - permissions
+                                    additionalProperties: false
+                                global:
+                                  type: array
+                                  items:
+                                    enum:
+                                    - discussion.write
+                                    - post.write
+                                canReadGatedRepos:
+                                  description: Allow access to all public gated repos to which the user has access
+                                  type: boolean
+                              required:
+                              - scoped
+                              additionalProperties: false
+                            createdAt:
+                              type: string
+                              format: date-time
+                              pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                          required:
+                          - displayName
+                          - role
+                          - createdAt
+                          additionalProperties: false
+                        expiresAt:
+                          type: string
+                          format: date-time
+                          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                        resource:
+                          type: object
+                          properties:
+                            sub:
+                              type: string
+                          required:
+                          - sub
+                          additionalProperties: false
+                      required:
+                      - type
+                      additionalProperties: false
+                    type:
+                      const: user
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    fullname:
+                      type: string
+                    email:
+                      anyOf:
+                      - type: string
+                      - type: 'null'
+                    canPay:
+                      type: boolean
+                    billingMode:
+                      enum:
+                      - prepaid
+                      - postpaid
+                    avatarUrl:
+                      type: string
+                    periodEnd:
+                      anyOf:
+                      - type: number
+                      - type: 'null'
+                    emailVerified:
+                      type: boolean
+                    isPro:
+                      type: boolean
+                    orgs:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            const: org
+                          id:
+                            type: string
+                          name:
+                            type: string
+                          fullname:
+                            type: string
+                          email:
+                            anyOf:
+                            - type: string
+                            - type: 'null'
+                          canPay:
+                            type: boolean
+                          billingMode:
+                            enum:
+                            - prepaid
+                            - postpaid
+                          avatarUrl:
+                            type: string
+                          periodEnd:
+                            anyOf:
+                            - type: number
+                            - type: 'null'
+                          plan:
+                            enum:
+                            - team
+                            - enterprise
+                            - plus
+                            - academia
+                          roleInOrg:
+                            anyOf:
+                            - enum:
+                              - admin
+                              - write
+                              - contributor
+                              - read
+                              - no_access
+                            - description: Custom role name
+                              type: string
+                          pendingSSO:
+                            deprecated: true
+                            type: boolean
+                          missingMFA:
+                            deprecated: true
+                            type: boolean
+                          securityRestrictions:
+                            description: Current security restrictions for accessing data in this organization with current authentication method
+                            type: array
+                            items:
+                              enum:
+                              - mfa
+                              - token-policy
+                              - token-revoked
+                              - sso
+                              - ip
+                          resourceGroups:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  minLength: 24
+                                  maxLength: 24
+                                  pattern: ^[0-9a-f]{24}$
+                                name:
+                                  type: string
+                                role:
+                                  anyOf:
+                                  - enum:
+                                    - admin
+                                    - write
+                                    - contributor
+                                    - read
+                                    - no_access
+                                  - description: Custom role name
+                                    type: string
+                              required:
+                              - id
+                              - name
+                              - role
+                              additionalProperties: false
+                        required:
+                        - type
+                        - id
+                        - name
+                        - fullname
+                        - avatarUrl
+                        additionalProperties: false
+                  required:
+                  - auth
+                  - type
+                  - id
+                  - name
+                  - fullname
+                  - avatarUrl
+                  - isPro
+                  - orgs
+                  additionalProperties: false
+          description: Auth information
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

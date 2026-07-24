@@ -1,0 +1,2211 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning repo-search API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: repo-search
+  x-displayName: Repository Search
+  description: The following endpoints help get information about models, datasets, and Spaces stored on the Hub.
+paths:
+  /api/quicksearch:
+    get:
+      description: Quick search for models, datasets, spaces, orgs, users, papers, collections, and buckets
+      summary: Quick search
+      tags:
+      - repo-search
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  datasets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                        trendingWeight:
+                          type: number
+                      required:
+                      - _id
+                      - id
+                      - trendingWeight
+                      additionalProperties: false
+                  datasetsCount:
+                    type: number
+                  models:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                        trendingWeight:
+                          type: number
+                      required:
+                      - _id
+                      - id
+                      - trendingWeight
+                      additionalProperties: false
+                  modelsCount:
+                    type: number
+                  orgs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        name:
+                          type: string
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - name
+                      additionalProperties: false
+                  q:
+                    type: string
+                  spaces:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                        emoji:
+                          type: string
+                        trendingWeight:
+                          type: number
+                      required:
+                      - _id
+                      - id
+                      - emoji
+                      - trendingWeight
+                      additionalProperties: false
+                  spacesCount:
+                    type: number
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        user:
+                          type: string
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - user
+                      additionalProperties: false
+                  papers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                      required:
+                      - _id
+                      - id
+                      additionalProperties: false
+                  papersCount:
+                    type: number
+                  collections:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        title:
+                          type: string
+                        description:
+                          type: string
+                      required:
+                      - _id
+                      - title
+                      additionalProperties: false
+                  collectionsCount:
+                    type: number
+                  buckets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                      required:
+                      - _id
+                      - id
+                      additionalProperties: false
+                  bucketsCount:
+                    type: number
+                required:
+                - datasets
+                - datasetsCount
+                - models
+                - modelsCount
+                - orgs
+                - q
+                - spaces
+                - spacesCount
+                - users
+                - papers
+                - papersCount
+                - collections
+                - collectionsCount
+                - buckets
+                - bucketsCount
+                additionalProperties: false
+          description: The quick search results
+      parameters:
+      - name: q
+        in: query
+        schema:
+          default: ''
+          type: string
+        required: false
+      - name: limit
+        in: query
+        schema:
+          anyOf:
+          - type: integer
+            minimum: 1
+            maximum: 20
+          - type: integer
+            minimum: 1
+            maximum: 20
+        required: false
+      - name: lang
+        in: query
+        schema:
+          anyOf:
+          - enum:
+            - aa
+            - ab
+            - ae
+            - af
+            - ak
+            - am
+            - an
+            - ar
+            - as
+            - av
+            - ay
+            - az
+            - ba
+            - be
+            - bg
+            - bh
+            - bi
+            - bm
+            - bn
+            - bo
+            - br
+            - bs
+            - ca
+            - ce
+            - ch
+            - co
+            - cr
+            - cs
+            - cu
+            - cv
+            - cy
+            - da
+            - de
+            - dv
+            - dz
+            - ee
+            - el
+            - en
+            - eo
+            - es
+            - et
+            - eu
+            - fa
+            - ff
+            - fi
+            - fj
+            - fo
+            - fr
+            - fy
+            - ga
+            - gd
+            - gl
+            - gn
+            - gu
+            - gv
+            - ha
+            - he
+            - hi
+            - ho
+            - hr
+            - ht
+            - hu
+            - hy
+            - hz
+            - ia
+            - id
+            - ie
+            - ig
+            - ii
+            - ik
+            - io
+            - is
+            - it
+            - iu
+            - ja
+            - jv
+            - ka
+            - kg
+            - ki
+            - kj
+            - kk
+            - kl
+            - km
+            - kn
+            - ko
+            - kr
+            - ks
+            - ku
+            - kv
+            - kw
+            - ky
+            - la
+            - lb
+            - lg
+            - li
+            - ln
+            - lo
+            - lt
+            - lu
+            - lv
+            - mg
+            - mh
+            - mi
+            - mk
+            - ml
+            - mn
+            - mr
+            - ms
+            - mt
+            - my
+            - na
+            - nb
+            - nd
+            - ne
+            - ng
+            - nl
+            - nn
+            - 'no'
+            - nr
+            - nv
+            - ny
+            - oc
+            - oj
+            - om
+            - or
+            - os
+            - pa
+            - pi
+            - pl
+            - ps
+            - pt
+            - qu
+            - rm
+            - rn
+            - ro
+            - ru
+            - rw
+            - sa
+            - sc
+            - sd
+            - se
+            - sg
+            - si
+            - sk
+            - sl
+            - sm
+            - sn
+            - so
+            - sq
+            - sr
+            - ss
+            - st
+            - su
+            - sv
+            - sw
+            - ta
+            - te
+            - tg
+            - th
+            - ti
+            - tk
+            - tl
+            - tn
+            - to
+            - tr
+            - ts
+            - tt
+            - tw
+            - ty
+            - ug
+            - uk
+            - ur
+            - uz
+            - ve
+            - vi
+            - vo
+            - wa
+            - wo
+            - xh
+            - yi
+            - yo
+            - za
+            - zh
+            - zu
+          - type: string
+        required: false
+      - name: library
+        in: query
+        schema:
+          anyOf:
+          - enum:
+            - acestep
+            - adapter-transformers
+            - allennlp
+            - anemoi
+            - araclip
+            - aviation-ner
+            - asteroid
+            - audiocraft
+            - audioseal
+            - bagel-mot
+            - bboxmaskpose
+            - ben2
+            - bertopic
+            - big_vision
+            - bionemo
+            - birder
+            - birefnet
+            - bm25s
+            - boltzgen
+            - cancertathomev2
+            - cartesia_pytorch
+            - cartesia_mlx
+            - champ
+            - chatterbox
+            - chaossim
+            - chat_tts
+            - chronos-forecasting
+            - clara
+            - clipscope
+            - cloud-agents
+            - collectorvision
+            - colipri
+            - cosyvoice
+            - cotracker
+            - colpali
+            - comet
+            - cosmos
+            - cxr-foundation
+            - deepforest
+            - depth-anything-v2
+            - depth-pro
+            - derm-foundation
+            - describe-anything
+            - dia-tts
+            - dia2
+            - diff-interpretation-tuning
+            - diffree
+            - diffusers
+            - diffusionkit
+            - docking-at-home
+            - doctr
+            - edsnlp
+            - elm
+            - encoderfile
+            - espnet
+            - eupe
+            - fairseq
+            - fastai
+            - fastprint
+            - fasttext
+            - fixer
+            - flair
+            - fme
+            - gemma.cpp
+            - geometry-crafter
+            - gliner
+            - gliner2
+            - glm-tts
+            - glyph-byt5
+            - granite-library
+            - grok
+            - habibi-tts
+            - hallo
+            - hermes
+            - holomotion
+            - hezar
+            - htrflow
+            - hunyuan-dit
+            - hunyuan3d-2
+            - hunyuanworld-voyager
+            - hy-worldplay
+            - hy-world-2
+            - image-matching-models
+            - imstoucan
+            - index-tts
+            - infinitetalk
+            - infinite-you
+            - intellifold
+            - ising-decoding
+            - keras
+            - tf-keras
+            - keras-hub
+            - kernels
+            - kimi-audio
+            - kittentts
+            - kronos
+            - k2
+            - lyra-2.0
+            - lagernvs
+            - lightning-ir
+            - litert
+            - litert-lm
+            - lerobot
+            - lightglue
+            - liveportrait
+            - llama-cpp-python
+            - mini-omni2
+            - mindspore
+            - magi-1
+            - magenta-realtime
+            - mamba-ssm
+            - manas-1
+            - mars5-tts
+            - matanyone
+            - mesh-anything
+            - merlin
+            - medvae
+            - mitie
+            - ml-agents
+            - ml-sharp
+            - mlx
+            - mlx-image
+            - mlc-llm
+            - model2vec
+            - moshi
+            - mtvcraft
+            - multimolecule
+            - nemo
+            - nv-medtech
+            - open-oasis
+            - open_clip
+            - openpeerllm
+            - open-sora
+            - outetts
+            - paddlenlp
+            - PaddleOCR
+            - peft
+            - perception-encoder
+            - phantom-wan
+            - pocket-tts
+            - pruna-ai
+            - pxia
+            - pyannote-audio
+            - py-feat
+            - pythae
+            - quantumpeer
+            - qwen3_tts
+            - recurrentgemma
+            - relik
+            - refiners
+            - renderformer
+            - reverb
+            - rkllm
+            - robo-orchard-lab
+            - saelens
+            - sam2
+            - sam-3d-body
+            - sam-3d-objects
+            - same
+            - sample-factory
+            - sap-rpt-1-oss
+            - sapiens
+            - sapiens2
+            - seedvr
+            - self-forcing
+            - sentence-transformers
+            - setfit
+            - sklearn
+            - spacy
+            - span-marker
+            - speechbrain
+            - ssr-speech
+            - stable-audio-tools
+            - monkeyocr
+            - diffusion-single-file
+            - seed-story
+            - skala
+            - soloaudio
+            - songbloom
+            - stable-baselines3
+            - stanza
+            - supertonic
+            - swarmformer
+            - synthefy-migas
+            - f5-tts
+            - genmo
+            - tencent-song-generation
+            - tensorflowtts
+            - tensorrt
+            - tabpfn
+            - terratorch
+            - tic-clip
+            - timesfm
+            - timm
+            - tirex
+            - torchgeo
+            - transformers
+            - transformers.js
+            - trellis
+            - trellis2
+            - ultralytics
+            - univa
+            - uni-3dar
+            - unity-sentis
+            - sana
+            - videoprism
+            - vfi-mamba
+            - vismatch
+            - lvface
+            - voicecraft
+            - voxcpm
+            - vui
+            - vibevoice
+            - videox_fun
+            - wan2.2
+            - wham
+            - whisperkit
+            - yolov10
+            - yolov26
+            - zonos
+            - 3dtopia-xl
+          - type: string
+        required: false
+      - name: type
+        in: query
+        schema:
+          anyOf:
+          - type: array
+            items:
+              enum:
+              - model
+              - dataset
+              - space
+              - org
+              - user
+              - paper
+              - collection
+              - bucket
+          - type: array
+            items:
+              type: string
+        required: false
+      - name: orgsFilter
+        in: query
+        schema:
+          anyOf:
+          - type: array
+            items:
+              enum:
+              - own
+              - unwatched
+          - type: array
+            items:
+              type: string
+        required: false
+      - name: reposFilter
+        in: query
+        schema:
+          anyOf:
+          - type: array
+            items:
+              enum:
+              - skip_disabled
+              - skip_gated
+              - own
+              - own_orgs
+              - granted_access
+          - type: array
+            items:
+              type: string
+        required: false
+      - name: pipelines
+        in: query
+        schema:
+          description: Comma-separated or array of pipeline types
+          anyOf:
+          - type: array
+            items:
+              enum:
+              - text-classification
+              - token-classification
+              - table-question-answering
+              - question-answering
+              - zero-shot-classification
+              - translation
+              - summarization
+              - feature-extraction
+              - text-generation
+              - fill-mask
+              - sentence-similarity
+              - text-to-speech
+              - text-to-audio
+              - automatic-speech-recognition
+              - audio-to-audio
+              - audio-classification
+              - audio-text-to-text
+              - voice-activity-detection
+              - depth-estimation
+              - image-classification
+              - object-detection
+              - image-segmentation
+              - text-to-image
+              - image-to-text
+              - image-to-image
+              - image-to-video
+              - unconditional-image-generation
+              - video-classification
+              - reinforcement-learning
+              - robotics
+              - tabular-classification
+              - tabular-regression
+              - tabular-to-text
+              - table-to-text
+              - multiple-choice
+              - text-ranking
+              - text-retrieval
+              - time-series-forecasting
+              - text-to-video
+              - image-text-to-text
+              - image-text-to-image
+              - image-text-to-video
+              - visual-question-answering
+              - document-question-answering
+              - zero-shot-image-classification
+              - graph-ml
+              - mask-generation
+              - zero-shot-object-detection
+              - text-to-3d
+              - image-to-3d
+              - image-feature-extraction
+              - video-text-to-text
+              - keypoint-detection
+              - visual-document-retrieval
+              - any-to-any
+              - video-to-video
+              - other
+          - anyOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        required: false
+      - name: exclude
+        in: query
+        schema:
+          description: 'Array of excluded resources: spaces/repo, models/repo, datasets/repo, papers/paperId, collections/collectionId, users/username, orgs/orgName, buckets/bucketName'
+          default: []
+          type: array
+          items:
+            type: string
+            pattern: ^(spaces|models|datasets|papers|collections|users|orgs|buckets)\/.*
+        required: false
+      - name: namespace
+        in: query
+        schema:
+          description: Namespace to filter by
+          type: string
+        required: false
+      - name: includeInvitees
+        in: query
+        schema:
+          default: false
+          anyOf:
+          - type: boolean
+          - {}
+        required: false
+      - name: repoName
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: repoType
+        in: query
+        schema:
+          anyOf:
+          - enum:
+            - dataset
+            - model
+            - space
+            - bucket
+            - kernel
+          - type: string
+        required: false
+      - name: discussionId
+        in: query
+        schema:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+        required: false
+      - name: discussionCollectionName
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: spacesTags
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        required: false
+    post:
+      description: Quick search for models, datasets, spaces, orgs, users, papers, collections, and buckets
+      summary: Quick search
+      tags:
+      - repo-search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                q:
+                  default: ''
+                  type: string
+                limit:
+                  anyOf:
+                  - type: integer
+                    minimum: 1
+                    maximum: 20
+                  - type: integer
+                    minimum: 1
+                    maximum: 20
+                lang:
+                  anyOf:
+                  - enum:
+                    - aa
+                    - ab
+                    - ae
+                    - af
+                    - ak
+                    - am
+                    - an
+                    - ar
+                    - as
+                    - av
+                    - ay
+                    - az
+                    - ba
+                    - be
+                    - bg
+                    - bh
+                    - bi
+                    - bm
+                    - bn
+                    - bo
+                    - br
+                    - bs
+                    - ca
+                    - ce
+                    - ch
+                    - co
+                    - cr
+                    - cs
+                    - cu
+                    - cv
+                    - cy
+                    - da
+                    - de
+                    - dv
+                    - dz
+                    - ee
+                    - el
+                    - en
+                    - eo
+                    - es
+                    - et
+                    - eu
+                    - fa
+                    - ff
+                    - fi
+                    - fj
+                    - fo
+                    - fr
+                    - fy
+                    - ga
+                    - gd
+                    - gl
+                    - gn
+                    - gu
+                    - gv
+                    - ha
+                    - he
+                    - hi
+                    - ho
+                    - hr
+                    - ht
+                    - hu
+                    - hy
+                    - hz
+                    - ia
+                    - id
+                    - ie
+                    - ig
+                    - ii
+                    - ik
+                    - io
+                    - is
+                    - it
+                    - iu
+                    - ja
+                    - jv
+                    - ka
+                    - kg
+                    - ki
+                    - kj
+                    - kk
+                    - kl
+                    - km
+                    - kn
+                    - ko
+                    - kr
+                    - ks
+                    - ku
+                    - kv
+                    - kw
+                    - ky
+                    - la
+                    - lb
+                    - lg
+                    - li
+                    - ln
+                    - lo
+                    - lt
+                    - lu
+                    - lv
+                    - mg
+                    - mh
+                    - mi
+                    - mk
+                    - ml
+                    - mn
+                    - mr
+                    - ms
+                    - mt
+                    - my
+                    - na
+                    - nb
+                    - nd
+                    - ne
+                    - ng
+                    - nl
+                    - nn
+                    - 'no'
+                    - nr
+                    - nv
+                    - ny
+                    - oc
+                    - oj
+                    - om
+                    - or
+                    - os
+                    - pa
+                    - pi
+                    - pl
+                    - ps
+                    - pt
+                    - qu
+                    - rm
+                    - rn
+                    - ro
+                    - ru
+                    - rw
+                    - sa
+                    - sc
+                    - sd
+                    - se
+                    - sg
+                    - si
+                    - sk
+                    - sl
+                    - sm
+                    - sn
+                    - so
+                    - sq
+                    - sr
+                    - ss
+                    - st
+                    - su
+                    - sv
+                    - sw
+                    - ta
+                    - te
+                    - tg
+                    - th
+                    - ti
+                    - tk
+                    - tl
+                    - tn
+                    - to
+                    - tr
+                    - ts
+                    - tt
+                    - tw
+                    - ty
+                    - ug
+                    - uk
+                    - ur
+                    - uz
+                    - ve
+                    - vi
+                    - vo
+                    - wa
+                    - wo
+                    - xh
+                    - yi
+                    - yo
+                    - za
+                    - zh
+                    - zu
+                  - type: string
+                library:
+                  anyOf:
+                  - enum:
+                    - acestep
+                    - adapter-transformers
+                    - allennlp
+                    - anemoi
+                    - araclip
+                    - aviation-ner
+                    - asteroid
+                    - audiocraft
+                    - audioseal
+                    - bagel-mot
+                    - bboxmaskpose
+                    - ben2
+                    - bertopic
+                    - big_vision
+                    - bionemo
+                    - birder
+                    - birefnet
+                    - bm25s
+                    - boltzgen
+                    - cancertathomev2
+                    - cartesia_pytorch
+                    - cartesia_mlx
+                    - champ
+                    - chatterbox
+                    - chaossim
+                    - chat_tts
+                    - chronos-forecasting
+                    - clara
+                    - clipscope
+                    - cloud-agents
+                    - collectorvision
+                    - colipri
+                    - cosyvoice
+                    - cotracker
+                    - colpali
+                    - comet
+                    - cosmos
+                    - cxr-foundation
+                    - deepforest
+                    - depth-anything-v2
+                    - depth-pro
+                    - derm-foundation
+                    - describe-anything
+                    - dia-tts
+                    - dia2
+                    - diff-interpretation-tuning
+                    - diffree
+                    - diffusers
+                    - diffusionkit
+                    - docking-at-home
+                    - doctr
+                    - edsnlp
+                    - elm
+                    - encoderfile
+                    - espnet
+                    - eupe
+                    - fairseq
+                    - fastai
+                    - fastprint
+                    - fasttext
+                    - fixer
+                    - flair
+                    - fme
+                    - gemma.cpp
+                    - geometry-crafter
+                    - gliner
+                    - gliner2
+                    - glm-tts
+                    - glyph-byt5
+                    - granite-library
+                    - grok
+                    - habibi-tts
+                    - hallo
+                    - hermes
+                    - holomotion
+                    - hezar
+                    - htrflow
+                    - hunyuan-dit
+                    - hunyuan3d-2
+                    - hunyuanworld-voyager
+                    - hy-worldplay
+                    - hy-world-2
+                    - image-matching-models
+                    - imstoucan
+                    - index-tts
+                    - infinitetalk
+                    - infinite-you
+                    - intellifold
+                    - ising-decoding
+                    - keras
+                    - tf-keras
+                    - keras-hub
+                    - kernels
+                    - kimi-audio
+                    - kittentts
+                    - kronos
+                    - k2
+                    - lyra-2.0
+                    - lagernvs
+                    - lightning-ir
+                    - litert
+                    - litert-lm
+                    - lerobot
+                    - lightglue
+                    - liveportrait
+                    - llama-cpp-python
+                    - mini-omni2
+                    - mindspore
+                    - magi-1
+                    - magenta-realtime
+                    - mamba-ssm
+                    - manas-1
+                    - mars5-tts
+                    - matanyone
+                    - mesh-anything
+                    - merlin
+                    - medvae
+                    - mitie
+                    - ml-agents
+                    - ml-sharp
+                    - mlx
+                    - mlx-image
+                    - mlc-llm
+                    - model2vec
+                    - moshi
+                    - mtvcraft
+                    - multimolecule
+                    - nemo
+                    - nv-medtech
+                    - open-oasis
+                    - open_clip
+                    - openpeerllm
+                    - open-sora
+                    - outetts
+                    - paddlenlp
+                    - PaddleOCR
+                    - peft
+                    - perception-encoder
+                    - phantom-wan
+                    - pocket-tts
+                    - pruna-ai
+                    - pxia
+                    - pyannote-audio
+                    - py-feat
+                    - pythae
+                    - quantumpeer
+                    - qwen3_tts
+                    - recurrentgemma
+                    - relik
+                    - refiners
+                    - renderformer
+                    - reverb
+                    - rkllm
+                    - robo-orchard-lab
+                    - saelens
+                    - sam2
+                    - sam-3d-body
+                    - sam-3d-objects
+                    - same
+                    - sample-factory
+                    - sap-rpt-1-oss
+                    - sapiens
+                    - sapiens2
+                    - seedvr
+                    - self-forcing
+                    - sentence-transformers
+                    - setfit
+                    - sklearn
+                    - spacy
+                    - span-marker
+                    - speechbrain
+                    - ssr-speech
+                    - stable-audio-tools
+                    - monkeyocr
+                    - diffusion-single-file
+                    - seed-story
+                    - skala
+                    - soloaudio
+                    - songbloom
+                    - stable-baselines3
+                    - stanza
+                    - supertonic
+                    - swarmformer
+                    - synthefy-migas
+                    - f5-tts
+                    - genmo
+                    - tencent-song-generation
+                    - tensorflowtts
+                    - tensorrt
+                    - tabpfn
+                    - terratorch
+                    - tic-clip
+                    - timesfm
+                    - timm
+                    - tirex
+                    - torchgeo
+                    - transformers
+                    - transformers.js
+                    - trellis
+                    - trellis2
+                    - ultralytics
+                    - univa
+                    - uni-3dar
+                    - unity-sentis
+                    - sana
+                    - videoprism
+                    - vfi-mamba
+                    - vismatch
+                    - lvface
+                    - voicecraft
+                    - voxcpm
+                    - vui
+                    - vibevoice
+                    - videox_fun
+                    - wan2.2
+                    - wham
+                    - whisperkit
+                    - yolov10
+                    - yolov26
+                    - zonos
+                    - 3dtopia-xl
+                  - type: string
+                type:
+                  anyOf:
+                  - type: array
+                    items:
+                      enum:
+                      - model
+                      - dataset
+                      - space
+                      - org
+                      - user
+                      - paper
+                      - collection
+                      - bucket
+                  - type: array
+                    items:
+                      type: string
+                orgsFilter:
+                  anyOf:
+                  - type: array
+                    items:
+                      enum:
+                      - own
+                      - unwatched
+                  - type: array
+                    items:
+                      type: string
+                reposFilter:
+                  anyOf:
+                  - type: array
+                    items:
+                      enum:
+                      - skip_disabled
+                      - skip_gated
+                      - own
+                      - own_orgs
+                      - granted_access
+                  - type: array
+                    items:
+                      type: string
+                pipelines:
+                  description: Comma-separated or array of pipeline types
+                  anyOf:
+                  - type: array
+                    items:
+                      enum:
+                      - text-classification
+                      - token-classification
+                      - table-question-answering
+                      - question-answering
+                      - zero-shot-classification
+                      - translation
+                      - summarization
+                      - feature-extraction
+                      - text-generation
+                      - fill-mask
+                      - sentence-similarity
+                      - text-to-speech
+                      - text-to-audio
+                      - automatic-speech-recognition
+                      - audio-to-audio
+                      - audio-classification
+                      - audio-text-to-text
+                      - voice-activity-detection
+                      - depth-estimation
+                      - image-classification
+                      - object-detection
+                      - image-segmentation
+                      - text-to-image
+                      - image-to-text
+                      - image-to-image
+                      - image-to-video
+                      - unconditional-image-generation
+                      - video-classification
+                      - reinforcement-learning
+                      - robotics
+                      - tabular-classification
+                      - tabular-regression
+                      - tabular-to-text
+                      - table-to-text
+                      - multiple-choice
+                      - text-ranking
+                      - text-retrieval
+                      - time-series-forecasting
+                      - text-to-video
+                      - image-text-to-text
+                      - image-text-to-image
+                      - image-text-to-video
+                      - visual-question-answering
+                      - document-question-answering
+                      - zero-shot-image-classification
+                      - graph-ml
+                      - mask-generation
+                      - zero-shot-object-detection
+                      - text-to-3d
+                      - image-to-3d
+                      - image-feature-extraction
+                      - video-text-to-text
+                      - keypoint-detection
+                      - visual-document-retrieval
+                      - any-to-any
+                      - video-to-video
+                      - other
+                  - anyOf:
+                    - type: string
+                    - type: array
+                      items:
+                        type: string
+                exclude:
+                  description: 'Array of excluded resources: spaces/repo, models/repo, datasets/repo, papers/paperId, collections/collectionId, users/username, orgs/orgName, buckets/bucketName'
+                  default: []
+                  type: array
+                  items:
+                    type: string
+                    pattern: ^(spaces|models|datasets|papers|collections|users|orgs|buckets)\/.*
+                namespace:
+                  description: Namespace to filter by
+                  type: string
+                includeInvitees:
+                  default: false
+                  anyOf:
+                  - type: boolean
+                  - {}
+                repoName:
+                  type: string
+                repoType:
+                  anyOf:
+                  - enum:
+                    - dataset
+                    - model
+                    - space
+                    - bucket
+                    - kernel
+                  - type: string
+                discussionId:
+                  type: string
+                  minLength: 24
+                  maxLength: 24
+                  pattern: ^[0-9a-fA-F]{24}$
+                discussionCollectionName:
+                  type: string
+                spacesTags:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - exclude
+              - bucketNamespace
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  datasets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                        trendingWeight:
+                          type: number
+                      required:
+                      - _id
+                      - id
+                      - trendingWeight
+                      additionalProperties: false
+                  datasetsCount:
+                    type: number
+                  models:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                        trendingWeight:
+                          type: number
+                      required:
+                      - _id
+                      - id
+                      - trendingWeight
+                      additionalProperties: false
+                  modelsCount:
+                    type: number
+                  orgs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        name:
+                          type: string
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - name
+                      additionalProperties: false
+                  q:
+                    type: string
+                  spaces:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                        emoji:
+                          type: string
+                        trendingWeight:
+                          type: number
+                      required:
+                      - _id
+                      - id
+                      - emoji
+                      - trendingWeight
+                      additionalProperties: false
+                  spacesCount:
+                    type: number
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        avatarUrl:
+                          type: string
+                        fullname:
+                          type: string
+                        user:
+                          type: string
+                      required:
+                      - _id
+                      - avatarUrl
+                      - fullname
+                      - user
+                      additionalProperties: false
+                  papers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                      required:
+                      - _id
+                      - id
+                      additionalProperties: false
+                  papersCount:
+                    type: number
+                  collections:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        title:
+                          type: string
+                        description:
+                          type: string
+                      required:
+                      - _id
+                      - title
+                      additionalProperties: false
+                  collectionsCount:
+                    type: number
+                  buckets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                        id:
+                          type: string
+                        private:
+                          type: boolean
+                      required:
+                      - _id
+                      - id
+                      additionalProperties: false
+                  bucketsCount:
+                    type: number
+                required:
+                - datasets
+                - datasetsCount
+                - models
+                - modelsCount
+                - orgs
+                - q
+                - spaces
+                - spacesCount
+                - users
+                - papers
+                - papersCount
+                - collections
+                - collectionsCount
+                - buckets
+                - bucketsCount
+                additionalProperties: false
+          description: The quick search results
+      parameters:
+      - name: q
+        in: query
+        schema:
+          default: ''
+          type: string
+        required: false
+      - name: limit
+        in: query
+        schema:
+          anyOf:
+          - type: integer
+            minimum: 1
+            maximum: 20
+          - type: integer
+            minimum: 1
+            maximum: 20
+        required: false
+      - name: lang
+        in: query
+        schema:
+          anyOf:
+          - enum:
+            - aa
+            - ab
+            - ae
+            - af
+            - ak
+            - am
+            - an
+            - ar
+            - as
+            - av
+            - ay
+            - az
+            - ba
+            - be
+            - bg
+            - bh
+            - bi
+            - bm
+            - bn
+            - bo
+            - br
+            - bs
+            - ca
+            - ce
+            - ch
+            - co
+            - cr
+            - cs
+            - cu
+            - cv
+            - cy
+            - da
+            - de
+            - dv
+            - dz
+            - ee
+            - el
+            - en
+            - eo
+            - es
+            - et
+            - eu
+            - fa
+            - ff
+            - fi
+            - fj
+            - fo
+            - fr
+            - fy
+            - ga
+            - gd
+            - gl
+            - gn
+            - gu
+            - gv
+            - ha
+            - he
+            - hi
+            - ho
+            - hr
+            - ht
+            - hu
+            - hy
+            - hz
+            - ia
+            - id
+            - ie
+            - ig
+            - ii
+            - ik
+            - io
+            - is
+            - it
+            - iu
+            - ja
+            - jv
+            - ka
+            - kg
+            - ki
+            - kj
+            - kk
+            - kl
+            - km
+            - kn
+            - ko
+            - kr
+            - ks
+            - ku
+            - kv
+            - kw
+            - ky
+            - la
+            - lb
+            - lg
+            - li
+            - ln
+            - lo
+            - lt
+            - lu
+            - lv
+            - mg
+            - mh
+            - mi
+            - mk
+            - ml
+            - mn
+            - mr
+            - ms
+            - mt
+            - my
+            - na
+            - nb
+            - nd
+            - ne
+            - ng
+            - nl
+            - nn
+            - 'no'
+            - nr
+            - nv
+            - ny
+            - oc
+            - oj
+            - om
+            - or
+            - os
+            - pa
+            - pi
+            - pl
+            - ps
+            - pt
+            - qu
+            - rm
+            - rn
+            - ro
+            - ru
+            - rw
+            - sa
+            - sc
+            - sd
+            - se
+            - sg
+            - si
+            - sk
+            - sl
+            - sm
+            - sn
+            - so
+            - sq
+            - sr
+            - ss
+            - st
+            - su
+            - sv
+            - sw
+            - ta
+            - te
+            - tg
+            - th
+            - ti
+            - tk
+            - tl
+            - tn
+            - to
+            - tr
+            - ts
+            - tt
+            - tw
+            - ty
+            - ug
+            - uk
+            - ur
+            - uz
+            - ve
+            - vi
+            - vo
+            - wa
+            - wo
+            - xh
+            - yi
+            - yo
+            - za
+            - zh
+            - zu
+          - type: string
+        required: false
+      - name: library
+        in: query
+        schema:
+          anyOf:
+          - enum:
+            - acestep
+            - adapter-transformers
+            - allennlp
+            - anemoi
+            - araclip
+            - aviation-ner
+            - asteroid
+            - audiocraft
+            - audioseal
+            - bagel-mot
+            - bboxmaskpose
+            - ben2
+            - bertopic
+            - big_vision
+            - bionemo
+            - birder
+            - birefnet
+            - bm25s
+            - boltzgen
+            - cancertathomev2
+            - cartesia_pytorch
+            - cartesia_mlx
+            - champ
+            - chatterbox
+            - chaossim
+            - chat_tts
+            - chronos-forecasting
+            - clara
+            - clipscope
+            - cloud-agents
+            - collectorvision
+            - colipri
+            - cosyvoice
+            - cotracker
+            - colpali
+            - comet
+            - cosmos
+            - cxr-foundation
+            - deepforest
+            - depth-anything-v2
+            - depth-pro
+            - derm-foundation
+            - describe-anything
+            - dia-tts
+            - dia2
+            - diff-interpretation-tuning
+            - diffree
+            - diffusers
+            - diffusionkit
+            - docking-at-home
+            - doctr
+            - edsnlp
+            - elm
+            - encoderfile
+            - espnet
+            - eupe
+            - fairseq
+            - fastai
+            - fastprint
+            - fasttext
+            - fixer
+            - flair
+            - fme
+            - gemma.cpp
+            - geometry-crafter
+            - gliner
+            - gliner2
+            - glm-tts
+            - glyph-byt5
+            - granite-library
+            - grok
+            - habibi-tts
+            - hallo
+            - hermes
+            - holomotion
+            - hezar
+            - htrflow
+            - hunyuan-dit
+            - hunyuan3d-2
+            - hunyuanworld-voyager
+            - hy-worldplay
+            - hy-world-2
+            - image-matching-models
+            - imstoucan
+            - index-tts
+            - infinitetalk
+            - infinite-you
+            - intellifold
+            - ising-decoding
+            - keras
+            - tf-keras
+            - keras-hub
+            - kernels
+            - kimi-audio
+            - kittentts
+            - kronos
+            - k2
+            - lyra-2.0
+            - lagernvs
+            - lightning-ir
+            - litert
+            - litert-lm
+            - lerobot
+            - lightglue
+            - liveportrait
+            - llama-cpp-python
+            - mini-omni2
+            - mindspore
+            - magi-1
+            - magenta-realtime
+            - mamba-ssm
+            - manas-1
+            - mars5-tts
+            - matanyone
+            - mesh-anything
+            - merlin
+            - medvae
+            - mitie
+            - ml-agents
+            - ml-sharp
+            - mlx
+            - mlx-image
+            - mlc-llm
+            - model2vec
+            - moshi
+            - mtvcraft
+            - multimolecule
+            - nemo
+            - nv-medtech
+            - open-oasis
+            - open_clip
+            - openpeerllm
+            - open-sora
+            - outetts
+            - paddlenlp
+            - PaddleOCR
+            - peft
+            - perception-encoder
+            - phantom-wan
+            - pocket-tts
+            - pruna-ai
+            - pxia
+            - pyannote-audio
+            - py-feat
+            - pythae
+            - quantumpeer
+            - qwen3_tts
+            - recurrentgemma
+            - relik
+            - refiners
+            - renderformer
+            - reverb
+            - rkllm
+            - robo-orchard-lab
+            - saelens
+            - sam2
+            - sam-3d-body
+            - sam-3d-objects
+            - same
+            - sample-factory
+            - sap-rpt-1-oss
+            - sapiens
+            - sapiens2
+            - seedvr
+            - self-forcing
+            - sentence-transformers
+            - setfit
+            - sklearn
+            - spacy
+            - span-marker
+            - speechbrain
+            - ssr-speech
+            - stable-audio-tools
+            - monkeyocr
+            - diffusion-single-file
+            - seed-story
+            - skala
+            - soloaudio
+            - songbloom
+            - stable-baselines3
+            - stanza
+            - supertonic
+            - swarmformer
+            - synthefy-migas
+            - f5-tts
+            - genmo
+            - tencent-song-generation
+            - tensorflowtts
+            - tensorrt
+            - tabpfn
+            - terratorch
+            - tic-clip
+            - timesfm
+            - timm
+            - tirex
+            - torchgeo
+            - transformers
+            - transformers.js
+            - trellis
+            - trellis2
+            - ultralytics
+            - univa
+            - uni-3dar
+            - unity-sentis
+            - sana
+            - videoprism
+            - vfi-mamba
+            - vismatch
+            - lvface
+            - voicecraft
+            - voxcpm
+            - vui
+            - vibevoice
+            - videox_fun
+            - wan2.2
+            - wham
+            - whisperkit
+            - yolov10
+            - yolov26
+            - zonos
+            - 3dtopia-xl
+          - type: string
+        required: false
+      - name: type
+        in: query
+        schema:
+          anyOf:
+          - type: array
+            items:
+              enum:
+              - model
+              - dataset
+              - space
+              - org
+              - user
+              - paper
+              - collection
+              - bucket
+          - type: array
+            items:
+              type: string
+        required: false
+      - name: orgsFilter
+        in: query
+        schema:
+          anyOf:
+          - type: array
+            items:
+              enum:
+              - own
+              - unwatched
+          - type: array
+            items:
+              type: string
+        required: false
+      - name: reposFilter
+        in: query
+        schema:
+          anyOf:
+          - type: array
+            items:
+              enum:
+              - skip_disabled
+              - skip_gated
+              - own
+              - own_orgs
+              - granted_access
+          - type: array
+            items:
+              type: string
+        required: false
+      - name: pipelines
+        in: query
+        schema:
+          description: Comma-separated or array of pipeline types
+          anyOf:
+          - type: array
+            items:
+              enum:
+              - text-classification
+              - token-classification
+              - table-question-answering
+              - question-answering
+              - zero-shot-classification
+              - translation
+              - summarization
+              - feature-extraction
+              - text-generation
+              - fill-mask
+              - sentence-similarity
+              - text-to-speech
+              - text-to-audio
+              - automatic-speech-recognition
+              - audio-to-audio
+              - audio-classification
+              - audio-text-to-text
+              - voice-activity-detection
+              - depth-estimation
+              - image-classification
+              - object-detection
+              - image-segmentation
+              - text-to-image
+              - image-to-text
+              - image-to-image
+              - image-to-video
+              - unconditional-image-generation
+              - video-classification
+              - reinforcement-learning
+              - robotics
+              - tabular-classification
+              - tabular-regression
+              - tabular-to-text
+              - table-to-text
+              - multiple-choice
+              - text-ranking
+              - text-retrieval
+              - time-series-forecasting
+              - text-to-video
+              - image-text-to-text
+              - image-text-to-image
+              - image-text-to-video
+              - visual-question-answering
+              - document-question-answering
+              - zero-shot-image-classification
+              - graph-ml
+              - mask-generation
+              - zero-shot-object-detection
+              - text-to-3d
+              - image-to-3d
+              - image-feature-extraction
+              - video-text-to-text
+              - keypoint-detection
+              - visual-document-retrieval
+              - any-to-any
+              - video-to-video
+              - other
+          - anyOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        required: false
+      - name: exclude
+        in: query
+        schema:
+          description: 'Array of excluded resources: spaces/repo, models/repo, datasets/repo, papers/paperId, collections/collectionId, users/username, orgs/orgName, buckets/bucketName'
+          default: []
+          type: array
+          items:
+            type: string
+            pattern: ^(spaces|models|datasets|papers|collections|users|orgs|buckets)\/.*
+        required: false
+      - name: namespace
+        in: query
+        schema:
+          description: Namespace to filter by
+          type: string
+        required: false
+      - name: includeInvitees
+        in: query
+        schema:
+          default: false
+          anyOf:
+          - type: boolean
+          - {}
+        required: false
+      - name: repoName
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: repoType
+        in: query
+        schema:
+          anyOf:
+          - enum:
+            - dataset
+            - model
+            - space
+            - bucket
+            - kernel
+          - type: string
+        required: false
+      - name: discussionId
+        in: query
+        schema:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+        required: false
+      - name: discussionCollectionName
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: spacesTags
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        required: false
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

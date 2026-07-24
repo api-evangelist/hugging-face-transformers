@@ -1,0 +1,1226 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: agentic-provisioning
+  x-displayName: Agentic Provisioning
+  description: The following endpoints are for use with Agentic Provisioning Protocol.
+paths:
+  /api/agentic/provisioning/health:
+    get:
+      summary: Get Agentic Provisioning health
+      tags:
+      - agentic-provisioning
+  /api/agentic/provisioning/services:
+    get:
+      summary: Get Agentic Provisioning services
+      tags:
+      - agentic-provisioning
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          minLength: 1
+                        description:
+                          type: string
+                          minLength: 1
+                        categories:
+                          minItems: 1
+                          type: array
+                          items:
+                            enum:
+                            - compute
+                            - database
+                            - storage
+                            - cache
+                            - messaging
+                            - email
+                            - notification
+                            - auth
+                            - cdn
+                            - observability
+                            - analytics
+                            - payments
+                            - search
+                            - ci
+                            - feature_flags
+                            - ai
+                        kind:
+                          enum:
+                          - deployable
+                          - plan
+                        pricing:
+                          anyOf:
+                          - type: object
+                            properties:
+                              type:
+                                const: free
+                            required:
+                            - type
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              type:
+                                const: paid
+                              paid:
+                                anyOf:
+                                - anyOf:
+                                  - type: object
+                                    properties:
+                                      type:
+                                        const: freeform
+                                      freeform:
+                                        type: string
+                                        minLength: 1
+                                      stripe_price:
+                                        type: string
+                                        minLength: 1
+                                      configuration:
+                                        type: object
+                                        propertyNames:
+                                          type: string
+                                        additionalProperties: {}
+                                      is_default:
+                                        type: boolean
+                                    required:
+                                    - type
+                                    - freeform
+                                    additionalProperties: false
+                                  - type: object
+                                    properties:
+                                      type:
+                                        const: stripe_price
+                                      stripe_price:
+                                        type: string
+                                        minLength: 1
+                                      freeform:
+                                        type: string
+                                        minLength: 1
+                                      configuration:
+                                        type: object
+                                        propertyNames:
+                                          type: string
+                                        additionalProperties: {}
+                                      is_default:
+                                        type: boolean
+                                    required:
+                                    - type
+                                    - stripe_price
+                                    additionalProperties: false
+                                - minItems: 1
+                                  type: array
+                                  items:
+                                    anyOf:
+                                    - type: object
+                                      properties:
+                                        type:
+                                          const: freeform
+                                        freeform:
+                                          type: string
+                                          minLength: 1
+                                        stripe_price:
+                                          type: string
+                                          minLength: 1
+                                        configuration:
+                                          type: object
+                                          propertyNames:
+                                            type: string
+                                          additionalProperties: {}
+                                        is_default:
+                                          type: boolean
+                                      required:
+                                      - type
+                                      - freeform
+                                      additionalProperties: false
+                                    - type: object
+                                      properties:
+                                        type:
+                                          const: stripe_price
+                                        stripe_price:
+                                          type: string
+                                          minLength: 1
+                                        freeform:
+                                          type: string
+                                          minLength: 1
+                                        configuration:
+                                          type: object
+                                          propertyNames:
+                                            type: string
+                                          additionalProperties: {}
+                                        is_default:
+                                          type: boolean
+                                      required:
+                                      - type
+                                      - stripe_price
+                                      additionalProperties: false
+                            required:
+                            - type
+                            - paid
+                            additionalProperties: false
+                          - type: object
+                            properties:
+                              type:
+                                const: component
+                              component:
+                                type: object
+                                properties:
+                                  options:
+                                    minItems: 1
+                                    type: array
+                                    items:
+                                      anyOf:
+                                      - type: object
+                                        properties:
+                                          type:
+                                            const: free
+                                          default:
+                                            type: boolean
+                                          parent_service_ids:
+                                            minItems: 1
+                                            type: array
+                                            items:
+                                              type: string
+                                              minLength: 1
+                                        required:
+                                        - type
+                                        additionalProperties: false
+                                      - type: object
+                                        properties:
+                                          type:
+                                            const: paid
+                                          paid:
+                                            anyOf:
+                                            - type: object
+                                              properties:
+                                                type:
+                                                  const: freeform
+                                                freeform:
+                                                  type: string
+                                                  minLength: 1
+                                                stripe_price:
+                                                  type: string
+                                                  minLength: 1
+                                                configuration:
+                                                  type: object
+                                                  propertyNames:
+                                                    type: string
+                                                  additionalProperties: {}
+                                                is_default:
+                                                  type: boolean
+                                              required:
+                                              - type
+                                              - freeform
+                                              additionalProperties: false
+                                            - type: object
+                                              properties:
+                                                type:
+                                                  const: stripe_price
+                                                stripe_price:
+                                                  type: string
+                                                  minLength: 1
+                                                freeform:
+                                                  type: string
+                                                  minLength: 1
+                                                configuration:
+                                                  type: object
+                                                  propertyNames:
+                                                    type: string
+                                                  additionalProperties: {}
+                                                is_default:
+                                                  type: boolean
+                                              required:
+                                              - type
+                                              - stripe_price
+                                              additionalProperties: false
+                                          default:
+                                            type: boolean
+                                          parent_service_ids:
+                                            minItems: 1
+                                            type: array
+                                            items:
+                                              type: string
+                                              minLength: 1
+                                        required:
+                                        - type
+                                        - paid
+                                        additionalProperties: false
+                                required:
+                                - options
+                                additionalProperties: false
+                            required:
+                            - type
+                            - component
+                            additionalProperties: false
+                        group:
+                          type: string
+                          minLength: 1
+                        kyc:
+                          type: object
+                          properties:
+                            required_fields:
+                              minItems: 1
+                              type: array
+                              items:
+                                enum:
+                                - name
+                                - email
+                                - phone
+                                - country
+                          required:
+                          - required_fields
+                          additionalProperties: false
+                        configuration_schema:
+                          type: object
+                          properties:
+                            type:
+                              const: object
+                            properties:
+                              type: object
+                              propertyNames:
+                                type: string
+                              additionalProperties: {}
+                          required:
+                          - type
+                          - properties
+                          additionalProperties: false
+                        allowed_updates:
+                          type: array
+                          items:
+                            type: string
+                            minLength: 1
+                      required:
+                      - id
+                      - description
+                      - categories
+                      - pricing
+                      additionalProperties: false
+                required:
+                - data
+                additionalProperties: false
+          description: List of available Agentic Provisioning services
+  /api/agentic/provisioning/account_requests:
+    post:
+      summary: Create an Agentic Provisioning account request
+      tags:
+      - agentic-provisioning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                id:
+                  type: string
+                  minLength: 1
+                object:
+                  const: account_request
+                name:
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  format: email
+                  pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                scopes:
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                phone:
+                  type: string
+                  minLength: 1
+                country:
+                  type: string
+                  minLength: 1
+                kyc:
+                  type: object
+                  properties:
+                    verified_fields:
+                      type: array
+                      items:
+                        enum:
+                        - name
+                        - email
+                        - phone
+                        - country
+                  required:
+                  - verified_fields
+                client_capabilities:
+                  type: array
+                  items:
+                    enum:
+                    - browser
+                    - email
+                    - sms
+                configuration:
+                  type: object
+                  propertyNames:
+                    type: string
+                  additionalProperties: {}
+                confirmation_secret:
+                  type: string
+                  minLength: 1
+                expires_at:
+                  type: string
+                  format: date-time
+                  pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                orchestrator:
+                  type: object
+                  properties:
+                    type:
+                      const: stripe
+                    stripe:
+                      type: object
+                      properties:
+                        organization:
+                          type: string
+                          minLength: 1
+                        account:
+                          type: string
+                          minLength: 1
+                      required:
+                      - account
+                  required:
+                  - type
+                  - stripe
+              required:
+              - id
+              - object
+              - email
+              - scopes
+              - client_capabilities
+              - confirmation_secret
+              - expires_at
+              - orchestrator
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                anyOf:
+                - type: object
+                  properties:
+                    type:
+                      const: credentials
+                    credentials:
+                      type: object
+                      properties:
+                        type:
+                          const: bearer
+                        bearer:
+                          type: object
+                          properties:
+                            access_token:
+                              type: string
+                            refresh_token:
+                              type: string
+                            expires_in:
+                              type: number
+                            account:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                payment_credentials:
+                                  const: orchestrator
+                              required:
+                              - id
+                              - payment_credentials
+                              additionalProperties: false
+                          required:
+                          - access_token
+                          - refresh_token
+                          - expires_in
+                          - account
+                          additionalProperties: false
+                      required:
+                      - type
+                      - bearer
+                      additionalProperties: false
+                  required:
+                  - type
+                  - credentials
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    type:
+                      const: requires_auth
+                    requires_auth:
+                      type: object
+                      properties:
+                        type:
+                          const: redirect
+                        redirect:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                          required:
+                          - url
+                          additionalProperties: false
+                      required:
+                      - type
+                      - redirect
+                      additionalProperties: false
+                  required:
+                  - type
+                  - requires_auth
+                  additionalProperties: false
+          description: Account request result
+        '400':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  type:
+                    const: error
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - type
+                - error
+                additionalProperties: false
+          description: Account request error
+  /api/agentic/provisioning/resources:
+    post:
+      summary: Provision a resource
+      tags:
+      - agentic-provisioning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              anyOf:
+              - type: object
+                properties:
+                  service_id:
+                    const: platform
+                required:
+                - service_id
+              - type: object
+                properties:
+                  service_id:
+                    const: bucket
+                  configuration:
+                    type: object
+                    properties:
+                      name:
+                        description: The name of the repository (defaults to a random name if not provided)
+                        default: LybLjAvP
+                        type: string
+                        minLength: 1
+                      visibility:
+                        default: private
+                        description: The visibility of the repository (defaults to private)
+                        enum:
+                        - public
+                        - private
+                required:
+                - service_id
+                - configuration
+              - type: object
+                properties:
+                  service_id:
+                    const: free
+                  configuration:
+                    type: object
+                    properties:
+                      rechargeAmountUsd:
+                        description: Optional pay-as-you-go auto top-up ceiling, in USD. If set, usage above the plan's included quota is billed via the shared payment token (minimum $15). If omitted, the plan's included quota is a hard cap.
+                        type: number
+                        minimum: 15
+                  payment_credentials:
+                    type: object
+                    properties:
+                      type:
+                        const: stripe_payment_token
+                      stripe_payment_token:
+                        type: string
+                        minLength: 1
+                    required:
+                    - type
+                    - stripe_payment_token
+                required:
+                - service_id
+              - type: object
+                properties:
+                  service_id:
+                    const: pro
+                  configuration:
+                    type: object
+                    properties:
+                      rechargeAmountUsd:
+                        description: Optional pay-as-you-go auto top-up ceiling, in USD. If set, usage above the plan's included quota is billed via the shared payment token (minimum $15). If omitted, the plan's included quota is a hard cap.
+                        type: number
+                        minimum: 15
+                  payment_credentials:
+                    type: object
+                    properties:
+                      type:
+                        const: stripe_payment_token
+                      stripe_payment_token:
+                        type: string
+                        minLength: 1
+                    required:
+                    - type
+                    - stripe_payment_token
+                required:
+                - service_id
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      const: complete
+                    id:
+                      type: string
+                    complete:
+                      type: object
+                      properties:
+                        access_configuration:
+                          type: object
+                          propertyNames:
+                            type: string
+                          additionalProperties: {}
+                      required:
+                      - access_configuration
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - complete
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      const: pending
+                    id:
+                      type: string
+                  required:
+                  - status
+                  - id
+                  additionalProperties: false
+                - description: Resource provisioning error
+                  type: object
+                  properties:
+                    status:
+                      const: error
+                    id:
+                      type: string
+                    error:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - message
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - error
+                  additionalProperties: false
+          description: Provisioned resource
+        '400':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  status:
+                    const: error
+                  id:
+                    type: string
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - status
+                - id
+                - error
+                additionalProperties: false
+          description: Resource provisioning error
+  /api/agentic/provisioning/resources/{id}:
+    get:
+      summary: Get a resource by ID
+      tags:
+      - agentic-provisioning
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      const: complete
+                    id:
+                      type: string
+                    complete:
+                      type: object
+                      properties:
+                        access_configuration:
+                          type: object
+                          propertyNames:
+                            type: string
+                          additionalProperties: {}
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - complete
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      const: pending
+                    id:
+                      type: string
+                  required:
+                  - status
+                  - id
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      const: removed
+                    id:
+                      type: string
+                  required:
+                  - status
+                  - id
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      const: error
+                    id:
+                      type: string
+                    error:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - message
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - error
+                  additionalProperties: false
+          description: Resource status
+        '400':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  status:
+                    const: error
+                  id:
+                    type: string
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - status
+                - id
+                - error
+                additionalProperties: false
+          description: Resource error
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/agentic/provisioning/resources/{id}/update_service:
+    post:
+      summary: Update a resource's service (e.g. plan upgrade)
+      tags:
+      - agentic-provisioning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                service_id:
+                  type: string
+                  minLength: 1
+                configuration:
+                  type: object
+                  properties:
+                    rechargeAmountUsd:
+                      description: Set a number (USD, minimum $15) to enable or update pay-as-you-go auto top-up; pass null to disable; omit to leave it unchanged.
+                      anyOf:
+                      - type: number
+                        minimum: 15
+                      - type: 'null'
+                payment_credentials:
+                  type: object
+                  properties:
+                    type:
+                      const: stripe_payment_token
+                    stripe_payment_token:
+                      type: string
+                      minLength: 1
+                  required:
+                  - type
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      const: complete
+                    id:
+                      type: string
+                    complete:
+                      type: object
+                      properties:
+                        access_configuration:
+                          type: object
+                          propertyNames:
+                            type: string
+                          additionalProperties: {}
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - complete
+                  additionalProperties: false
+                - type: object
+                  properties:
+                    status:
+                      const: pending
+                    id:
+                      type: string
+                  required:
+                  - status
+                  - id
+                  additionalProperties: false
+                - description: Service update error
+                  type: object
+                  properties:
+                    status:
+                      const: error
+                    id:
+                      type: string
+                    error:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - message
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - error
+                  additionalProperties: false
+          description: Service update result
+        '400':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  status:
+                    const: error
+                  id:
+                    type: string
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - status
+                - id
+                - error
+                additionalProperties: false
+          description: Service update error
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/agentic/provisioning/resources/{id}/remove:
+    post:
+      summary: Remove / de-provision a resource
+      tags:
+      - agentic-provisioning
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      const: removed
+                    id:
+                      type: string
+                  required:
+                  - status
+                  - id
+                  additionalProperties: false
+                - description: Resource removal not supported
+                  type: object
+                  properties:
+                    status:
+                      const: error
+                    id:
+                      type: string
+                    error:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - message
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - error
+                  additionalProperties: false
+          description: Resource removal result
+        '400':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  status:
+                    const: error
+                  id:
+                    type: string
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - status
+                - id
+                - error
+                additionalProperties: false
+          description: Resource removal error
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/agentic/provisioning/resources/{id}/rotate_credentials:
+    post:
+      summary: Rotate the credentials for a resource
+      tags:
+      - agentic-provisioning
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                anyOf:
+                - type: object
+                  properties:
+                    status:
+                      const: complete
+                    id:
+                      type: string
+                    complete:
+                      type: object
+                      properties:
+                        access_configuration:
+                          type: object
+                          propertyNames:
+                            type: string
+                          additionalProperties: {}
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - complete
+                  additionalProperties: false
+                - description: Credential rotation not supported
+                  type: object
+                  properties:
+                    status:
+                      const: error
+                    id:
+                      type: string
+                    error:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - code
+                      - message
+                      additionalProperties: false
+                  required:
+                  - status
+                  - id
+                  - error
+                  additionalProperties: false
+          description: Rotated credentials
+        '400':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  status:
+                    const: error
+                  id:
+                    type: string
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - status
+                - id
+                - error
+                additionalProperties: false
+          description: Credential rotation error
+        '404':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  status:
+                    const: error
+                  id:
+                    type: string
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - status
+                - id
+                - error
+                additionalProperties: false
+          description: Resource not found
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  status:
+                    const: error
+                  id:
+                    type: string
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - status
+                - id
+                - error
+                additionalProperties: false
+          description: Token was modified concurrently
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/agentic/provisioning/deep_links:
+    post:
+      summary: Create a self-authenticated deep link to the user's billing dashboard
+      tags:
+      - agentic-provisioning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                purpose:
+                  const: dashboard
+              required:
+              - purpose
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  purpose:
+                    type: string
+                  url:
+                    type: string
+                  expires_at:
+                    type: string
+                required:
+                - purpose
+                - url
+                - expires_at
+                additionalProperties: false
+          description: Deep link URL
+        '400':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                    additionalProperties: false
+                required:
+                - error
+                additionalProperties: false
+          description: Deep link error
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

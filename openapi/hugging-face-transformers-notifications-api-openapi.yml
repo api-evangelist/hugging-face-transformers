@@ -1,0 +1,694 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning notifications API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: notifications
+  x-displayName: Notifications
+  description: The following endpoints fetch Hub notifications.
+paths:
+  /api/notifications:
+    get:
+      description: List notifications for the user
+      summary: List notifications
+      tags:
+      - notifications
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  notifications:
+                    type: array
+                    items:
+                      anyOf:
+                      - type: object
+                        properties:
+                          type:
+                            const: paper
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                          read:
+                            type: boolean
+                          discussionEventId:
+                            type: string
+                          paper:
+                            type: object
+                            properties:
+                              _id:
+                                type: string
+                                minLength: 24
+                                maxLength: 24
+                                pattern: ^[0-9a-f]{24}$
+                              title:
+                                type: string
+                            required:
+                            - _id
+                            - title
+                            additionalProperties: false
+                          paperDiscussion:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              participating:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    _id:
+                                      type: string
+                                      minLength: 24
+                                      maxLength: 24
+                                      pattern: ^[0-9a-f]{24}$
+                                    avatar:
+                                      type: string
+                                    user:
+                                      type: string
+                                  required:
+                                  - _id
+                                  - avatar
+                                  - user
+                                  additionalProperties: false
+                              paperId:
+                                type: string
+                                minLength: 24
+                                maxLength: 24
+                                pattern: ^[0-9a-f]{24}$
+                            required:
+                            - id
+                            - participating
+                            - paperId
+                            additionalProperties: false
+                        required:
+                        - type
+                        - updatedAt
+                        - read
+                        - paper
+                        - paperDiscussion
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          type:
+                            const: repo
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                          read:
+                            type: boolean
+                          discussionEventId:
+                            type: string
+                          repo:
+                            $ref: '#/components/schemas/RepoId'
+                          discussion:
+                            type: object
+                            properties:
+                              num:
+                                type: number
+                              title:
+                                type: string
+                              status:
+                                enum:
+                                - draft
+                                - open
+                                - closed
+                                - merged
+                              id:
+                                type: string
+                                minLength: 24
+                                maxLength: 24
+                                pattern: ^[0-9a-f]{24}$
+                              isPullRequest:
+                                type: boolean
+                              participating:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    _id:
+                                      type: string
+                                      minLength: 24
+                                      maxLength: 24
+                                      pattern: ^[0-9a-f]{24}$
+                                    avatar:
+                                      type: string
+                                    user:
+                                      type: string
+                                  required:
+                                  - _id
+                                  - avatar
+                                  - user
+                                  additionalProperties: false
+                            required:
+                            - num
+                            - title
+                            - status
+                            - id
+                            - isPullRequest
+                            - participating
+                            additionalProperties: false
+                        required:
+                        - type
+                        - updatedAt
+                        - read
+                        - repo
+                        - discussion
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          type:
+                            const: post
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                          read:
+                            type: boolean
+                          discussionEventId:
+                            type: string
+                          post:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              slug:
+                                type: string
+                              authorName:
+                                type: string
+                              title:
+                                type: string
+                              participating:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    _id:
+                                      type: string
+                                      minLength: 24
+                                      maxLength: 24
+                                      pattern: ^[0-9a-f]{24}$
+                                    avatar:
+                                      type: string
+                                    user:
+                                      type: string
+                                  required:
+                                  - _id
+                                  - avatar
+                                  - user
+                                  additionalProperties: false
+                            required:
+                            - id
+                            - slug
+                            - authorName
+                            - title
+                            - participating
+                            additionalProperties: false
+                        required:
+                        - type
+                        - updatedAt
+                        - read
+                        - post
+                        additionalProperties: false
+                      - type: object
+                        properties:
+                          type:
+                            const: community_blog
+                          updatedAt:
+                            type: string
+                            format: date-time
+                            pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                          read:
+                            type: boolean
+                          discussionEventId:
+                            type: string
+                          blog:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              slug:
+                                type: string
+                              title:
+                                type: string
+                              canonical:
+                                type: boolean
+                              authorName:
+                                type: string
+                              participating:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    _id:
+                                      type: string
+                                      minLength: 24
+                                      maxLength: 24
+                                      pattern: ^[0-9a-f]{24}$
+                                    avatar:
+                                      type: string
+                                    user:
+                                      type: string
+                                  required:
+                                  - _id
+                                  - avatar
+                                  - user
+                                  additionalProperties: false
+                            required:
+                            - id
+                            - slug
+                            - title
+                            - canonical
+                            - participating
+                            additionalProperties: false
+                        required:
+                        - type
+                        - updatedAt
+                        - read
+                        - blog
+                        additionalProperties: false
+                  count:
+                    type: object
+                    properties:
+                      view:
+                        type: number
+                      unread:
+                        type: number
+                      all:
+                        type: number
+                    required:
+                    - view
+                    - unread
+                    - all
+                    additionalProperties: false
+                  start:
+                    type: number
+                required:
+                - notifications
+                - count
+                - start
+                additionalProperties: false
+          description: The notifications for the user
+      parameters:
+      - name: p
+        in: query
+        schema:
+          default: 0
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        required: false
+      - name: readStatus
+        in: query
+        schema:
+          default: all
+          enum:
+          - all
+          - unread
+        required: false
+      - name: repoType
+        in: query
+        schema:
+          enum:
+          - dataset
+          - model
+          - space
+          - bucket
+          - kernel
+        required: false
+      - name: repoName
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: postAuthor
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: paperId
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: articleId
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: mention
+        in: query
+        schema:
+          default: all
+          enum:
+          - all
+          - participating
+          - mentions
+        required: false
+      - name: lastUpdate
+        in: query
+        schema:
+          type: string
+          format: date-time
+          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+        required: false
+    delete:
+      description: Delete notifications, either by specifying discussionIds or by applying to all notifications with search parameters
+      summary: Delete notifications
+      tags:
+      - notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                discussionIds:
+                  minItems: 1
+                  type: array
+                  items:
+                    type: string
+                    minLength: 24
+                    maxLength: 24
+                    pattern: ^[0-9a-f]{24}$
+      parameters:
+      - name: p
+        in: query
+        schema:
+          default: 0
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        required: false
+      - name: readStatus
+        in: query
+        schema:
+          default: all
+          enum:
+          - all
+          - unread
+        required: false
+      - name: repoType
+        in: query
+        schema:
+          enum:
+          - dataset
+          - model
+          - space
+          - bucket
+          - kernel
+        required: false
+      - name: repoName
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: postAuthor
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: paperId
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: articleId
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: mention
+        in: query
+        schema:
+          default: all
+          enum:
+          - all
+          - participating
+          - mentions
+        required: false
+      - name: lastUpdate
+        in: query
+        schema:
+          type: string
+          format: date-time
+          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+        required: false
+      - name: applyToAll
+        in: query
+        schema:
+          default: false
+        required: false
+  /api/notifications/mark-as-read:
+    post:
+      description: Mark discussions as read or unread. If `applyToAll` is true, all notifications for the user matching the search parameters will be marked as read or unread.
+      summary: Change read status
+      tags:
+      - notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                discussionIds:
+                  default: []
+                  type: array
+                  items:
+                    type: string
+                read:
+                  default: true
+                  type: boolean
+      parameters:
+      - name: p
+        in: query
+        schema:
+          default: 0
+          type: integer
+          minimum: 0
+          maximum: 9007199254740991
+        required: false
+      - name: readStatus
+        in: query
+        schema:
+          default: all
+          enum:
+          - all
+          - unread
+        required: false
+      - name: repoType
+        in: query
+        schema:
+          enum:
+          - dataset
+          - model
+          - space
+          - bucket
+          - kernel
+        required: false
+      - name: repoName
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: postAuthor
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: paperId
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: articleId
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: mention
+        in: query
+        schema:
+          default: all
+          enum:
+          - all
+          - participating
+          - mentions
+        required: false
+      - name: lastUpdate
+        in: query
+        schema:
+          type: string
+          format: date-time
+          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+        required: false
+      - name: applyToAll
+        in: query
+        schema:
+          default: false
+        required: false
+  /api/settings/notifications:
+    patch:
+      description: Update notification settings for the user
+      summary: Update notification settings
+      tags:
+      - notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                notifications:
+                  type: object
+                  properties:
+                    announcements:
+                      type: boolean
+                    arxiv_paper_activity:
+                      type: boolean
+                    daily_papers_digest:
+                      type: boolean
+                    discussions_participating:
+                      type: boolean
+                    discussions_watched:
+                      type: boolean
+                    gated_user_access_request:
+                      type: boolean
+                    inference_endpoint_status:
+                      type: boolean
+                    launch_autonlp:
+                      type: boolean
+                    launch_spaces:
+                      type: boolean
+                    launch_prepaid_credits:
+                      type: boolean
+                    launch_training_cluster:
+                      type: boolean
+                    org_request:
+                      type: boolean
+                    org_suggestions:
+                      type: boolean
+                    org_verified_suggestions:
+                      type: boolean
+                    org_suggestions_to_create:
+                      type: boolean
+                    posts_participating:
+                      type: boolean
+                    user_follows:
+                      type: boolean
+                    secret_detected:
+                      type: boolean
+                    web_discussions_participating:
+                      type: boolean
+                    web_discussions_watched:
+                      type: boolean
+                    web_posts_participating:
+                      type: boolean
+                    product_updates_after:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    api_inference_sunset:
+                      type: boolean
+                    locked_out:
+                      type: boolean
+                prepaidAmount:
+                  description: To be provided when enabling launch_prepaid_credits
+                  type: string
+                  maxLength: 24
+              required:
+              - notifications
+  /api/settings/watch:
+    patch:
+      description: Update watch settings for the user. Get notified when discussions happen on your watched items.
+      summary: Update watch settings
+      tags:
+      - notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                delete:
+                  default: []
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        enum:
+                        - org
+                        - user
+                        - repo
+                    required:
+                    - id
+                    - type
+                add:
+                  default: []
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        enum:
+                        - org
+                        - user
+                        - repo
+                    required:
+                    - id
+                    - type
+components:
+  schemas:
+    RepoId:
+      $schema: https://json-schema.org/draft/2020-12/schema
+      type: object
+      properties:
+        name:
+          examples:
+          - deepseek-ai/DeepSeek-R1
+          - black-forest-labs/FLUX.1-dev
+          type: string
+        type:
+          enum:
+          - dataset
+          - model
+          - space
+          - bucket
+          - kernel
+      required:
+      - name
+      - type
+      additionalProperties: false
+      id: RepoId
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

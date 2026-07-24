@@ -1,0 +1,1383 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning orgs API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: orgs
+  x-displayName: Organizations
+  description: The following endpoints let you interact with Hub Organizations and their members.
+paths:
+  /api/organizations/{name}/settings/tokens/revoke:
+    post:
+      description: An org admin can revoke a token's access to the org. The token itself isn't deleted, it still works outside the org. Requires the raw token value. Enterprise only.
+      summary: Revoke a member's access token from the organization
+      tags:
+      - orgs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                token:
+                  type: string
+                  pattern: ^hf_.*
+              required:
+              - token
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/settings/repositories:
+    get:
+      summary: List organization repositories with storage info
+      tags:
+      - orgs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    type:
+                      enum:
+                      - dataset
+                      - model
+                      - space
+                      - bucket
+                      - kernel
+                    updatedAt:
+                      type: string
+                    visibility:
+                      enum:
+                      - public
+                      - private
+                      - protected
+                    storage:
+                      type: number
+                    storagePercent:
+                      type: number
+                  required:
+                  - id
+                  - type
+                  - updatedAt
+                  - visibility
+                  - storage
+                  - storagePercent
+                  additionalProperties: false
+          description: Organization repositories with storage usage
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: search
+        in: query
+        schema:
+          description: Filter repositories by name (case-insensitive substring match)
+          type: string
+        required: false
+      - name: type
+        in: query
+        schema:
+          description: Filter by repository type
+          enum:
+          - dataset
+          - model
+          - space
+          - bucket
+          - kernel
+        required: false
+      - name: limit
+        in: query
+        schema:
+          description: Max number of repositories to return
+          type: integer
+          minimum: 1
+          maximum: 9007199254740991
+        required: false
+      - name: sort
+        in: query
+        schema:
+          description: 'Sort field (default: storage)'
+          default: storage
+          enum:
+          - storage
+          - updatedAt
+        required: false
+      - name: direction
+        in: query
+        schema:
+          description: 'Sort direction (default: desc)'
+          default: desc
+          enum:
+          - asc
+          - desc
+        required: false
+  /api/organizations/{name}/audit-log/export:
+    get:
+      description: Export the audit log events in JSON format for a Team or Enterprise organization. The export is limited to the last 100,000 events.
+      summary: Export the audit log
+      tags:
+      - orgs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      minLength: 24
+                      maxLength: 24
+                      pattern: ^[0-9a-f]{24}$
+                    createdAt:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    type:
+                      enum:
+                      - billing.update_payment_method
+                      - billing.create_customer
+                      - billing.remove_payment_method
+                      - billing.aws_add
+                      - billing.aws_remove
+                      - billing.gcp_add
+                      - billing.gcp_remove
+                      - billing.marketplace_approve
+                      - billing.cancel_subscription
+                      - billing.renew_subscription
+                      - billing.start_subscription
+                      - billing.un_cancel_subscription
+                      - billing.update_subscription
+                      - billing.update_subscription_plan
+                      - collection.create
+                      - collection.delete
+                      - org.add_user
+                      - org.change_role
+                      - org.create
+                      - org.delete
+                      - org.restore
+                      - org.invite_user
+                      - org.invite.accept
+                      - org.invite.email
+                      - org.join.from_domain
+                      - org.join.automatic
+                      - org.leave
+                      - org.remove_user
+                      - org.rename
+                      - org.rotate_token
+                      - org.sso_login
+                      - org.sso_join
+                      - org.update_join_settings
+                      - org.update_settings
+                      - org.token_approval.enabled
+                      - org.token_approval.disabled
+                      - org.token_approval.authorization_request
+                      - org.token_approval.authorization_request.authorized
+                      - org.token_approval.authorization_request.revoked
+                      - org.token_approval.authorization_request.denied
+                      - org.custom_role.create
+                      - org.custom_role.update
+                      - org.custom_role.delete
+                      - repo.add_secrets
+                      - repo.remove_secrets
+                      - repo.add_secret
+                      - repo.update_secret
+                      - repo.remove_secret
+                      - repo.create
+                      - repo.delete
+                      - repo.disable
+                      - repo.removeDisable
+                      - repo.duplication
+                      - repo.delete_doi
+                      - repo.move
+                      - repo.update_resource_group
+                      - repo.update_settings
+                      - repo.add_variable
+                      - repo.update_variable
+                      - repo.remove_variable
+                      - repo.add_variables
+                      - repo.remove_variables
+                      - repo.delete_lfs_file
+                      - spaces.add_storage
+                      - spaces.remove_storage
+                      - spaces.set_volumes
+                      - spaces.remove_volumes
+                      - spaces.update_hardware
+                      - spaces.update_sleep_time
+                      - resource_group.create
+                      - resource_group.add_users
+                      - resource_group.remove_users
+                      - resource_group.change_role
+                      - resource_group.settings
+                      - resource_group.delete
+                      - jobs.create
+                      - jobs.cancel
+                      - jobs.update_labels
+                      - scheduled_job.create
+                      - scheduled_job.delete
+                      - scheduled_job.resume
+                      - scheduled_job.suspend
+                      - scheduled_job.run
+                      - scheduled_job.update_schedule
+                      - scheduled_job.update_labels
+                      - oauth.token
+                    data: {}
+                    message:
+                      type: string
+                    ip:
+                      type: string
+                    location:
+                      type: object
+                      properties:
+                        formatted:
+                          type: string
+                        country:
+                          type: string
+                        city:
+                          type: string
+                      required:
+                      - formatted
+                      additionalProperties: false
+                    userAgent:
+                      type: string
+                    author:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          minLength: 24
+                          maxLength: 24
+                          pattern: ^[0-9a-f]{24}$
+                        user:
+                          type: string
+                        avatarUrl:
+                          type: string
+                        type:
+                          enum:
+                          - user
+                          - system
+                        deleted:
+                          type: boolean
+                      required:
+                      - _id
+                      - user
+                      - avatarUrl
+                      - type
+                      additionalProperties: false
+                    token:
+                      type: object
+                      properties:
+                        type:
+                          const: access_token
+                        id:
+                          type: string
+                        role:
+                          enum:
+                          - read
+                          - write
+                          - fineGrained
+                        last4:
+                          type: string
+                        deleted:
+                          type: boolean
+                      required:
+                      - type
+                      - id
+                      - deleted
+                      additionalProperties: false
+                    oauth:
+                      type: object
+                      properties:
+                        clientId:
+                          type: string
+                        name:
+                          type: string
+                      required:
+                      - clientId
+                      additionalProperties: false
+                  required:
+                  - _id
+                  - createdAt
+                  - type
+                  - message
+                  - author
+                  additionalProperties: false
+          description: Array of audit log events
+          headers:
+            Content-Disposition:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+              description: The filename of the exported audit log
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: q
+        in: query
+        schema:
+          examples:
+          - author:huggingface
+          - ip:127.0.0.0
+          - type:repo.create
+          type: string
+        required: false
+  /api/organizations/{name}/settings/network-security:
+    get:
+      description: Get the network security settings for an organization.
+      summary: Get network security settings
+      tags:
+      - orgs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  enforceAuth:
+                    anyOf:
+                    - type: boolean
+                    - const: pending
+                  enforceIpRestriction:
+                    type: boolean
+                  highRateLimits:
+                    anyOf:
+                    - type: boolean
+                    - const: pending
+                  ipRanges:
+                    type: array
+                    items:
+                      type: string
+                  blockedContents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          anyOf:
+                          - enum:
+                            - dataset
+                            - model
+                            - space
+                            - bucket
+                            - kernel
+                          - const: '*'
+                        scope:
+                          type: string
+                          minLength: 1
+                      required:
+                      - resource
+                      - scope
+                      additionalProperties: false
+                  allowedContents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          anyOf:
+                          - enum:
+                            - dataset
+                            - model
+                            - space
+                            - bucket
+                            - kernel
+                          - const: '*'
+                        scope:
+                          type: string
+                          minLength: 1
+                      required:
+                      - resource
+                      - scope
+                      additionalProperties: false
+                required:
+                - enforceAuth
+                - enforceIpRestriction
+                - highRateLimits
+                - ipRanges
+                - blockedContents
+                - allowedContents
+                additionalProperties: false
+          description: Network security settings
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      description: Update the network security settings for an organization.
+      summary: Update network security settings
+      tags:
+      - orgs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                enforceAuth:
+                  type: boolean
+                enforceIpRestriction:
+                  type: boolean
+                highRateLimits:
+                  type: boolean
+                ipRanges:
+                  minItems: 1
+                  type: array
+                  items:
+                    anyOf:
+                    - type: string
+                      format: cidrv4
+                      pattern: ^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\/([0-9]|[1-2][0-9]|3[0-2])$
+                    - type: string
+                      format: cidrv6
+                      pattern: ^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::|([0-9a-fA-F]{1,4})?::([0-9a-fA-F]{1,4}:?){0,6})\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])$
+                blockedContents:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      resource:
+                        anyOf:
+                        - enum:
+                          - dataset
+                          - model
+                          - space
+                          - bucket
+                          - kernel
+                        - const: '*'
+                      scope:
+                        type: string
+                        minLength: 1
+                    required:
+                    - resource
+                    - scope
+                allowedContents:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      resource:
+                        anyOf:
+                        - enum:
+                          - dataset
+                          - model
+                          - space
+                          - bucket
+                          - kernel
+                        - const: '*'
+                      scope:
+                        type: string
+                        minLength: 1
+                    required:
+                    - resource
+                    - scope
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  enforceAuth:
+                    anyOf:
+                    - type: boolean
+                    - const: pending
+                  enforceIpRestriction:
+                    type: boolean
+                  highRateLimits:
+                    anyOf:
+                    - type: boolean
+                    - const: pending
+                  ipRanges:
+                    type: array
+                    items:
+                      type: string
+                  blockedContents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          anyOf:
+                          - enum:
+                            - dataset
+                            - model
+                            - space
+                            - bucket
+                            - kernel
+                          - const: '*'
+                        scope:
+                          type: string
+                          minLength: 1
+                      required:
+                      - resource
+                      - scope
+                      additionalProperties: false
+                  allowedContents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          anyOf:
+                          - enum:
+                            - dataset
+                            - model
+                            - space
+                            - bucket
+                            - kernel
+                          - const: '*'
+                        scope:
+                          type: string
+                          minLength: 1
+                      required:
+                      - resource
+                      - scope
+                      additionalProperties: false
+                required:
+                - enforceAuth
+                - enforceIpRestriction
+                - highRateLimits
+                - ipRanges
+                - blockedContents
+                - allowedContents
+                additionalProperties: false
+          description: Updated network security settings
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/avatar:
+    get:
+      description: 'Retrieve organization avatar. This endpoint returns a JSON with the avatar URL for the organization.
+
+
+        If called with the `Sec-Fetch-Dest: image` header, it instead redirects to the avatar URL'
+      summary: Get avatar
+      tags:
+      - orgs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  avatarUrl:
+                    type: string
+                    format: uri
+                required:
+                - avatarUrl
+                additionalProperties: false
+          description: Avatar URL
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: redirect
+        in: query
+        schema:
+          description: Redirect to the avatar url instead of returning it
+        required: false
+  /api/organizations/{name}/members:
+    get:
+      description: Get a list of members for the organization with optional search and pagination.
+      summary: Get organization members
+      tags:
+      - orgs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    avatarUrl:
+                      type: string
+                    fullname:
+                      type: string
+                    isPro:
+                      type: boolean
+                    user:
+                      type: string
+                    type:
+                      const: user
+                    isFollowing:
+                      type: boolean
+                    _id:
+                      type: string
+                      minLength: 24
+                      maxLength: 24
+                      pattern: ^[0-9a-f]{24}$
+                    role:
+                      anyOf:
+                      - enum:
+                        - admin
+                        - write
+                        - contributor
+                        - read
+                        - no_access
+                      - description: Custom role name
+                        type: string
+                    resourceGroups:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          id:
+                            type: string
+                          numUsers:
+                            type: number
+                          role:
+                            anyOf:
+                            - enum:
+                              - admin
+                              - write
+                              - contributor
+                              - read
+                              - no_access
+                            - description: Custom role name
+                              type: string
+                        required:
+                        - name
+                        - id
+                        - numUsers
+                        - role
+                        additionalProperties: false
+                    twoFaEnabled:
+                      type: boolean
+                    verifiedEmail:
+                      description: The user's SSO email, if the org has a Team or Enterprise plan and the requester is an admin
+                      anyOf:
+                      - type: string
+                      - type: 'null'
+                    isExternalCollaborator:
+                      type: boolean
+                  required:
+                  - avatarUrl
+                  - fullname
+                  - isPro
+                  - user
+                  - type
+                  - _id
+                  additionalProperties: false
+          description: Array of organization members
+          headers:
+            Link:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+              description: Link header for pagination, can contain a `rel="next"` link
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: search
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: email
+        in: query
+        schema:
+          type: string
+          format: email
+          pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+        required: false
+      - name: cursor
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: limit
+        in: query
+        schema:
+          default: 500
+          type: integer
+          minimum: 10
+          maximum: 10000
+        required: false
+  /api/organizations/{name}/members/{username}/role:
+    put:
+      description: Change the role of a member in the organization. Need a paid plan.
+      summary: Change member role
+      tags:
+      - orgs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                role:
+                  anyOf:
+                  - enum:
+                    - admin
+                    - write
+                    - contributor
+                    - read
+                    - no_access
+                  - description: Custom role name
+                    type: string
+                resourceGroups:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-fA-F]{24}$
+                      role:
+                        anyOf:
+                        - enum:
+                          - admin
+                          - write
+                          - contributor
+                          - read
+                          - no_access
+                        - description: Custom role name
+                          type: string
+                    required:
+                    - id
+                    - role
+              required:
+              - role
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/billing/usage:
+    get:
+      description: Get org usage for a given period
+      summary: Get org usage
+      tags:
+      - orgs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  usage:
+                    type: object
+                    propertyNames:
+                      anyOf:
+                      - enum:
+                        - Endpoints
+                        - Spaces
+                      - not: {}
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          entityId:
+                            type: string
+                            minLength: 24
+                            maxLength: 24
+                            pattern: ^[0-9a-f]{24}$
+                          label:
+                            anyOf:
+                            - type: string
+                            - type: 'null'
+                          product:
+                            enum:
+                            - hf/repository-storage
+                            - jobs/cpu-basic/minutes
+                            - jobs/cpu-upgrade/minutes
+                            - jobs/cpu-performance/minutes
+                            - jobs/cpu-xl/minutes
+                            - jobs/sprx8/minutes
+                            - jobs/t4-small/minutes
+                            - jobs/t4-medium/minutes
+                            - jobs/a10g-small/minutes
+                            - jobs/a10g-large/minutes
+                            - jobs/a10g-largex2/minutes
+                            - jobs/a10g-largex4/minutes
+                            - jobs/a100-large/minutes
+                            - jobs/a100x4/minutes
+                            - jobs/a100x8/minutes
+                            - jobs/h100/minutes
+                            - jobs/h100x8/minutes
+                            - jobs/h200/minutes
+                            - jobs/h200x2/minutes
+                            - jobs/h200x4/minutes
+                            - jobs/h200x8/minutes
+                            - jobs/rtx-pro-6000/minutes
+                            - jobs/rtx-pro-6000x2/minutes
+                            - jobs/rtx-pro-6000x4/minutes
+                            - jobs/rtx-pro-6000x8/minutes
+                            - jobs/l4x1/minutes
+                            - jobs/l4x4/minutes
+                            - jobs/l40sx1/minutes
+                            - jobs/l40sx4/minutes
+                            - jobs/l40sx8/minutes
+                            - jobs/v5e-2x4/minutes
+                            - jobs/v5e-2x2/minutes
+                            - jobs/v5e-1x1/minutes
+                            - jobs/inf2x6/minutes
+                            - spaces/zero-a10g/minutes
+                            - spaces/cpu-basic/minutes
+                            - spaces/cpu-upgrade/minutes
+                            - spaces/cpu-performance/minutes
+                            - spaces/cpu-xl/minutes
+                            - spaces/sprx8/minutes
+                            - spaces/t4-small/minutes
+                            - spaces/t4-medium/minutes
+                            - spaces/a10g-small/minutes
+                            - spaces/a10g-large/minutes
+                            - spaces/a10g-largex2/minutes
+                            - spaces/a10g-largex4/minutes
+                            - spaces/a100-large/minutes
+                            - spaces/a100x4/minutes
+                            - spaces/a100x8/minutes
+                            - spaces/h100/minutes
+                            - spaces/h100x8/minutes
+                            - spaces/h200/minutes
+                            - spaces/h200x2/minutes
+                            - spaces/h200x4/minutes
+                            - spaces/h200x8/minutes
+                            - spaces/rtx-pro-6000/minutes
+                            - spaces/rtx-pro-6000x2/minutes
+                            - spaces/rtx-pro-6000x4/minutes
+                            - spaces/rtx-pro-6000x8/minutes
+                            - spaces/l4x1/minutes
+                            - spaces/l4x4/minutes
+                            - spaces/l40sx1/minutes
+                            - spaces/l40sx4/minutes
+                            - spaces/l40sx8/minutes
+                            - spaces/inf2x6/minutes
+                            - spaces/v5e-2x4/minutes
+                            - spaces/v5e-2x2/minutes
+                            - spaces/v5e-1x1/minutes
+                            - spaces/storage-small/minutes
+                            - spaces/storage-medium/minutes
+                            - spaces/storage-large/minutes
+                            - endpoints/azure/intel-xeon/x1
+                            - endpoints/azure/intel-xeon/x2
+                            - endpoints/azure/intel-xeon/x4
+                            - endpoints/azure/intel-xeon/x8
+                            - endpoints/aws/intel-icl/x1
+                            - endpoints/aws/intel-icl/x2
+                            - endpoints/aws/intel-icl/x4
+                            - endpoints/aws/intel-icl/x8
+                            - endpoints/aws/intel-spr/x1
+                            - endpoints/aws/intel-spr/x2
+                            - endpoints/aws/intel-spr/x4
+                            - endpoints/aws/intel-spr/x8
+                            - endpoints/aws/intel-spr/x16
+                            - endpoints/aws/intel-spr-overcommitted/x16
+                            - endpoints/aws/nvidia-t4/x1
+                            - endpoints/aws/nvidia-t4/x4
+                            - endpoints/aws/nvidia-l4/x1
+                            - endpoints/aws/nvidia-l4/x4
+                            - endpoints/aws/nvidia-l40s/x1
+                            - endpoints/aws/nvidia-l40s/x4
+                            - endpoints/aws/nvidia-l40s/x8
+                            - endpoints/aws/nvidia-a10g/x1
+                            - endpoints/aws/nvidia-a10g/x4
+                            - endpoints/aws/nvidia-a100/x1
+                            - endpoints/aws/nvidia-a100/x2
+                            - endpoints/aws/nvidia-a100/x4
+                            - endpoints/aws/nvidia-a100/x8
+                            - endpoints/aws/nvidia-h100/x1
+                            - endpoints/aws/nvidia-h100/x2
+                            - endpoints/aws/nvidia-h100/x4
+                            - endpoints/aws/nvidia-h100/x8
+                            - endpoints/aws/nvidia-h200/x1
+                            - endpoints/aws/nvidia-h200/x2
+                            - endpoints/aws/nvidia-h200/x4
+                            - endpoints/aws/nvidia-h200/x8
+                            - endpoints/aws/nvidia-b200/x1
+                            - endpoints/aws/nvidia-b200/x2
+                            - endpoints/aws/nvidia-b200/x4
+                            - endpoints/aws/nvidia-b200/x8
+                            - endpoints/aws/nvidia-rtx-pro-6000/x1
+                            - endpoints/aws/nvidia-rtx-pro-6000/x2
+                            - endpoints/aws/nvidia-rtx-pro-6000/x4
+                            - endpoints/aws/nvidia-rtx-pro-6000/x8
+                            - endpoints/aws/inf2/x1
+                            - endpoints/aws/inf2/x1-large
+                            - endpoints/aws/inf2/x12
+                            - endpoints/gcp/intel-spr/x1
+                            - endpoints/gcp/intel-spr/x2
+                            - endpoints/gcp/intel-spr/x4
+                            - endpoints/gcp/intel-spr/x8
+                            - endpoints/gcp/nvidia-t4/x1
+                            - endpoints/gcp/nvidia-l4/x1
+                            - endpoints/gcp/nvidia-l4/x4
+                            - endpoints/gcp/nvidia-a100/x1
+                            - endpoints/gcp/nvidia-a100/x2
+                            - endpoints/gcp/nvidia-a100/x4
+                            - endpoints/gcp/nvidia-a100/x8
+                            - endpoints/gcp/nvidia-h100/x1
+                            - endpoints/gcp/nvidia-h100/x2
+                            - endpoints/gcp/nvidia-h100/x4
+                            - endpoints/gcp/nvidia-h100/x8
+                            - endpoints/gcp/v5e/1x1
+                            - endpoints/gcp/v5e/2x2
+                            - endpoints/gcp/v5e/2x4
+                          quantity:
+                            type: number
+                          startedAt:
+                            type: string
+                            format: date-time
+                            pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                          stoppedAt:
+                            anyOf:
+                            - type: string
+                              format: date-time
+                              pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                            - type: 'null'
+                          freeGrant:
+                            type: boolean
+                          productPrettyName:
+                            type: string
+                          unitLabel:
+                            anyOf:
+                            - type: string
+                            - type: 'null'
+                          totalCostMicroUSD:
+                            type: number
+                          unitCostMicroUSD:
+                            type: number
+                          active:
+                            type: boolean
+                        required:
+                        - entityId
+                        - label
+                        - product
+                        - quantity
+                        - productPrettyName
+                        - unitLabel
+                        - totalCostMicroUSD
+                        - unitCostMicroUSD
+                        - active
+                        additionalProperties: false
+                  period:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      entityId:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      entityType:
+                        enum:
+                        - user
+                        - org
+                      entityName:
+                        type: string
+                      periodStart:
+                        type: string
+                        format: date-time
+                        pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                      periodEnd:
+                        type: string
+                        format: date-time
+                        pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                      invoice:
+                        anyOf:
+                        - type: object
+                          properties:
+                            type:
+                              const: stripe
+                            id:
+                              type: string
+                            amountDueCents:
+                              type: number
+                            totalCents:
+                              type: number
+                            status:
+                              enum:
+                              - draft
+                              - open
+                              - paid
+                              - uncollectible
+                              - void
+                              - unpaid
+                            dueDate:
+                              type: string
+                              format: date-time
+                              pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                            collectionMethod:
+                              enum:
+                              - charge_automatically
+                              - send_invoice
+                          required:
+                          - type
+                          - id
+                          - amountDueCents
+                          - totalCents
+                          - status
+                          - dueDate
+                          additionalProperties: false
+                        - type: object
+                          properties:
+                            type:
+                              const: no-invoice
+                            id:
+                              const: no-invoice
+                          required:
+                          - type
+                          - id
+                          additionalProperties: false
+                      charges:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              minLength: 24
+                              maxLength: 24
+                              pattern: ^[0-9a-f]{24}$
+                            createdAt:
+                              type: string
+                              format: date-time
+                              pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                            dueDate:
+                              type: string
+                              format: date-time
+                              pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                            usageAtChargeTimeMicroUSD:
+                              type: number
+                            amountCents:
+                              type: number
+                            billedThrough:
+                              enum:
+                              - stripe-payment-intent
+                            paymentIntentId:
+                              type: string
+                            paymentIntentStatus:
+                              enum:
+                              - canceled
+                              - processing
+                              - requires_action
+                              - requires_capture
+                              - requires_confirmation
+                              - requires_payment_method
+                              - succeeded
+                          required:
+                          - _id
+                          - createdAt
+                          - dueDate
+                          - usageAtChargeTimeMicroUSD
+                          - amountCents
+                          - billedThrough
+                          - paymentIntentId
+                          - paymentIntentStatus
+                          additionalProperties: false
+                    required:
+                    - _id
+                    - entityId
+                    - entityType
+                    - entityName
+                    - periodStart
+                    - periodEnd
+                    additionalProperties: false
+                required:
+                - usage
+                - period
+                additionalProperties: false
+          description: Usage and period information
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: periodId
+        in: query
+        schema:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-f]{24}$
+        required: false
+  /api/organizations/{name}/billing/usage-v2:
+    get:
+      description: Get org usage for a given period
+      summary: Get org usage
+      tags:
+      - orgs
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: integer
+          exclusiveMinimum: 0
+          maximum: 9007199254740991
+        required: true
+      - name: endDate
+        in: query
+        schema:
+          type: integer
+          exclusiveMinimum: 0
+          maximum: 9007199254740991
+        required: true
+  /api/organizations/{name}/billing/usage-by-resource-group:
+    get:
+      description: Get org usage breakdown per resource group for a given period (max 3 months)
+      summary: Get org usage by resource group
+      tags:
+      - orgs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  currency:
+                    type: string
+                  resourceGroups:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          anyOf:
+                          - type: string
+                          - type: 'null'
+                        name:
+                          anyOf:
+                          - type: string
+                          - type: 'null'
+                        storage:
+                          type: object
+                          properties:
+                            privateGB:
+                              type: number
+                            publicGB:
+                              type: number
+                          required:
+                          - privateGB
+                          - publicGB
+                          additionalProperties: false
+                        inference:
+                          type: object
+                          properties:
+                            requestCount:
+                              type: number
+                            costCents:
+                              type: number
+                          required:
+                          - requestCount
+                          - costCents
+                          additionalProperties: false
+                        compute:
+                          type: object
+                          properties:
+                            spaces:
+                              type: object
+                              properties:
+                                uptimeSec:
+                                  type: number
+                                costCents:
+                                  type: number
+                              required:
+                              - uptimeSec
+                              - costCents
+                              additionalProperties: false
+                            endpoints:
+                              type: object
+                              properties:
+                                uptimeSec:
+                                  type: number
+                                costCents:
+                                  type: number
+                              required:
+                              - uptimeSec
+                              - costCents
+                              additionalProperties: false
+                            jobs:
+                              type: object
+                              properties:
+                                uptimeSec:
+                                  type: number
+                                costCents:
+                                  type: number
+                              required:
+                              - uptimeSec
+                              - costCents
+                              additionalProperties: false
+                          required:
+                          - spaces
+                          - endpoints
+                          - jobs
+                          additionalProperties: false
+                      required:
+                      - id
+                      - name
+                      - storage
+                      - inference
+                      - compute
+                      additionalProperties: false
+                required:
+                - currency
+                - resourceGroups
+                additionalProperties: false
+          description: Org usage breakdown per resource group
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+        required: true
+      - name: endDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+          pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+        required: true
+  /api/organizations/{name}/billing/usage/live:
+    get:
+      description: Get live usage for org
+      summary: Stream usage
+      tags:
+      - orgs
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/socials:
+    get:
+      description: Get an organization's social media handles
+      summary: Get social handles
+      tags:
+      - orgs
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  _id:
+                    type: string
+                  org:
+                    type: string
+                  socialHandles:
+                    type: object
+                    properties:
+                      twitter:
+                        type: string
+                      github:
+                        type: string
+                      linkedin:
+                        type: string
+                    additionalProperties: false
+                required:
+                - _id
+                - org
+                - socialHandles
+                additionalProperties: false
+          description: The organization's social media handles. Only includes handles that the organization has provided.
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/avatars/{namespace}:
+    get:
+      description: Display the avatar for any user or organization. This endpoint redirects to the avatar URL for either a user or an organization
+      summary: Get avatar
+      tags:
+      - orgs
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

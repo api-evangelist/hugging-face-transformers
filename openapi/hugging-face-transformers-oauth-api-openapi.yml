@@ -1,0 +1,459 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning oauth API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: oauth
+  x-displayName: OAuth
+  description: The following endpoints are for use with OAuth.
+paths:
+  /oauth/register:
+    post:
+      summary: Register a new OAuth app
+      tags:
+      - oauth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                redirect_uris:
+                  type: array
+                  items:
+                    type: string
+                    format: uri
+                client_name:
+                  type: string
+                client_uri:
+                  type: string
+                  format: uri
+                logo_uri:
+                  type: string
+                  format: uri
+                scope:
+                  type: string
+                contacts:
+                  type: array
+                  items:
+                    type: string
+                token_endpoint_auth_method:
+                  enum:
+                  - client_secret_basic
+                  - none
+                  - client_secret_post
+                software_id:
+                  type: string
+                software_version:
+                  type: string
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  client_id:
+                    type: string
+                  client_secret:
+                    type: string
+                  client_id_issued_at:
+                    type: number
+                  client_secret_expires_at:
+                    type: number
+                  redirect_uris:
+                    type: array
+                    items:
+                      type: string
+                      format: uri
+                  client_name:
+                    type: string
+                  client_uri:
+                    type: string
+                    format: uri
+                  logo_uri:
+                    type: string
+                    format: uri
+                  scope:
+                    type: string
+                  grant_types:
+                    readOnly: true
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:oauth:grant-type:token-exchange
+                      - urn:ietf:params:oauth:grant-type:device_code
+                      - authorization_code
+                      - refresh_token
+                  contacts:
+                    type: array
+                    items:
+                      type: string
+                  token_endpoint_auth_method:
+                    enum:
+                    - client_secret_basic
+                    - none
+                    - client_secret_post
+                  software_id:
+                    type: string
+                  software_version:
+                    type: string
+                required:
+                - client_id
+                - client_id_issued_at
+                - client_secret_expires_at
+                - redirect_uris
+                - scope
+                - grant_types
+                additionalProperties: false
+          description: Details of the OAuth app that was created
+  /oauth/device:
+    post:
+      summary: Initiate device authorization
+      tags:
+      - oauth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              description: Initiate device authorization as per https://datatracker.ietf.org/doc/html/rfc8628#section-3.1
+              type: object
+              properties:
+                client_id:
+                  type: string
+                scope:
+                  type: string
+              required:
+              - client_id
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  device_code:
+                    type: string
+                  user_code:
+                    type: string
+                  verification_uri:
+                    type: string
+                  expires_in:
+                    type: number
+                required:
+                - device_code
+                - user_code
+                - verification_uri
+                - expires_in
+                additionalProperties: false
+          description: Details of the device code that was created as per https://datatracker.ietf.org/doc/html/rfc8628#section-3.2
+  /oauth/userinfo:
+    get:
+      description: Get information about the user. Only available through oauth access tokens. Information varies depending on the scope of the oauth app and what permissions the user granted to the oauth app.
+      summary: Get user info
+      tags:
+      - oauth
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  sub:
+                    description: ID of the user
+                    type: string
+                  name:
+                    description: Full name of the user
+                    type: string
+                  preferred_username:
+                    description: Username of the user
+                    type: string
+                  profile:
+                    description: Profile URL of the user
+                    type: string
+                    format: uri
+                  picture:
+                    description: Avatar URL of the user
+                    type: string
+                    format: uri
+                  website:
+                    description: Website of the user
+                    type: string
+                    format: uri
+                  email:
+                    description: Email of the user
+                    type: string
+                  email_verified:
+                    description: Whether the email is verified
+                    type: boolean
+                  isPro:
+                    description: Whether the user is a Pro user
+                    type: boolean
+                  canPay:
+                    description: Whether the user has access to billing. You should check `canPay` first.
+                    type: boolean
+                  billingMode:
+                    description: Whether the user is on prepaid or postpaid billing
+                    enum:
+                    - prepaid
+                    - postpaid
+                  orgs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sub:
+                          description: ID of the organization
+                          type: string
+                        name:
+                          description: Name of the organization
+                          type: string
+                        picture:
+                          description: Avatar URL of the organization
+                          type: string
+                          format: uri
+                        preferred_username:
+                          description: Username of the organization
+                          type: string
+                        plan:
+                          enum:
+                          - team
+                          - enterprise
+                          - plus
+                          - academia
+                        canPay:
+                          type: boolean
+                        billingMode:
+                          enum:
+                          - prepaid
+                          - postpaid
+                        roleInOrg:
+                          anyOf:
+                          - enum:
+                            - admin
+                            - write
+                            - contributor
+                            - read
+                            - no_access
+                          - description: Custom role name
+                            type: string
+                        pendingSSO:
+                          deprecated: true
+                          type: boolean
+                        missingMFA:
+                          deprecated: true
+                          type: boolean
+                        securityRestrictions:
+                          description: Current security restrictions for accessing data in this organization with current authentication method
+                          type: array
+                          items:
+                            enum:
+                            - mfa
+                            - token-policy
+                            - token-revoked
+                            - sso
+                            - ip
+                        resourceGroups:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              sub:
+                                type: string
+                              name:
+                                type: string
+                              role:
+                                anyOf:
+                                - enum:
+                                  - admin
+                                  - write
+                                  - contributor
+                                  - read
+                                  - no_access
+                                - description: Custom role name
+                                  type: string
+                            required:
+                            - sub
+                            - name
+                            - role
+                            additionalProperties: false
+                      required:
+                      - sub
+                      - name
+                      - picture
+                      - preferred_username
+                      additionalProperties: false
+                required:
+                - sub
+                - isPro
+                - orgs
+                additionalProperties: false
+          description: User info
+    post:
+      description: Get information about the user. Only available through oauth access tokens. Information varies depending on the scope of the oauth app and what permissions the user granted to the oauth app.
+      summary: Get user info
+      tags:
+      - oauth
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  sub:
+                    description: ID of the user
+                    type: string
+                  name:
+                    description: Full name of the user
+                    type: string
+                  preferred_username:
+                    description: Username of the user
+                    type: string
+                  profile:
+                    description: Profile URL of the user
+                    type: string
+                    format: uri
+                  picture:
+                    description: Avatar URL of the user
+                    type: string
+                    format: uri
+                  website:
+                    description: Website of the user
+                    type: string
+                    format: uri
+                  email:
+                    description: Email of the user
+                    type: string
+                  email_verified:
+                    description: Whether the email is verified
+                    type: boolean
+                  isPro:
+                    description: Whether the user is a Pro user
+                    type: boolean
+                  canPay:
+                    description: Whether the user has access to billing. You should check `canPay` first.
+                    type: boolean
+                  billingMode:
+                    description: Whether the user is on prepaid or postpaid billing
+                    enum:
+                    - prepaid
+                    - postpaid
+                  orgs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sub:
+                          description: ID of the organization
+                          type: string
+                        name:
+                          description: Name of the organization
+                          type: string
+                        picture:
+                          description: Avatar URL of the organization
+                          type: string
+                          format: uri
+                        preferred_username:
+                          description: Username of the organization
+                          type: string
+                        plan:
+                          enum:
+                          - team
+                          - enterprise
+                          - plus
+                          - academia
+                        canPay:
+                          type: boolean
+                        billingMode:
+                          enum:
+                          - prepaid
+                          - postpaid
+                        roleInOrg:
+                          anyOf:
+                          - enum:
+                            - admin
+                            - write
+                            - contributor
+                            - read
+                            - no_access
+                          - description: Custom role name
+                            type: string
+                        pendingSSO:
+                          deprecated: true
+                          type: boolean
+                        missingMFA:
+                          deprecated: true
+                          type: boolean
+                        securityRestrictions:
+                          description: Current security restrictions for accessing data in this organization with current authentication method
+                          type: array
+                          items:
+                            enum:
+                            - mfa
+                            - token-policy
+                            - token-revoked
+                            - sso
+                            - ip
+                        resourceGroups:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              sub:
+                                type: string
+                              name:
+                                type: string
+                              role:
+                                anyOf:
+                                - enum:
+                                  - admin
+                                  - write
+                                  - contributor
+                                  - read
+                                  - no_access
+                                - description: Custom role name
+                                  type: string
+                            required:
+                            - sub
+                            - name
+                            - role
+                            additionalProperties: false
+                      required:
+                      - sub
+                      - name
+                      - picture
+                      - preferred_username
+                      additionalProperties: false
+                required:
+                - sub
+                - isPro
+                - orgs
+                additionalProperties: false
+          description: User info
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

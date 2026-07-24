@@ -1,0 +1,3248 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning scim API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: scim
+  x-displayName: SCIM
+  description: "Use the SCIM API to control and manage your hub Enterprise organization manage members' access.\n## Authentication\n\n- Must be organization owner\n- Use Access token with write permission on organization\n- Organization must be Enterprise Plus\n\n## Key Attribute Matching\n\n- Microsoft Entra ID (Azure AD)\n\t* SAML: `http://schemas.microsoft.com/identity/claims/objectidentifier`\n\t* SCIM: `externalId`\n- Other Identity Providers\n\t* SAML: `NameID` or `unique identifier`\n\t* SCIM: `externalId`\n\n## Supported SCIM User Attributes\n\n| Attribute | Description |\n|---|---|\n| `userName` | Username for the user |\n| `name.givenName` | First name |\n| `name.familyName` | Last name |\n| `emails` | Array of user emails; we don't support email types |\n| `externalId` | IDP provider's unique identifier |\n| `id` | Hugging Face SCIM endpoint identifier |\n| `active` | Boolean for provisioning status |\n\n"
+paths:
+  /api/organizations/{name}/scim/v2/ServiceProviderConfig:
+    get:
+      description: Returns the SCIM 2.0 Service Provider configuration, describing the server's capabilities and supported authentication schemes.
+      summary: Get SCIM Service Provider Configuration
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    type: array
+                    items:
+                      type: string
+                  documentationUri:
+                    type: string
+                  patch:
+                    type: object
+                    properties:
+                      supported:
+                        type: boolean
+                    required:
+                    - supported
+                    additionalProperties: false
+                  bulk:
+                    type: object
+                    properties:
+                      supported:
+                        type: boolean
+                      maxOperations:
+                        type: number
+                      maxPayloadSize:
+                        type: number
+                    required:
+                    - supported
+                    - maxOperations
+                    - maxPayloadSize
+                    additionalProperties: false
+                  filter:
+                    type: object
+                    properties:
+                      supported:
+                        type: boolean
+                      maxResults:
+                        type: number
+                    required:
+                    - supported
+                    - maxResults
+                    additionalProperties: false
+                  changePassword:
+                    type: object
+                    properties:
+                      supported:
+                        type: boolean
+                    required:
+                    - supported
+                    additionalProperties: false
+                  sort:
+                    type: object
+                    properties:
+                      supported:
+                        type: boolean
+                    required:
+                    - supported
+                    additionalProperties: false
+                  etag:
+                    type: object
+                    properties:
+                      supported:
+                        type: boolean
+                    required:
+                    - supported
+                    additionalProperties: false
+                  authenticationSchemes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                        name:
+                          type: string
+                        description:
+                          type: string
+                        specUri:
+                          type: string
+                        documentationUri:
+                          type: string
+                      required:
+                      - type
+                      - name
+                      - description
+                      - specUri
+                      - documentationUri
+                      additionalProperties: false
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        type: string
+                      location:
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - documentationUri
+                - patch
+                - bulk
+                - filter
+                - changePassword
+                - sort
+                - etag
+                - authenticationSchemes
+                - meta
+                additionalProperties: false
+          description: SCIM Service Provider Configuration
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim/v2/ResourceTypes:
+    get:
+      description: Returns the list of SCIM 2.0 resource types supported by this server (User and Group).
+      summary: Get SCIM Resource Types
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    schemas:
+                      type: array
+                      items:
+                        type: string
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    endpoint:
+                      type: string
+                    schema:
+                      type: string
+                    meta:
+                      type: object
+                      properties:
+                        resourceType:
+                          type: string
+                        location:
+                          type: string
+                      required:
+                      - resourceType
+                      - location
+                      additionalProperties: false
+                  required:
+                  - schemas
+                  - id
+                  - name
+                  - description
+                  - endpoint
+                  - schema
+                  - meta
+                  additionalProperties: false
+          description: SCIM Resource Types
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim/v2/Schemas:
+    get:
+      description: Returns the SCIM 2.0 schema definitions for User and Group resources.
+      summary: Get SCIM Schemas
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    schemas:
+                      type: array
+                      items:
+                        type: string
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    attributes:
+                      type: array
+                      items: {}
+                    meta:
+                      type: object
+                      properties:
+                        resourceType:
+                          type: string
+                        location:
+                          type: string
+                      required:
+                      - resourceType
+                      - location
+                      additionalProperties: false
+                  required:
+                  - schemas
+                  - id
+                  - name
+                  - description
+                  - attributes
+                  - meta
+                  additionalProperties: false
+          description: SCIM Schema Definitions
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim/v2/Schemas/{schemaId}:
+    get:
+      description: Returns a single SCIM 2.0 schema definition by its schema URI.
+      summary: Get SCIM Schema by ID
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    type: array
+                    items:
+                      type: string
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  attributes:
+                    type: array
+                    items: {}
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        type: string
+                      location:
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - name
+                - description
+                - attributes
+                - meta
+                additionalProperties: false
+          description: SCIM Schema Definition
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: schemaId
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim/v2/Users:
+    get:
+      description: Retrieves a paginated list of all organization members who have been set up, including disabled users. If you provide the filter parameter, the resources for all matching members are returned.
+      summary: List SCIM users
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                  totalResults:
+                    examples:
+                    - 100
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  itemsPerPage:
+                    examples:
+                    - 100
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  startIndex:
+                    examples:
+                    - 1
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  Resources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        schemas:
+                          examples:
+                          - - urn:ietf:params:scim:schemas:core:2.0:User
+                          minItems: 1
+                          maxItems: 1
+                          type: array
+                          items:
+                            enum:
+                            - urn:ietf:params:scim:schemas:core:2.0:User
+                        id:
+                          examples:
+                          - '123'
+                          type: string
+                        externalId:
+                          anyOf:
+                          - examples:
+                            - unique-identifier
+                            type: string
+                          - type: 'null'
+                        userName:
+                          examples:
+                          - username
+                          type: string
+                        displayName:
+                          examples:
+                          - username (equals to userName)
+                          type: string
+                        name:
+                          type: object
+                          properties:
+                            givenName:
+                              examples:
+                              - John
+                              type: string
+                            familyName:
+                              examples:
+                              - Doe
+                              type: string
+                            formatted:
+                              examples:
+                              - John Doe
+                              type: string
+                          required:
+                          - givenName
+                          - familyName
+                          - formatted
+                          additionalProperties: false
+                        emails:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                examples:
+                                - john.doe@example.com
+                                type: string
+                              primary:
+                                examples:
+                                - true
+                                type: boolean
+                              type:
+                                examples:
+                                - work
+                                description: We only support work emails, other types are converted to work
+                                enum:
+                                - work
+                            required:
+                            - value
+                            - primary
+                            additionalProperties: false
+                        active:
+                          examples:
+                          - true
+                          type: boolean
+                        meta:
+                          type: object
+                          properties:
+                            resourceType:
+                              examples:
+                              - User
+                              enum:
+                              - User
+                            location:
+                              examples:
+                              - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                              type: string
+                          required:
+                          - resourceType
+                          - location
+                          additionalProperties: false
+                      required:
+                      - schemas
+                      - id
+                      - externalId
+                      - userName
+                      - displayName
+                      - name
+                      - emails
+                      - active
+                      - meta
+                      additionalProperties: false
+                required:
+                - schemas
+                - totalResults
+                - itemsPerPage
+                - startIndex
+                - Resources
+                additionalProperties: false
+          description: SCIM User List
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startIndex
+        in: query
+        schema:
+          default: 1
+          type: number
+          minimum: 1
+        required: false
+      - name: count
+        in: query
+        schema:
+          default: 1000
+          type: number
+          minimum: 1
+          maximum: 1000
+        required: false
+      - name: filter
+        in: query
+        schema:
+          description: 'You can filter results using the equals operator (eq) to find items that match specific values like `id`, `userName`, `emails`, and `externalId`. For example, to find a user named Bob, use this search: `?filter=userName%20eq%20Bob`'
+          default: ''
+          type: string
+        required: false
+    post:
+      description: Creates a new user in the organization. If the user already exists, only `active` field will be updated to provision the user.
+      summary: Create a SCIM user
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:schemas:core:2.0:User
+                  minItems: 1
+                  type: array
+                  items:
+                    type: string
+                userName:
+                  description: 'Username for the user, it should respect the hub rules: No consecutive dashes, No digit-only, Does not start or end with a dash, Only dashes, letters or numbers, Not 24 chars hex string'
+                  type: string
+                  minLength: 2
+                  maxLength: 42
+                  pattern: ^\b(?!\d+$)(?![0-9a-fA-F]{24}$)([a-zA-Z0-9]|-(?!-))+\b$
+                emails:
+                  minItems: 1
+                  maxItems: 1
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        format: email
+                        pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                    required:
+                    - value
+                name:
+                  type: object
+                  properties:
+                    givenName:
+                      type: string
+                      minLength: 1
+                    familyName:
+                      type: string
+                      minLength: 1
+                  required:
+                  - givenName
+                  - familyName
+                active:
+                  default: true
+                  type: boolean
+                externalId:
+                  description: External ID for the user, it must be unique within the organization and is required for managed users
+                  type: string
+              required:
+              - schemas
+              - userName
+              - emails
+              - name
+              - externalId
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:User
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:User
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  userName:
+                    examples:
+                    - username
+                    type: string
+                  displayName:
+                    examples:
+                    - username (equals to userName)
+                    type: string
+                  name:
+                    type: object
+                    properties:
+                      givenName:
+                        examples:
+                        - John
+                        type: string
+                      familyName:
+                        examples:
+                        - Doe
+                        type: string
+                      formatted:
+                        examples:
+                        - John Doe
+                        type: string
+                    required:
+                    - givenName
+                    - familyName
+                    - formatted
+                    additionalProperties: false
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          examples:
+                          - john.doe@example.com
+                          type: string
+                        primary:
+                          examples:
+                          - true
+                          type: boolean
+                        type:
+                          examples:
+                          - work
+                          description: We only support work emails, other types are converted to work
+                          enum:
+                          - work
+                      required:
+                      - value
+                      - primary
+                      additionalProperties: false
+                  active:
+                    examples:
+                    - true
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - User
+                        enum:
+                        - User
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - externalId
+                - userName
+                - displayName
+                - name
+                - emails
+                - active
+                - meta
+                additionalProperties: false
+          description: SCIM User
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: SCIM User already exists
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim/v2/Users/{userId}:
+    get:
+      description: Retrieves a SCIM user by their ID.
+      summary: Get a SCIM user
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:User
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:User
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  userName:
+                    examples:
+                    - username
+                    type: string
+                  displayName:
+                    examples:
+                    - username (equals to userName)
+                    type: string
+                  name:
+                    type: object
+                    properties:
+                      givenName:
+                        examples:
+                        - John
+                        type: string
+                      familyName:
+                        examples:
+                        - Doe
+                        type: string
+                      formatted:
+                        examples:
+                        - John Doe
+                        type: string
+                    required:
+                    - givenName
+                    - familyName
+                    - formatted
+                    additionalProperties: false
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          examples:
+                          - john.doe@example.com
+                          type: string
+                        primary:
+                          examples:
+                          - true
+                          type: boolean
+                        type:
+                          examples:
+                          - work
+                          description: We only support work emails, other types are converted to work
+                          enum:
+                          - work
+                      required:
+                      - value
+                      - primary
+                      additionalProperties: false
+                  active:
+                    examples:
+                    - true
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - User
+                        enum:
+                        - User
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - externalId
+                - userName
+                - displayName
+                - name
+                - emails
+                - active
+                - meta
+                additionalProperties: false
+          description: SCIM User
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      description: "Update an attribute of a SCIM user. Modify individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `externalId` is supported), or replace operations.\n If you set `active` to `false`, the user will be deprovisioned from the organization. \nComplicated SCIM `path` values are not supported like `emails[type eq 'work'].value`."
+      summary: Update SCIM user
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:api:messages:2.0:PatchOp
+                  minItems: 1
+                  type: array
+                  items:
+                    const: urn:ietf:params:scim:api:messages:2.0:PatchOp
+                Operations:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      op:
+                        type: string
+                      path:
+                        enum:
+                        - active
+                        - externalId
+                        - userName
+                        - emails[type eq "work"].value
+                        - name.givenName
+                        - name.familyName
+                      value: {}
+                    required:
+                    - op
+                    - value
+              required:
+              - schemas
+              - Operations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:User
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:User
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  userName:
+                    examples:
+                    - username
+                    type: string
+                  displayName:
+                    examples:
+                    - username (equals to userName)
+                    type: string
+                  name:
+                    type: object
+                    properties:
+                      givenName:
+                        examples:
+                        - John
+                        type: string
+                      familyName:
+                        examples:
+                        - Doe
+                        type: string
+                      formatted:
+                        examples:
+                        - John Doe
+                        type: string
+                    required:
+                    - givenName
+                    - familyName
+                    - formatted
+                    additionalProperties: false
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          examples:
+                          - john.doe@example.com
+                          type: string
+                        primary:
+                          examples:
+                          - true
+                          type: boolean
+                        type:
+                          examples:
+                          - work
+                          description: We only support work emails, other types are converted to work
+                          enum:
+                          - work
+                      required:
+                      - value
+                      - primary
+                      additionalProperties: false
+                  active:
+                    examples:
+                    - true
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - User
+                        enum:
+                        - User
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - externalId
+                - userName
+                - displayName
+                - name
+                - emails
+                - active
+                - meta
+                additionalProperties: false
+          description: SCIM User
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: User already exists
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      description: Updates a provisioned user, you'll need to provide all their information fresh - just like setting them up for the first time. Any details you don't include will be automatically removed, so make sure to include everything they need to keep their account running smoothly. Setting `active` to `false` will deprovision the user from the organization.
+      summary: Update a SCIM user
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:schemas:core:2.0:User
+                  minItems: 1
+                  type: array
+                  items:
+                    type: string
+                userName:
+                  description: 'Username for the user, it should respect the hub rules: No consecutive dashes, No digit-only, Does not start or end with a dash, Only dashes, letters or numbers, Not 24 chars hex string'
+                  type: string
+                  minLength: 2
+                  maxLength: 42
+                  pattern: ^\b(?!\d+$)(?![0-9a-fA-F]{24}$)([a-zA-Z0-9]|-(?!-))+\b$
+                emails:
+                  maxItems: 1
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        format: email
+                        pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                    required:
+                    - value
+                name:
+                  type: object
+                  properties:
+                    givenName:
+                      type: string
+                      minLength: 1
+                    familyName:
+                      type: string
+                      minLength: 1
+                  required:
+                  - givenName
+                  - familyName
+                active:
+                  default: true
+                  type: boolean
+                externalId:
+                  type: string
+              required:
+              - schemas
+              - userName
+              - emails
+              - name
+              - externalId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:User
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:User
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  userName:
+                    examples:
+                    - username
+                    type: string
+                  displayName:
+                    examples:
+                    - username (equals to userName)
+                    type: string
+                  name:
+                    type: object
+                    properties:
+                      givenName:
+                        examples:
+                        - John
+                        type: string
+                      familyName:
+                        examples:
+                        - Doe
+                        type: string
+                      formatted:
+                        examples:
+                        - John Doe
+                        type: string
+                    required:
+                    - givenName
+                    - familyName
+                    - formatted
+                    additionalProperties: false
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          examples:
+                          - john.doe@example.com
+                          type: string
+                        primary:
+                          examples:
+                          - true
+                          type: boolean
+                        type:
+                          examples:
+                          - work
+                          description: We only support work emails, other types are converted to work
+                          enum:
+                          - work
+                      required:
+                      - value
+                      - primary
+                      additionalProperties: false
+                  active:
+                    examples:
+                    - true
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - User
+                        enum:
+                        - User
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - externalId
+                - userName
+                - displayName
+                - name
+                - emails
+                - active
+                - meta
+                additionalProperties: false
+          description: SCIM User
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: User already exists
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      summary: Delete a SCIM user
+      tags:
+      - scim
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: User deleted
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim/v2/Groups:
+    get:
+      description: Get a list of SCIM groups. Retrieves a paginated list of all organization groups. If you provide the filter parameter, the resources for all matching groups are returned.
+      summary: List SCIM groups
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                  totalResults:
+                    examples:
+                    - 100
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  itemsPerPage:
+                    examples:
+                    - 100
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  startIndex:
+                    examples:
+                    - 1
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  Resources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        schemas:
+                          examples:
+                          - - urn:ietf:params:scim:schemas:core:2.0:Group
+                          minItems: 1
+                          maxItems: 1
+                          type: array
+                          items:
+                            enum:
+                            - urn:ietf:params:scim:schemas:core:2.0:Group
+                        id:
+                          examples:
+                          - '123'
+                          type: string
+                        displayName:
+                          examples:
+                          - Group 1
+                          type: string
+                        members:
+                          examples:
+                          - - value: john
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                            required:
+                            - value
+                            additionalProperties: false
+                        externalId:
+                          anyOf:
+                          - examples:
+                            - unique-identifier
+                            type: string
+                          - type: 'null'
+                        meta:
+                          type: object
+                          properties:
+                            resourceType:
+                              examples:
+                              - Group
+                              enum:
+                              - Group
+                            location:
+                              examples:
+                              - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                              type: string
+                          required:
+                          - resourceType
+                          - location
+                          additionalProperties: false
+                      required:
+                      - schemas
+                      - id
+                      - displayName
+                      - meta
+                      additionalProperties: false
+                required:
+                - schemas
+                - totalResults
+                - itemsPerPage
+                - startIndex
+                - Resources
+                additionalProperties: false
+          description: SCIM Group List
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startIndex
+        in: query
+        schema:
+          default: 1
+          type: number
+          minimum: 1
+        required: false
+      - name: count
+        in: query
+        schema:
+          default: 1000
+          type: number
+          minimum: 1
+          maximum: 1000
+        required: false
+      - name: filter
+        in: query
+        schema:
+          default: ''
+          type: string
+        required: false
+      - name: excludedAttributes
+        in: query
+        schema:
+          const: members
+        required: false
+    post:
+      description: Creates a new group in the organization. The group name must be unique within the organization.
+      summary: Create a SCIM group
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                displayName:
+                  type: string
+                externalId:
+                  type: string
+                members:
+                  description: Array of SCIM user ids
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-fA-F]{24}$
+                    required:
+                    - value
+              required:
+              - displayName
+              - members
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:Group
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:Group
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  displayName:
+                    examples:
+                    - Group 1
+                    type: string
+                  members:
+                    examples:
+                    - - value: john
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                      required:
+                      - value
+                      additionalProperties: false
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - Group
+                        enum:
+                        - Group
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - displayName
+                - members
+                - meta
+                additionalProperties: false
+          description: SCIM Group
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: Group already exists
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim/v2/Groups/{groupId}:
+    get:
+      description: Retrieves a group by its ID. If you provide the `excludedAttributes` parameter, the `members` attribute is not returned.
+      summary: Get a SCIM group
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:Group
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:Group
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  displayName:
+                    examples:
+                    - Group 1
+                    type: string
+                  members:
+                    examples:
+                    - - value: john
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                      required:
+                      - value
+                      additionalProperties: false
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - Group
+                        enum:
+                        - Group
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - displayName
+                - meta
+                additionalProperties: false
+          description: SCIM Group
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: excludedAttributes
+        in: query
+        schema:
+          const: members
+        required: false
+    put:
+      description: Updates a group by its ID. The group name must be unique within the organization.
+      summary: Update a SCIM group
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:schemas:core:2.0:Group
+                  minItems: 1
+                  type: array
+                  items:
+                    const: urn:ietf:params:scim:schemas:core:2.0:Group
+                displayName:
+                  type: string
+                externalId:
+                  type: string
+                members:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-fA-F]{24}$
+                    required:
+                    - value
+              required:
+              - schemas
+              - displayName
+              - members
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:Group
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:Group
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  displayName:
+                    examples:
+                    - Group 1
+                    type: string
+                  members:
+                    examples:
+                    - - value: john
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                      required:
+                      - value
+                      additionalProperties: false
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - Group
+                        enum:
+                        - Group
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - displayName
+                - members
+                - meta
+                additionalProperties: false
+          description: SCIM Group
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      description: Update attributes of a SCIM group. Updates individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `members` is supported), or replace operations.
+      summary: Update SCIM group
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:api:messages:2.0:PatchOp
+                  minItems: 1
+                  type: array
+                  items:
+                    const: urn:ietf:params:scim:api:messages:2.0:PatchOp
+                Operations:
+                  type: array
+                  items:
+                    anyOf:
+                    - type: object
+                      properties:
+                        op:
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                            required:
+                            - value
+                      required:
+                      - op
+                      - path
+                    - type: object
+                      properties:
+                        op:
+                          type: string
+                        path:
+                          type: string
+                        value: {}
+                      required:
+                      - op
+                      - value
+              required:
+              - schemas
+              - Operations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:Group
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:Group
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  displayName:
+                    examples:
+                    - Group 1
+                    type: string
+                  members:
+                    examples:
+                    - - value: john
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                      required:
+                      - value
+                      additionalProperties: false
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - Group
+                        enum:
+                        - Group
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - displayName
+                - members
+                - meta
+                additionalProperties: false
+          description: SCIM Group
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      summary: Delete a SCIM group
+      tags:
+      - scim
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: SCIM Group deleted
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim-provisioning/v2/Users:
+    get:
+      description: Retrieves a paginated list of organization members and pending invitations managed by SCIM for non-managed organizations.
+      summary: List SCIM-managed users
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                  totalResults:
+                    examples:
+                    - 100
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  itemsPerPage:
+                    examples:
+                    - 100
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  startIndex:
+                    examples:
+                    - 1
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  Resources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        schemas:
+                          examples:
+                          - - urn:ietf:params:scim:schemas:core:2.0:User
+                          minItems: 1
+                          maxItems: 1
+                          type: array
+                          items:
+                            enum:
+                            - urn:ietf:params:scim:schemas:core:2.0:User
+                        id:
+                          examples:
+                          - '123'
+                          type: string
+                        externalId:
+                          anyOf:
+                          - examples:
+                            - unique-identifier
+                            type: string
+                          - type: 'null'
+                        userName:
+                          examples:
+                          - username
+                          type: string
+                        displayName:
+                          examples:
+                          - username (equals to userName)
+                          type: string
+                        name:
+                          type: object
+                          properties:
+                            givenName:
+                              examples:
+                              - John
+                              type: string
+                            familyName:
+                              examples:
+                              - Doe
+                              type: string
+                            formatted:
+                              examples:
+                              - John Doe
+                              type: string
+                          required:
+                          - givenName
+                          - familyName
+                          - formatted
+                          additionalProperties: false
+                        emails:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                examples:
+                                - john.doe@example.com
+                                type: string
+                              primary:
+                                examples:
+                                - true
+                                type: boolean
+                              type:
+                                examples:
+                                - work
+                                description: We only support work emails, other types are converted to work
+                                enum:
+                                - work
+                            required:
+                            - value
+                            - primary
+                            additionalProperties: false
+                        active:
+                          examples:
+                          - true
+                          type: boolean
+                        meta:
+                          type: object
+                          properties:
+                            resourceType:
+                              examples:
+                              - User
+                              enum:
+                              - User
+                            location:
+                              examples:
+                              - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                              type: string
+                          required:
+                          - resourceType
+                          - location
+                          additionalProperties: false
+                      required:
+                      - schemas
+                      - id
+                      - externalId
+                      - userName
+                      - displayName
+                      - name
+                      - emails
+                      - active
+                      - meta
+                      additionalProperties: false
+                required:
+                - schemas
+                - totalResults
+                - itemsPerPage
+                - startIndex
+                - Resources
+                additionalProperties: false
+          description: SCIM User List
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startIndex
+        in: query
+        schema:
+          default: 1
+          type: number
+          minimum: 1
+        required: false
+      - name: count
+        in: query
+        schema:
+          default: 1000
+          type: number
+          minimum: 1
+          maximum: 1000
+        required: false
+      - name: filter
+        in: query
+        schema:
+          description: 'You can filter results using the equals operator (eq) to find items that match specific values like `id`, `userName`, `emails`, and `externalId`. For example, to find a user named Bob, use this search: `?filter=userName%20eq%20Bob`'
+          default: ''
+          type: string
+        required: false
+    post:
+      description: Creates an invitation for a user to join the organization. The user must have an existing Hugging Face account.
+      summary: Create a SCIM provisioning user invitation
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:schemas:core:2.0:User
+                  minItems: 1
+                  type: array
+                  items:
+                    type: string
+                userName:
+                  description: Username of the existing Hugging Face user
+                  type: string
+                  minLength: 2
+                  maxLength: 42
+                  pattern: ^\b(?!\d+$)(?![0-9a-fA-F]{24}$)([a-zA-Z0-9]|-(?!-))+\b$
+                emails:
+                  minItems: 1
+                  maxItems: 1
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        format: email
+                        pattern: ^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$
+                    required:
+                    - value
+                active:
+                  default: true
+                  type: boolean
+                externalId:
+                  description: SSO unique identifier (SAML nameid or OIDC sub claim) - required for SSO login
+                  type: string
+              required:
+              - schemas
+              - userName
+              - emails
+              - externalId
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:User
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:User
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  userName:
+                    examples:
+                    - username
+                    type: string
+                  displayName:
+                    examples:
+                    - username (equals to userName)
+                    type: string
+                  name:
+                    type: object
+                    properties:
+                      givenName:
+                        examples:
+                        - John
+                        type: string
+                      familyName:
+                        examples:
+                        - Doe
+                        type: string
+                      formatted:
+                        examples:
+                        - John Doe
+                        type: string
+                    required:
+                    - givenName
+                    - familyName
+                    - formatted
+                    additionalProperties: false
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          examples:
+                          - john.doe@example.com
+                          type: string
+                        primary:
+                          examples:
+                          - true
+                          type: boolean
+                        type:
+                          examples:
+                          - work
+                          description: We only support work emails, other types are converted to work
+                          enum:
+                          - work
+                      required:
+                      - value
+                      - primary
+                      additionalProperties: false
+                  active:
+                    examples:
+                    - true
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - User
+                        enum:
+                        - User
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - externalId
+                - userName
+                - displayName
+                - name
+                - emails
+                - active
+                - meta
+                additionalProperties: false
+          description: SCIM User
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim-provisioning/v2/Users/{userId}:
+    get:
+      description: Retrieves a SCIM user by their ID for non-managed organizations.
+      summary: Get a SCIM provisioning user
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:User
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:User
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  userName:
+                    examples:
+                    - username
+                    type: string
+                  displayName:
+                    examples:
+                    - username (equals to userName)
+                    type: string
+                  name:
+                    type: object
+                    properties:
+                      givenName:
+                        examples:
+                        - John
+                        type: string
+                      familyName:
+                        examples:
+                        - Doe
+                        type: string
+                      formatted:
+                        examples:
+                        - John Doe
+                        type: string
+                    required:
+                    - givenName
+                    - familyName
+                    - formatted
+                    additionalProperties: false
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          examples:
+                          - john.doe@example.com
+                          type: string
+                        primary:
+                          examples:
+                          - true
+                          type: boolean
+                        type:
+                          examples:
+                          - work
+                          description: We only support work emails, other types are converted to work
+                          enum:
+                          - work
+                      required:
+                      - value
+                      - primary
+                      additionalProperties: false
+                  active:
+                    examples:
+                    - true
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - User
+                        enum:
+                        - User
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - externalId
+                - userName
+                - displayName
+                - name
+                - emails
+                - active
+                - meta
+                additionalProperties: false
+          description: SCIM User
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      description: Modify individual attributes for non-managed organizations. Only the `active` field can be modified. User profile fields are not editable via SCIM.
+      summary: Update an attribute of a SCIM provisioning user
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:api:messages:2.0:PatchOp
+                  minItems: 1
+                  type: array
+                  items:
+                    const: urn:ietf:params:scim:api:messages:2.0:PatchOp
+                Operations:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      op:
+                        description: '`remove` operation is not supported for non-managed organizations'
+                        enum:
+                        - add
+                        - remove
+                        - replace
+                      path:
+                        enum:
+                        - active
+                        - externalId
+                        - userName
+                        - emails[type eq "work"].value
+                        - name.givenName
+                        - name.familyName
+                      value: {}
+                    required:
+                    - op
+                    - value
+              required:
+              - schemas
+              - Operations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:User
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:User
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  userName:
+                    examples:
+                    - username
+                    type: string
+                  displayName:
+                    examples:
+                    - username (equals to userName)
+                    type: string
+                  name:
+                    type: object
+                    properties:
+                      givenName:
+                        examples:
+                        - John
+                        type: string
+                      familyName:
+                        examples:
+                        - Doe
+                        type: string
+                      formatted:
+                        examples:
+                        - John Doe
+                        type: string
+                    required:
+                    - givenName
+                    - familyName
+                    - formatted
+                    additionalProperties: false
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          examples:
+                          - john.doe@example.com
+                          type: string
+                        primary:
+                          examples:
+                          - true
+                          type: boolean
+                        type:
+                          examples:
+                          - work
+                          description: We only support work emails, other types are converted to work
+                          enum:
+                          - work
+                      required:
+                      - value
+                      - primary
+                      additionalProperties: false
+                  active:
+                    examples:
+                    - true
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - User
+                        enum:
+                        - User
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - externalId
+                - userName
+                - displayName
+                - name
+                - emails
+                - active
+                - meta
+                additionalProperties: false
+          description: SCIM User
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      description: Updates a provisioned user's invitation for non-managed organizations. User profile fields are not editable via SCIM for non-managed organizations.
+      summary: Update a SCIM provisioning user
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:schemas:core:2.0:User
+                  minItems: 1
+                  type: array
+                  items:
+                    type: string
+                active:
+                  default: true
+                  type: boolean
+                externalId:
+                  type: string
+              required:
+              - schemas
+              - externalId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:User
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:User
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  userName:
+                    examples:
+                    - username
+                    type: string
+                  displayName:
+                    examples:
+                    - username (equals to userName)
+                    type: string
+                  name:
+                    type: object
+                    properties:
+                      givenName:
+                        examples:
+                        - John
+                        type: string
+                      familyName:
+                        examples:
+                        - Doe
+                        type: string
+                      formatted:
+                        examples:
+                        - John Doe
+                        type: string
+                    required:
+                    - givenName
+                    - familyName
+                    - formatted
+                    additionalProperties: false
+                  emails:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          examples:
+                          - john.doe@example.com
+                          type: string
+                        primary:
+                          examples:
+                          - true
+                          type: boolean
+                        type:
+                          examples:
+                          - work
+                          description: We only support work emails, other types are converted to work
+                          enum:
+                          - work
+                      required:
+                      - value
+                      - primary
+                      additionalProperties: false
+                  active:
+                    examples:
+                    - true
+                    type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - User
+                        enum:
+                        - User
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Users/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - externalId
+                - userName
+                - displayName
+                - name
+                - emails
+                - active
+                - meta
+                additionalProperties: false
+          description: SCIM User
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: User already exists
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      description: Removes a user from the organization and deletes any pending invitations for non-managed organizations.
+      summary: Delete a SCIM provisioning user
+      tags:
+      - scim
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: User removed from organization
+        '404':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: User not found or not provisioned
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim-provisioning/v2/Groups:
+    get:
+      description: Get a list of SCIM groups. Retrieves a paginated list of all organization groups. If you provide the filter parameter, the resources for all matching groups are returned.
+      summary: List SCIM groups
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:api:messages:2.0:ListResponse
+                  totalResults:
+                    examples:
+                    - 100
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  itemsPerPage:
+                    examples:
+                    - 100
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  startIndex:
+                    examples:
+                    - 1
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  Resources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        schemas:
+                          examples:
+                          - - urn:ietf:params:scim:schemas:core:2.0:Group
+                          minItems: 1
+                          maxItems: 1
+                          type: array
+                          items:
+                            enum:
+                            - urn:ietf:params:scim:schemas:core:2.0:Group
+                        id:
+                          examples:
+                          - '123'
+                          type: string
+                        displayName:
+                          examples:
+                          - Group 1
+                          type: string
+                        members:
+                          examples:
+                          - - value: john
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                            required:
+                            - value
+                            additionalProperties: false
+                        externalId:
+                          anyOf:
+                          - examples:
+                            - unique-identifier
+                            type: string
+                          - type: 'null'
+                        meta:
+                          type: object
+                          properties:
+                            resourceType:
+                              examples:
+                              - Group
+                              enum:
+                              - Group
+                            location:
+                              examples:
+                              - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                              type: string
+                          required:
+                          - resourceType
+                          - location
+                          additionalProperties: false
+                      required:
+                      - schemas
+                      - id
+                      - displayName
+                      - meta
+                      additionalProperties: false
+                required:
+                - schemas
+                - totalResults
+                - itemsPerPage
+                - startIndex
+                - Resources
+                additionalProperties: false
+          description: SCIM Group List
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: startIndex
+        in: query
+        schema:
+          default: 1
+          type: number
+          minimum: 1
+        required: false
+      - name: count
+        in: query
+        schema:
+          default: 1000
+          type: number
+          minimum: 1
+          maximum: 1000
+        required: false
+      - name: filter
+        in: query
+        schema:
+          default: ''
+          type: string
+        required: false
+      - name: excludedAttributes
+        in: query
+        schema:
+          const: members
+        required: false
+    post:
+      description: Creates a new group in the organization. The group name must be unique within the organization.
+      summary: Create a SCIM group
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                displayName:
+                  type: string
+                externalId:
+                  type: string
+                members:
+                  description: Array of SCIM user ids
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-fA-F]{24}$
+                    required:
+                    - value
+              required:
+              - displayName
+              - members
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:Group
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:Group
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  displayName:
+                    examples:
+                    - Group 1
+                    type: string
+                  members:
+                    examples:
+                    - - value: john
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                      required:
+                      - value
+                      additionalProperties: false
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - Group
+                        enum:
+                        - Group
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - displayName
+                - members
+                - meta
+                additionalProperties: false
+          description: SCIM Group
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: Group already exists
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/organizations/{name}/scim-provisioning/v2/Groups/{groupId}:
+    get:
+      description: Retrieves a group by its ID. If you provide the `excludedAttributes` parameter, the `members` attribute is not returned.
+      summary: Get a SCIM group
+      tags:
+      - scim
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:Group
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:Group
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  displayName:
+                    examples:
+                    - Group 1
+                    type: string
+                  members:
+                    examples:
+                    - - value: john
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                      required:
+                      - value
+                      additionalProperties: false
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - Group
+                        enum:
+                        - Group
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - displayName
+                - meta
+                additionalProperties: false
+          description: SCIM Group
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: excludedAttributes
+        in: query
+        schema:
+          const: members
+        required: false
+    put:
+      description: Updates a group by its ID. The group name must be unique within the organization.
+      summary: Update a SCIM group
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:schemas:core:2.0:Group
+                  minItems: 1
+                  type: array
+                  items:
+                    const: urn:ietf:params:scim:schemas:core:2.0:Group
+                displayName:
+                  type: string
+                externalId:
+                  type: string
+                members:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-fA-F]{24}$
+                    required:
+                    - value
+              required:
+              - schemas
+              - displayName
+              - members
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:Group
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:Group
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  displayName:
+                    examples:
+                    - Group 1
+                    type: string
+                  members:
+                    examples:
+                    - - value: john
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                      required:
+                      - value
+                      additionalProperties: false
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - Group
+                        enum:
+                        - Group
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - displayName
+                - members
+                - meta
+                additionalProperties: false
+          description: SCIM Group
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+    patch:
+      description: Update attributes of a SCIM group. Updates individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `members` is supported), or replace operations.
+      summary: Update SCIM group
+      tags:
+      - scim
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                schemas:
+                  examples:
+                  - - urn:ietf:params:scim:api:messages:2.0:PatchOp
+                  minItems: 1
+                  type: array
+                  items:
+                    const: urn:ietf:params:scim:api:messages:2.0:PatchOp
+                Operations:
+                  type: array
+                  items:
+                    anyOf:
+                    - type: object
+                      properties:
+                        op:
+                          type: string
+                        path:
+                          type: string
+                        value:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              value:
+                                type: string
+                            required:
+                            - value
+                      required:
+                      - op
+                      - path
+                    - type: object
+                      properties:
+                        op:
+                          type: string
+                        path:
+                          type: string
+                        value: {}
+                      required:
+                      - op
+                      - value
+              required:
+              - schemas
+              - Operations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  schemas:
+                    examples:
+                    - - urn:ietf:params:scim:schemas:core:2.0:Group
+                    minItems: 1
+                    maxItems: 1
+                    type: array
+                    items:
+                      enum:
+                      - urn:ietf:params:scim:schemas:core:2.0:Group
+                  id:
+                    examples:
+                    - '123'
+                    type: string
+                  displayName:
+                    examples:
+                    - Group 1
+                    type: string
+                  members:
+                    examples:
+                    - - value: john
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                      required:
+                      - value
+                      additionalProperties: false
+                  externalId:
+                    anyOf:
+                    - examples:
+                      - unique-identifier
+                      type: string
+                    - type: 'null'
+                  meta:
+                    type: object
+                    properties:
+                      resourceType:
+                        examples:
+                        - Group
+                        enum:
+                        - Group
+                      location:
+                        examples:
+                        - https://huggingface.co/api/organizations/:name/scim/v2/Groups/:id
+                        type: string
+                    required:
+                    - resourceType
+                    - location
+                    additionalProperties: false
+                required:
+                - schemas
+                - id
+                - displayName
+                - members
+                - meta
+                additionalProperties: false
+          description: SCIM Group
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      summary: Delete a SCIM group
+      tags:
+      - scim
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: SCIM Group deleted
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

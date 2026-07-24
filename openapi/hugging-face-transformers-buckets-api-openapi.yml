@@ -1,0 +1,1142 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning buckets API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: buckets
+  x-displayName: Buckets
+  description: Git-free storage buckets for files, powered by Xet. Buckets provide simple file storage without git versioning.
+paths:
+  /api/buckets/{namespace}/{repo}/lfs-files/duplicate:
+    post:
+      description: Duplicate xet-stored files from this repo (source) into another repo (target) by xet hash, without re-uploading file bytes. The caller must then commit the files with their sha256/size as usual.
+      summary: Duplicate xet files
+      tags:
+      - buckets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                target:
+                  type: object
+                  properties:
+                    type:
+                      enum:
+                      - dataset
+                      - model
+                      - space
+                      - kernel
+                    name:
+                      type: string
+                      minLength: 1
+                  required:
+                  - type
+                  - name
+                files:
+                  minItems: 1
+                  maxItems: 1000
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      xetHash:
+                        type: string
+                        minLength: 64
+                        maxLength: 64
+                        pattern: ^[0-9a-fA-F]{64}$
+                      sha256:
+                        type: string
+                        minLength: 64
+                        maxLength: 64
+                        pattern: ^[0-9a-fA-F]{64}$
+                      filename:
+                        type: string
+                        maxLength: 1000
+                    required:
+                    - xetHash
+                    - sha256
+              required:
+              - target
+              - files
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  success:
+                    description: True if all requested files were duplicated (or already present)
+                    type: boolean
+                  processed:
+                    description: Total number of unique files processed
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  succeeded:
+                    description: Number of files duplicated or already present in the target
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  failed:
+                    description: Per-file failures
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        xetHash:
+                          description: Xet content hash of the file that failed
+                          type: string
+                        sha256:
+                          description: sha256 of the file that failed
+                          type: string
+                        error:
+                          description: Error message
+                          type: string
+                      required:
+                      - xetHash
+                      - sha256
+                      - error
+                      additionalProperties: false
+                required:
+                - success
+                - processed
+                - succeeded
+                - failed
+                additionalProperties: false
+          description: Duplicate xet files response
+        '207':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  success:
+                    description: True if all requested files were duplicated (or already present)
+                    type: boolean
+                  processed:
+                    description: Total number of unique files processed
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  succeeded:
+                    description: Number of files duplicated or already present in the target
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  failed:
+                    description: Per-file failures
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        xetHash:
+                          description: Xet content hash of the file that failed
+                          type: string
+                        sha256:
+                          description: sha256 of the file that failed
+                          type: string
+                        error:
+                          description: Error message
+                          type: string
+                      required:
+                      - xetHash
+                      - sha256
+                      - error
+                      additionalProperties: false
+                required:
+                - success
+                - processed
+                - succeeded
+                - failed
+                additionalProperties: false
+          description: Duplicate xet files response
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/buckets/{namespace}/{repo}/xet-write-token:
+    get:
+      description: Get a write short-lived access token for XET upload
+      summary: Xet write token
+      tags:
+      - buckets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  casUrl:
+                    type: string
+                  exp:
+                    type: number
+                  accessToken:
+                    type: string
+                required:
+                - casUrl
+                - exp
+                - accessToken
+                additionalProperties: false
+          description: The response from the getXetWriteAccessToken endpoint.
+          headers:
+            X-Xet-Cas-Url:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+            X-Xet-Token-Expiration:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+            X-Xet-Access-Token:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/buckets/{namespace}/{repo}/xet-read-token:
+    get:
+      description: Get a read short-lived access token for XET
+      summary: Xet read token
+      tags:
+      - buckets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  casUrl:
+                    type: string
+                  exp:
+                    type: number
+                  accessToken:
+                    type: string
+                required:
+                - casUrl
+                - exp
+                - accessToken
+                additionalProperties: false
+          description: The response from the getXetReadAccessToken endpoint.
+          headers:
+            X-Xet-Cas-Url:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+            X-Xet-Token-Expiration:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+            X-Xet-Access-Token:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/buckets/{namespace}/{repo}/resource-group:
+    post:
+      description: Add the repository to a resource group
+      summary: Add resource group
+      tags:
+      - buckets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                resourceGroupId:
+                  description: The resource group to add the repository to, if null, the repository will be removed from the resource group
+                  anyOf:
+                  - type: string
+                    minLength: 24
+                    maxLength: 24
+                    pattern: ^[0-9a-f]{24}$
+                  - type: 'null'
+              required:
+              - resourceGroupId
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  name:
+                    type: string
+                  type:
+                    enum:
+                    - dataset
+                    - model
+                    - space
+                    - bucket
+                    - kernel
+                  private:
+                    type: boolean
+                  addedBy:
+                    type: string
+                required:
+                - name
+                - type
+                - private
+                - addedBy
+                additionalProperties: false
+          description: Minimal information about the repository
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get resource group
+      tags:
+      - buckets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  id:
+                    type: string
+                    minLength: 24
+                    maxLength: 24
+                    pattern: ^[0-9a-f]{24}$
+                  name:
+                    type: string
+                  numUsers:
+                    type: number
+                required:
+                - id
+                - name
+                additionalProperties: false
+          description: The resource group of the repository
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/buckets/{namespace}/{repo}:
+    post:
+      summary: Create bucket
+      tags:
+      - buckets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              description: Bucket creation options
+              type: object
+              properties:
+                private:
+                  description: Bucket visibility. Defaults to public
+                  anyOf:
+                  - type: boolean
+                  - type: 'null'
+                resourceGroupId:
+                  type: string
+                  minLength: 24
+                  maxLength: 24
+                  pattern: ^[0-9a-fA-F]{24}$
+                cdn:
+                  description: CDN pre-warming regions
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      provider:
+                        enum:
+                        - gcp
+                        - aws
+                      region:
+                        enum:
+                        - us
+                        - eu
+                    required:
+                    - provider
+                    - region
+                region:
+                  description: The region where the bucket is hosted.
+                  enum:
+                  - us
+                  - eu
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  url:
+                    type: string
+                  name:
+                    type: string
+                  id:
+                    type: string
+                    minLength: 24
+                    maxLength: 24
+                    pattern: ^[0-9a-f]{24}$
+                required:
+                - url
+                - name
+                - id
+                additionalProperties: false
+          description: Bucket created, url is given
+        '409':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  error:
+                    type: string
+                  url:
+                    type: string
+                  id:
+                    type: string
+                    minLength: 24
+                    maxLength: 24
+                    pattern: ^[0-9a-f]{24}$
+                required:
+                - error
+                - url
+                - id
+                additionalProperties: false
+          description: Bucket already exists, url is given
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      summary: Delete bucket
+      tags:
+      - buckets
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get bucket details
+      tags:
+      - buckets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    minLength: 24
+                    maxLength: 24
+                    pattern: ^[0-9a-f]{24}$
+                  author:
+                    type: string
+                  id:
+                    type: string
+                  private:
+                    anyOf:
+                    - type: boolean
+                    - type: 'null'
+                  createdAt:
+                    type: string
+                    format: date-time
+                    pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                  size:
+                    description: The amount of storage used by the bucket in bytes
+                    type: number
+                  totalFiles:
+                    description: The total number of files in the bucket
+                    type: number
+                  repoType:
+                    const: bucket
+                  cdnRegions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        provider:
+                          enum:
+                          - gcp
+                          - aws
+                        region:
+                          enum:
+                          - us
+                          - eu
+                      required:
+                      - provider
+                      - region
+                      additionalProperties: false
+                  resourceGroup:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 24
+                        maxLength: 24
+                        pattern: ^[0-9a-f]{24}$
+                      name:
+                        type: string
+                      numUsers:
+                        type: number
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                required:
+                - _id
+                - author
+                - id
+                - createdAt
+                - updatedAt
+                - size
+                - totalFiles
+                - repoType
+                - cdnRegions
+                additionalProperties: false
+          description: Bucket overview information
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/buckets/{namespace}/{repo}/settings:
+    put:
+      summary: Update bucket settings
+      tags:
+      - buckets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                private:
+                  anyOf:
+                  - type: boolean
+                  - {}
+                cdnRegions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      provider:
+                        enum:
+                        - gcp
+                        - aws
+                      region:
+                        enum:
+                        - us
+                        - eu
+                    required:
+                    - provider
+                    - region
+              required:
+              - cdnRegions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  private:
+                    anyOf:
+                    - type: boolean
+                    - type: boolean
+                  cdnRegions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        provider:
+                          enum:
+                          - gcp
+                          - aws
+                        region:
+                          enum:
+                          - us
+                          - eu
+                      required:
+                      - provider
+                      - region
+                      additionalProperties: false
+                additionalProperties: false
+          description: The updated bucket settings.
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/buckets/{namespace}:
+    get:
+      summary: List namespace buckets
+      tags:
+      - buckets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  description: Bucket overview information
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      minLength: 24
+                      maxLength: 24
+                      pattern: ^[0-9a-f]{24}$
+                    author:
+                      type: string
+                    id:
+                      type: string
+                    private:
+                      anyOf:
+                      - type: boolean
+                      - type: 'null'
+                    createdAt:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    updatedAt:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    size:
+                      description: The amount of storage used by the bucket in bytes
+                      type: number
+                    totalFiles:
+                      description: The total number of files in the bucket
+                      type: number
+                    repoType:
+                      const: bucket
+                    cdnRegions:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          provider:
+                            enum:
+                            - gcp
+                            - aws
+                          region:
+                            enum:
+                            - us
+                            - eu
+                        required:
+                        - provider
+                        - region
+                        additionalProperties: false
+                    resourceGroup:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          minLength: 24
+                          maxLength: 24
+                          pattern: ^[0-9a-f]{24}$
+                        name:
+                          type: string
+                        numUsers:
+                          type: number
+                      required:
+                      - id
+                      - name
+                      additionalProperties: false
+                  required:
+                  - _id
+                  - author
+                  - id
+                  - createdAt
+                  - updatedAt
+                  - size
+                  - totalFiles
+                  - repoType
+                  - cdnRegions
+                  additionalProperties: false
+          description: List of buckets
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: search
+        in: query
+        schema:
+          type: string
+        required: false
+  /buckets/{namespace}/{repo}/resolve/{path}:
+    get:
+      description: Returns file metadata including size, hash, and links to XET authentication
+      summary: Retrieve information about a file in a bucket
+      tags:
+      - buckets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  hash:
+                    description: The XET hash of the file
+                    type: string
+                  refreshUrl:
+                    description: The XET auth URL for the file
+                    type: string
+                  reconstructionUrl:
+                    description: The XET reconstruction URL for the file
+                    type: string
+                  etag:
+                    description: The ETag of the file
+                    type: string
+                  size:
+                    description: The size of the file
+                    type: number
+                  contentType:
+                    description: The content type of the file
+                    type: string
+                required:
+                - hash
+                - refreshUrl
+                - reconstructionUrl
+                - etag
+                - size
+                additionalProperties: false
+          description: XET file info returned when the Accept header is set to `application/vnd.xet-fileinfo+json`. Otherwise, a 302 redirect is returned.
+        '302':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+          description: Redirection to file on the xet bridge (default when no specific Accept header is set)
+        '400':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                additionalProperties: false
+          description: File path required
+        '404':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+                additionalProperties: false
+          description: Bucket or file not found
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Wildcard path parameter
+      - name: noContentDisposition
+        in: query
+        schema: {}
+        required: false
+      - name: download
+        in: query
+        schema: {}
+        required: false
+      - name: Accept
+        in: header
+        schema:
+          $schema: https://json-schema.org/draft/2020-12/schema
+          description: Returns json information about the XET file info
+          const: application/vnd.xet-fileinfo+json
+  /api/buckets/{namespace}/{repo}/batch:
+    post:
+      description: "Accepts NDJSON (newline-delimited JSON) where each line is an addFile, copyFile, or deleteFile instruction.\nAll add/copy operations must come before all delete operations.\n\nJSON-lines payload:\n```json\n\t'{\"type\":\"addFile\",\"path\":\"...\",\"xetHash\":\"...\",\"mtime\":...,\"contentType\":\"...\"}' +\n\t'{\"type\":\"copyFile\",\"path\":\"...\",\"xetHash\":\"...\",\"sourceRepoType\":\"...\",\"sourceRepoId\":\"...\"}' +\n\t'{\"type\":\"deleteFile\",\"path\":\"...\"}'\n```"
+      summary: Batch file operations
+      tags:
+      - buckets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  success:
+                    description: True if all operations succeeded
+                    type: boolean
+                  processed:
+                    description: Total number of operations attempted
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  succeeded:
+                    description: Number of successful operations
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  failed:
+                    description: List of failed operations
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        path:
+                          description: File path that failed
+                          type: string
+                        error:
+                          description: Error message
+                          type: string
+                      required:
+                      - path
+                      - error
+                      additionalProperties: false
+                required:
+                - success
+                - processed
+                - succeeded
+                - failed
+                additionalProperties: false
+          description: Batch operation status
+        '422':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  success:
+                    description: True if all operations succeeded
+                    type: boolean
+                  processed:
+                    description: Total number of operations attempted
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  succeeded:
+                    description: Number of successful operations
+                    type: integer
+                    minimum: -9007199254740991
+                    maximum: 9007199254740991
+                  failed:
+                    description: List of failed operations
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        path:
+                          description: File path that failed
+                          type: string
+                        error:
+                          description: Error message
+                          type: string
+                      required:
+                      - path
+                      - error
+                      additionalProperties: false
+                required:
+                - success
+                - processed
+                - succeeded
+                - failed
+                additionalProperties: false
+          description: Batch operation status
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/buckets/{namespace}/{repo}/tree/{path}:
+    get:
+      summary: List files
+      tags:
+      - buckets
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      enum:
+                      - file
+                      - directory
+                    path:
+                      type: string
+                    size:
+                      type: integer
+                      minimum: -9007199254740991
+                      maximum: 9007199254740991
+                    xetHash:
+                      description: Not defined for directories
+                      type: string
+                    mtime:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    uploadedAt:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    contentType:
+                      type: string
+                  required:
+                  - type
+                  - path
+                  - uploadedAt
+                  additionalProperties: false
+          description: List of files and directories
+          headers:
+            Link:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: string
+              description: Pagination link header
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Wildcard path parameter
+      - name: limit
+        in: query
+        schema:
+          maximum: 5000
+          default: 1000
+          type: integer
+          minimum: 1
+        required: false
+      - name: cursor
+        in: query
+        schema:
+          description: Pagination cursor
+          type: string
+        required: false
+      - name: recursive
+        in: query
+        schema:
+          description: 'When false, returns collapsed directory entries instead of listing all files recursively. The number of entries returned can then be less than the limit, but there will always be a pagination link if there are more entries. Note: non-recursive listing hasn''t a strong consistency guarantees.'
+          default: true
+        required: false
+  /api/buckets/{namespace}/{repo}/paths-info:
+    post:
+      summary: List paths info
+      tags:
+      - buckets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $schema: https://json-schema.org/draft/2020-12/schema
+              type: object
+              properties:
+                paths:
+                  anyOf:
+                  - maxItems: 2000
+                    type: array
+                    items:
+                      type: string
+                  - type: string
+              required:
+              - paths
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      enum:
+                      - file
+                      - directory
+                    path:
+                      type: string
+                    size:
+                      type: integer
+                      minimum: -9007199254740991
+                      maximum: 9007199254740991
+                    xetHash:
+                      description: Not defined for directories
+                      type: string
+                    mtime:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    uploadedAt:
+                      type: string
+                      format: date-time
+                      pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
+                    contentType:
+                      type: string
+                  required:
+                  - type
+                  - path
+                  - uploadedAt
+                  additionalProperties: false
+          description: List of found files (missing paths are omitted)
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: repo
+        in: path
+        required: true
+        schema:
+          type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

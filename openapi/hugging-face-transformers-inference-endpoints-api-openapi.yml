@@ -1,0 +1,297 @@
+openapi: 3.1.0
+info:
+  title: Hub API Endpoints agentic-provisioning inference-endpoints API
+  version: 0.0.1
+  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
+
+
+    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
+
+
+    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
+
+    '
+servers:
+- url: https://huggingface.co
+  description: Hub
+security:
+- bearerAuth: []
+tags:
+- name: inference-endpoints
+  x-displayName: Inference Endpoints
+  description: Manage inference endpoints.
+paths:
+  /api/inference-endpoints/{namespace}/auth-check/{perms}:
+    post:
+      description: Check if the user has access to the inference endpoint
+      summary: Check access
+      tags:
+      - inference-endpoints
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  namespace:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      hasHfLevelAccess:
+                        type: boolean
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                required:
+                - namespace
+                - user
+                additionalProperties: false
+          description: The user has access to the inference endpoint/resource
+        '207':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  namespace:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      hasHfLevelAccess:
+                        type: boolean
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                  patternRestrictions:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - namespace
+                - user
+                - patternRestrictions
+                additionalProperties: false
+          description: The user has access to the resource, but the endpoint name is restricted by pattern restrictions. Can only be returned if `endpoint` is not provided in the path
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: perms
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - read
+          - write
+          - infer
+      - name: own
+        in: query
+        schema: {}
+        required: false
+      - name: is_creator
+        in: query
+        schema: {}
+        required: false
+      - name: creator_id
+        in: query
+        schema:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+        required: false
+      - name: incur_cost
+        in: query
+        schema: {}
+        required: false
+      - name: resource_group_id
+        in: query
+        schema:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+        required: false
+      - name: repo_id
+        in: query
+        schema:
+          type: string
+        required: false
+  /api/inference-endpoints/{namespace}/{endpoint}/auth-check/{perms}:
+    post:
+      description: Check if the user has access to the inference endpoint
+      summary: Check access
+      tags:
+      - inference-endpoints
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  namespace:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      hasHfLevelAccess:
+                        type: boolean
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                required:
+                - namespace
+                - user
+                additionalProperties: false
+          description: The user has access to the inference endpoint/resource
+        '207':
+          content:
+            application/json:
+              schema:
+                $schema: https://json-schema.org/draft/2020-12/schema
+                type: object
+                properties:
+                  namespace:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      hasHfLevelAccess:
+                        type: boolean
+                    required:
+                    - id
+                    - name
+                    additionalProperties: false
+                  patternRestrictions:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - namespace
+                - user
+                - patternRestrictions
+                additionalProperties: false
+          description: The user has access to the resource, but the endpoint name is restricted by pattern restrictions. Can only be returned if `endpoint` is not provided in the path
+      parameters:
+      - name: namespace
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: endpoint
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: perms
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - read
+          - write
+          - infer
+      - name: own
+        in: query
+        schema: {}
+        required: false
+      - name: is_creator
+        in: query
+        schema: {}
+        required: false
+      - name: creator_id
+        in: query
+        schema:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+        required: false
+      - name: incur_cost
+        in: query
+        schema: {}
+        required: false
+      - name: resource_group_id
+        in: query
+        schema:
+          type: string
+          minLength: 24
+          maxLength: 24
+          pattern: ^[0-9a-fA-F]{24}$
+        required: false
+      - name: repo_id
+        in: query
+        schema:
+          type: string
+        required: false
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
