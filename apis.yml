@@ -8,7 +8,20 @@ description: >-
   Hugging Face APIs that developers use to run inference, manage models,
   deploy demos, and serve LLMs at scale.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/hugging-face-transformers.png
 tags:
   - Artificial Intelligence
   - Computer Vision
@@ -23,118 +36,571 @@ created: '2024'
 modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
-  - aid: hugging-face-transformers:transformers-library
-    name: Hugging Face Transformers Library
-    description: >-
-      Open-source Python library that provides pretrained models, tokenizers,
-      and pipelines for inference and fine-tuning across NLP, vision, audio,
-      and multimodal tasks. The high-level pipeline API gives drop-in
-      access to text generation, classification, translation, summarization,
-      speech recognition, and many other tasks.
-    humanURL: https://huggingface.co/docs/transformers/index
-    tags:
-      - Library
-      - Open Source
-      - Pipelines
-      - Python
-    properties:
-      - type: Documentation
-        url: https://huggingface.co/docs/transformers/index
-      - type: GitHubRepository
-        url: https://github.com/huggingface/transformers
-      - type: Quick Tour
-        url: https://huggingface.co/docs/transformers/quicktour
-      - type: Task Guide
-        url: https://huggingface.co/docs/transformers/task_summary
-      - type: PyPI Package
-        url: https://pypi.org/project/transformers/
-      - type: Issues
-        url: https://github.com/huggingface/transformers/issues
-  - aid: hugging-face-transformers:inference-api
-    name: Hugging Face Inference API
-    description: >-
-      Serverless inference API for running predictions against thousands of
-      models hosted on the Hugging Face Hub. Supports NLP, computer vision,
-      audio, and multimodal tasks through a unified HTTP interface.
-    humanURL: https://huggingface.co/docs/api-inference/index
-    baseURL: https://api-inference.huggingface.co
-    tags:
-      - Inference
-      - Predictions
-      - Serverless
-    properties:
-      - type: Documentation
-        url: https://huggingface.co/docs/api-inference/index
-      - type: Authentication
-        url: https://huggingface.co/docs/api-inference/quicktour#authentication
-      - type: Pricing
-        url: https://huggingface.co/pricing
-  - aid: hugging-face-transformers:hub-api
-    name: Hugging Face Hub API
-    description: >-
-      REST API for interacting with the Hugging Face Hub - upload, download,
-      and manage models, datasets, and spaces programmatically.
-    humanURL: https://huggingface.co/docs/hub/api
-    baseURL: https://huggingface.co/api
-    tags:
-      - Datasets
-      - Hub
-      - Models
-      - Repositories
-    properties:
-      - type: Documentation
-        url: https://huggingface.co/docs/huggingface_hub/index
-      - type: Python Client
-        url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
-      - type: JavaScript Client
-        url: https://huggingface.co/docs/huggingface.js/index
-      - type: APIReference
-        url: https://huggingface.co/docs/hub/api
-      - type: OpenAPI
-        url: openapi/hugging-face-transformers-openapi.json
-      - type: GitHub
-        url: https://github.com/huggingface/huggingface_hub
-  - aid: hugging-face-transformers:spaces-api
-    name: Hugging Face Spaces API
-    description: >-
-      API for deploying and managing machine learning applications and demos
-      using Gradio, Streamlit, or Docker on Hugging Face Spaces.
-    humanURL: https://huggingface.co/spaces
-    baseURL: https://huggingface.co/api/spaces
-    tags:
-      - Demos
-      - Deployment
-      - Gradio
-      - Spaces
-      - Streamlit
-    properties:
-      - type: Documentation
-        url: https://huggingface.co/docs/hub/spaces-overview
-      - type: Gradio Documentation
-        url: https://gradio.app/docs/
-      - type: Examples
-        url: https://huggingface.co/spaces
-  - aid: hugging-face-transformers:text-generation-inference
-    name: Text Generation Inference (TGI)
-    description: >-
-      High-performance inference server for large language models with
-      continuous batching, token streaming, tensor parallelism, and
-      OpenAI-compatible chat completions endpoints.
-    humanURL: https://huggingface.co/docs/text-generation-inference/index
-    tags:
-      - Inference Server
-      - LLM
-      - Streaming
-      - Text Generation
-    properties:
-      - type: Documentation
-        url: https://huggingface.co/docs/text-generation-inference/index
-      - type: GitHubRepository
-        url: https://github.com/huggingface/text-generation-inference
-      - type: APIReference
-        url: https://huggingface.co/docs/text-generation-inference/basic_tutorials/consuming_tgi
-      - type: Supported Models
-        url: https://huggingface.co/docs/text-generation-inference/supported_models
+- aid: hugging-face-transformers:transformers-library
+  name: Hugging Face Transformers Library
+  description: >-
+    Open-source Python library that provides pretrained models, tokenizers, and pipelines for inference
+    and fine-tuning across NLP, vision, audio, and multimodal tasks. The high-level pipeline API gives
+    drop-in access to text generation, classification, translation, summarization, speech recognition,
+    and many other tasks.
+  humanURL: https://huggingface.co/docs/transformers/index
+  tags:
+  - Library
+  - Open Source
+  - Pipelines
+  - Python
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/transformers/index
+  - type: GitHubRepository
+    url: https://github.com/huggingface/transformers
+  - type: Quick Tour
+    url: https://huggingface.co/docs/transformers/quicktour
+  - type: Task Guide
+    url: https://huggingface.co/docs/transformers/task_summary
+  - type: PyPI Package
+    url: https://pypi.org/project/transformers/
+  - type: Issues
+    url: https://github.com/huggingface/transformers/issues
+- aid: hugging-face-transformers:inference-api
+  name: Hugging Face Inference API
+  description: >-
+    Serverless inference API for running predictions against thousands of models hosted on the Hugging
+    Face Hub. Supports NLP, computer vision, audio, and multimodal tasks through a unified HTTP interface.
+  humanURL: https://huggingface.co/docs/api-inference/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - Inference
+  - Predictions
+  - Serverless
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/api-inference/index
+  - type: Authentication
+    url: https://huggingface.co/docs/api-inference/quicktour#authentication
+  - type: Pricing
+    url: https://huggingface.co/pricing
+- aid: hugging-face-transformers:spaces-api
+  name: Hugging Face Spaces API
+  description: >-
+    API for deploying and managing machine learning applications and demos using Gradio, Streamlit, or
+    Docker on Hugging Face Spaces.
+  humanURL: https://huggingface.co/spaces
+  baseURL: https://huggingface.co/api/spaces
+  tags:
+  - Demos
+  - Deployment
+  - Gradio
+  - Spaces
+  - Streamlit
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/hub/spaces-overview
+  - type: Gradio Documentation
+    url: https://gradio.app/docs/
+  - type: Examples
+    url: https://huggingface.co/spaces
+- aid: hugging-face-transformers:text-generation-inference
+  name: Text Generation Inference (TGI)
+  description: >-
+    High-performance inference server for large language models with continuous batching, token streaming,
+    tensor parallelism, and OpenAI-compatible chat completions endpoints.
+  humanURL: https://huggingface.co/docs/text-generation-inference/index
+  tags:
+  - Inference Server
+  - LLM
+  - Streaming
+  - Text Generation
+  properties:
+  - type: Documentation
+    url: https://huggingface.co/docs/text-generation-inference/index
+  - type: GitHubRepository
+    url: https://github.com/huggingface/text-generation-inference
+  - type: APIReference
+    url: https://huggingface.co/docs/text-generation-inference/basic_tutorials/consuming_tgi
+  - type: Supported Models
+    url: https://huggingface.co/docs/text-generation-inference/supported_models
+- aid: hugging-face-transformers:hugging-face-transformers-agentic-provisioning-api
+  name: Hugging Face Transformers agentic-provisioning API
+  description: The following endpoints are for use with Agentic Provisioning Protocol.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - agentic-provisioning
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-agentic-provisioning-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-auth-api
+  name: Hugging Face Transformers auth API
+  description: >-
+    The following endpoints get information about your currently used user based on the passed token.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - auth
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-auth-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-buckets-api
+  name: Hugging Face Transformers buckets API
+  description: >-
+    Git-free storage buckets for files, powered by Xet. Buckets provide simple file storage without git
+    versioning.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-buckets-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-collections-api
+  name: Hugging Face Transformers collections API
+  description: >-
+    Use Collections to group repositories from the Hub (Models, Datasets, Spaces and Papers) on a dedicated
+    page.
+
+
+    You can learn more about it in the Collections [guide](https://huggingface.co/docs/hub/collections).
+    Collections can also be managed using the Python client (see [guide](https://huggingface.co/docs/huggingface_hub/main/en/guides/collections)).
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - collections
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-collections-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-datasets-api
+  name: Hugging Face Transformers datasets API
+  description: Get information from all datasets on the Hub.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-datasets-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-discussions-api
+  name: Hugging Face Transformers discussions API
+  description: The following endpoints manage discussions.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - discussions
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-discussions-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-docs-api
+  name: Hugging Face Transformers docs API
+  description: The following endpoints are for interacting with the Hub's documentation.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - docs
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-docs-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-inference-endpoints-api
+  name: Hugging Face Transformers inference-endpoints API
+  description: Manage inference endpoints.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - inference-endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-inference-endpoints-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-jobs-api
+  name: Hugging Face Transformers jobs API
+  description: The following endpoints manage jobs.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-kernels-api
+  name: Hugging Face Transformers kernels API
+  description: Get information from all kernels on the Hub.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - kernels
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-kernels-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-models-api
+  name: Hugging Face Transformers models API
+  description: Get information from all models on the Hub.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - models
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-models-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-notifications-api
+  name: Hugging Face Transformers notifications API
+  description: The following endpoints fetch Hub notifications.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-notifications-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-oauth-api
+  name: Hugging Face Transformers oauth API
+  description: The following endpoints are for use with OAuth.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-orgs-api
+  name: Hugging Face Transformers orgs API
+  description: The following endpoints let you interact with Hub Organizations and their members.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - orgs
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-orgs-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-papers-api
+  name: Hugging Face Transformers papers API
+  description: The following endpoint gets information about papers.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - papers
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-papers-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-repo-search-api
+  name: Hugging Face Transformers repo-search API
+  description: >-
+    The following endpoints help get information about models, datasets, and Spaces stored on the Hub.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - repo-search
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-repo-search-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-repos-api
+  name: Hugging Face Transformers repos API
+  description: >-
+    The following endpoints manage repository settings like creating and deleting a repository.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - repos
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-repos-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-resource-groups-api
+  name: Hugging Face Transformers resource-groups API
+  description: >-
+    The following endpoints manage resource groups. Resource groups are a Team or Enterprise feature.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - resource-groups
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-resource-groups-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-scim-api
+  name: Hugging Face Transformers scim API
+  description: "Use the SCIM API to control and manage your hub Enterprise organization manage members'\
+    \ access.\n## Authentication\n\n- Must be organization owner\n- Use Access token with write permission\
+    \ on organization\n- Organization must be Enterprise Plus\n\n## Key Attribute Matching\n\n- Microsoft\
+    \ Entra ID (Azure AD)\n\t* SAML: `http://schemas.microsoft.com/identity/claims/objectidentifier`\n\
+    \t* SCIM: `externalId`\n- Other Identity Providers\n\t* SAML: `NameID` or `unique identifier`\n\t\
+    * SCIM: `externalId`\n\n## Supported SCIM User Attributes\n\n| Attribute | Description |\n|---|---|\n\
+    | `userName` | Username for the user |\n| `name.givenName` | First name |\n| `name.familyName` | Last\
+    \ name |\n| `emails` | Array of user emails; we don't support email types |\n| `externalId` | IDP\
+    \ provider's unique identifier |\n| `id` | Hugging Face SCIM endpoint identifier |\n| `active` | Boolean\
+    \ for provisioning status |"
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - scim
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-scim-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-spaces-api
+  name: Hugging Face Transformers spaces API
+  description: Get information from all Spaces on the Hub.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - spaces
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-spaces-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-sql-console-api
+  name: Hugging Face Transformers sql-console API
+  description: Get information from SQL Console embeds from a dataset.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - sql-console
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-sql-console-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-users-api
+  name: Hugging Face Transformers users API
+  description: User accounts are the base authoring entity on the Hub
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-users-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-webhooks-api
+  name: Hugging Face Transformers webhooks API
+  description: The following endpoints are for use with webhooks.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
 common:
   - type: AgenticAccess
     url: agentic-access/hugging-face-transformers-agentic-access.yml
