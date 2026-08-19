@@ -1,0 +1,167 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "agentic-provisioning",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Agentic Provisioning health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/agentic/provisioning/health"
+          },
+          "docs": "Get Agentic Provisioning health"
+        },
+        {
+          "info": {
+            "name": "Get Agentic Provisioning services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/agentic/provisioning/services"
+          },
+          "docs": "Get Agentic Provisioning services"
+        },
+        {
+          "info": {
+            "name": "Create an Agentic Provisioning account request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/agentic/provisioning/account_requests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Agentic Provisioning account request"
+        },
+        {
+          "info": {
+            "name": "Provision a resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/agentic/provisioning/resources",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Provision a resource"
+        },
+        {
+          "info": {
+            "name": "Get a resource by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/agentic/provisioning/resources/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a resource by ID"
+        },
+        {
+          "info": {
+            "name": "Update a resource's service (e.g. plan upgrade)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/agentic/provisioning/resources/:id/update_service",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a resource's service (e.g. plan upgrade)"
+        },
+        {
+          "info": {
+            "name": "Remove / de-provision a resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/agentic/provisioning/resources/:id/remove",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove / de-provision a resource"
+        },
+        {
+          "info": {
+            "name": "Rotate the credentials for a resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/agentic/provisioning/resources/:id/rotate_credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Rotate the credentials for a resource"
+        },
+        {
+          "info": {
+            "name": "Create a self-authenticated deep link to the user's billing dashboard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/agentic/provisioning/deep_links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a self-authenticated deep link to the user's billing dashboard"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

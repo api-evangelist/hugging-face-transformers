@@ -1,0 +1,193 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning papers API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "papers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Claim paper authorship",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/settings/papers/claim",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Claim paper authorship"
+        },
+        {
+          "info": {
+            "name": "Get Daily Papers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/daily_papers",
+            "params": [
+              {
+                "name": "p",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "week",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "month",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "submitter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Daily Papers"
+        },
+        {
+          "info": {
+            "name": "List papers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/papers",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List arXiv papers sorted by published date"
+        },
+        {
+          "info": {
+            "name": "Search papers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/papers/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Perform a hybrid semantic / full-text-search on papers"
+        },
+        {
+          "info": {
+            "name": "Index a paper",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/papers/index",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Index a paper from arXiv by its ID. If the paper is already indexed, only its authors can re-index it."
+        },
+        {
+          "info": {
+            "name": "Get a paper",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/papers/:paperId",
+            "params": [
+              {
+                "name": "paperId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "field",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a paper"
+        },
+        {
+          "info": {
+            "name": "Update paper links",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/papers/:paperId/links",
+            "params": [
+              {
+                "name": "paperId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the project page, GitHub repository, or submitting organization for a paper. Requires the requester to be the paper author, the Daily Papers submitter, or a papers admin."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

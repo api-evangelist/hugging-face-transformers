@@ -1,0 +1,741 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning scim API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "scim",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get SCIM Service Provider Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/ServiceProviderConfig",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the SCIM 2.0 Service Provider configuration, describing the server's capabilities and supported authentication schemes."
+        },
+        {
+          "info": {
+            "name": "Get SCIM Resource Types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/ResourceTypes",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the list of SCIM 2.0 resource types supported by this server (User and Group)."
+        },
+        {
+          "info": {
+            "name": "Get SCIM Schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Schemas",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the SCIM 2.0 schema definitions for User and Group resources."
+        },
+        {
+          "info": {
+            "name": "Get SCIM Schema by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Schemas/:schemaId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single SCIM 2.0 schema definition by its schema URI."
+        },
+        {
+          "info": {
+            "name": "List SCIM users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Users",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of all organization members who have been set up, including disabled users. If you provide the filter parameter, the resources for all matching members are returned."
+        },
+        {
+          "info": {
+            "name": "Create a SCIM user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Users",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user in the organization. If the user already exists, only `active` field will be updated to provision the user."
+        },
+        {
+          "info": {
+            "name": "Get a SCIM user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Users/:userId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a SCIM user by their ID."
+        },
+        {
+          "info": {
+            "name": "Update a SCIM user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Users/:userId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a provisioned user, you'll need to provide all their information fresh - just like setting them up for the first time. Any details you don't include will be automatically removed, so make sure to include everything they need to keep their account running smoothly. Setting `active` to `false` will deprovision the user from the organization."
+        },
+        {
+          "info": {
+            "name": "Update SCIM user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Users/:userId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an attribute of a SCIM user. Modify individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `externalId` is supported), or replace operations.\n If you set `active` to `false`, the user will be deprovisioned from the organization. \nComplicated SCIM `path` values are not supported like `emails[type eq 'work'].value`."
+        },
+        {
+          "info": {
+            "name": "Delete a SCIM user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Users/:userId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a SCIM user"
+        },
+        {
+          "info": {
+            "name": "List SCIM groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Groups",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "excludedAttributes",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a list of SCIM groups. Retrieves a paginated list of all organization groups. If you provide the filter parameter, the resources for all matching groups are returned."
+        },
+        {
+          "info": {
+            "name": "Create a SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Groups",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new group in the organization. The group name must be unique within the organization."
+        },
+        {
+          "info": {
+            "name": "Get a SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "excludedAttributes",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a group by its ID. If you provide the `excludedAttributes` parameter, the `members` attribute is not returned."
+        },
+        {
+          "info": {
+            "name": "Update a SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a group by its ID. The group name must be unique within the organization."
+        },
+        {
+          "info": {
+            "name": "Update SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update attributes of a SCIM group. Updates individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `members` is supported), or replace operations."
+        },
+        {
+          "info": {
+            "name": "Delete a SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/organizations/:name/scim/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a SCIM group"
+        },
+        {
+          "info": {
+            "name": "List SCIM-managed users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Users",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a paginated list of organization members and pending invitations managed by SCIM for non-managed organizations."
+        },
+        {
+          "info": {
+            "name": "Create a SCIM provisioning user invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Users",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an invitation for a user to join the organization. The user must have an existing Hugging Face account."
+        },
+        {
+          "info": {
+            "name": "Get a SCIM provisioning user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Users/:userId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves a SCIM user by their ID for non-managed organizations."
+        },
+        {
+          "info": {
+            "name": "Update a SCIM provisioning user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Users/:userId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a provisioned user's invitation for non-managed organizations. User profile fields are not editable via SCIM for non-managed organizations."
+        },
+        {
+          "info": {
+            "name": "Update an attribute of a SCIM provisioning user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Users/:userId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify individual attributes for non-managed organizations. Only the `active` field can be modified. User profile fields are not editable via SCIM."
+        },
+        {
+          "info": {
+            "name": "Delete a SCIM provisioning user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Users/:userId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Removes a user from the organization and deletes any pending invitations for non-managed organizations."
+        },
+        {
+          "info": {
+            "name": "List SCIM groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Groups",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startIndex",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "excludedAttributes",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a list of SCIM groups. Retrieves a paginated list of all organization groups. If you provide the filter parameter, the resources for all matching groups are returned."
+        },
+        {
+          "info": {
+            "name": "Create a SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Groups",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new group in the organization. The group name must be unique within the organization."
+        },
+        {
+          "info": {
+            "name": "Get a SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "excludedAttributes",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves a group by its ID. If you provide the `excludedAttributes` parameter, the `members` attribute is not returned."
+        },
+        {
+          "info": {
+            "name": "Update a SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a group by its ID. The group name must be unique within the organization."
+        },
+        {
+          "info": {
+            "name": "Update SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update attributes of a SCIM group. Updates individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `members` is supported), or replace operations."
+        },
+        {
+          "info": {
+            "name": "Delete a SCIM group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/organizations/:name/scim-provisioning/v2/Groups/:groupId",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a SCIM group"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

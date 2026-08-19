@@ -1,0 +1,485 @@
+{
+  "item": [
+    {
+      "id": "cd207cee-7154-4712-9105-6455b42dd37c",
+      "name": "notifications",
+      "description": {
+        "content": "The following endpoints fetch Hub notifications.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "50c86002-d9ff-4012-91c8-5b314278558b",
+          "name": "List notifications",
+          "request": {
+            "name": "List notifications",
+            "description": {
+              "content": "List notifications for the user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "notifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "p",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "readStatus",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "repoType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "repoName",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "postAuthor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "paperId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "articleId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "mention",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "lastUpdate",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "79a3f2e2-54f4-4565-aa7d-c3e7f4ba30a7",
+              "name": "The notifications for the user",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "p",
+                      "value": "0"
+                    },
+                    {
+                      "key": "readStatus",
+                      "value": "all"
+                    },
+                    {
+                      "key": "repoType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repoName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "postAuthor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "paperId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "articleId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mention",
+                      "value": "all"
+                    },
+                    {
+                      "key": "lastUpdate",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6d8a8e4-9561-41a0-af06-57507e98ca7a",
+          "name": "Delete notifications",
+          "request": {
+            "name": "Delete notifications",
+            "description": {
+              "content": "Delete notifications, either by specifying discussionIds or by applying to all notifications with search parameters",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "notifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "p",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "readStatus",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "repoType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "repoName",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "postAuthor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "paperId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "articleId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "mention",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "lastUpdate",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "applyToAll",
+                  "value": "false"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54119350-1ef3-4de7-9262-54202645367f",
+          "name": "Change read status",
+          "request": {
+            "name": "Change read status",
+            "description": {
+              "content": "Mark discussions as read or unread. If `applyToAll` is true, all notifications for the user matching the search parameters will be marked as read or unread.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "notifications",
+                "mark-as-read"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "p",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "readStatus",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "repoType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "repoName",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "postAuthor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "paperId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "articleId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "mention",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "lastUpdate",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "applyToAll",
+                  "value": "false"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e803f496-368c-4c72-9d4a-a5ed7636e882",
+          "name": "Update notification settings",
+          "request": {
+            "name": "Update notification settings",
+            "description": {
+              "content": "Update notification settings for the user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "settings",
+                "notifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d828450-689a-4e3e-a71e-8e606b361c11",
+          "name": "Update watch settings",
+          "request": {
+            "name": "Update watch settings",
+            "description": {
+              "content": "Update watch settings for the user. Get notified when discussions happen on your watched items.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "settings",
+                "watch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://huggingface.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "00dd7335-8db9-4ab0-a1bf-0c665c472fda",
+    "name": "Hub API Endpoints agentic-provisioning notifications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!\n\nThe base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).\n\nIf you're an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).\n",
+      "type": "text/plain"
+    }
+  }
+}

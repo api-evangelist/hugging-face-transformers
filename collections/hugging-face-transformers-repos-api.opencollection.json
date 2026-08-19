@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning repos API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "repos",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Duplicate a repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/duplicate",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Duplicate a repository"
+        },
+        {
+          "info": {
+            "name": "Create a new repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/repos/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new repository"
+        },
+        {
+          "info": {
+            "name": "Move repo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/repos/move",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move or rename a repo"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

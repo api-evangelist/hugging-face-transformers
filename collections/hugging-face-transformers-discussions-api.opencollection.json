@@ -1,0 +1,670 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning discussions API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "discussions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/blog/:slug/comment",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        },
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/blog/:slug/comment/:commentId/reply",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        },
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/blog/:namespace/:slug/comment",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        },
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/blog/:namespace/:slug/comment/:commentId/reply",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        },
+        {
+          "info": {
+            "name": "List discussions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "p",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "author",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get discussions for a repo"
+        },
+        {
+          "info": {
+            "name": "Create a new discussion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new discussion"
+        },
+        {
+          "info": {
+            "name": "Get discussion details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get discussion details"
+        },
+        {
+          "info": {
+            "name": "Delete a discussion",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a discussion"
+        },
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num/comment",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        },
+        {
+          "info": {
+            "name": "Change status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num/status",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the status of a discussion"
+        },
+        {
+          "info": {
+            "name": "Change title",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num/title",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the title of a discussion"
+        },
+        {
+          "info": {
+            "name": "Pin a discussion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num/pin",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Pin a discussion"
+        },
+        {
+          "info": {
+            "name": "Merge a pull request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num/merge",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merge a pull request"
+        },
+        {
+          "info": {
+            "name": "Delete PR ref",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num/ref",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes the git ref for a closed/merged pull request to free up storage. LFS files unique to this PR will be garbage collected. The PR page and diff will still be viewable using stored commit data."
+        },
+        {
+          "info": {
+            "name": "PR storage estimate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/discussions/:num/storage",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "num",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Estimates the LFS storage used by a PR that could be freed if the ref is deleted."
+        },
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/papers/:paperId/comment",
+            "params": [
+              {
+                "name": "paperId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        },
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/papers/:paperId/comment/:commentId/reply",
+            "params": [
+              {
+                "name": "paperId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        },
+        {
+          "info": {
+            "name": "Delete a discussion",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/posts/:username/:postSlug",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "postSlug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a discussion"
+        },
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/posts/:username/:postSlug/comment",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "postSlug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        },
+        {
+          "info": {
+            "name": "Create a new comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/posts/:username/:postSlug/comment/:commentId/reply",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "postSlug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "commentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new comment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

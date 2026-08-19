@@ -1,0 +1,214 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning repo-search API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "repo-search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Quick search",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/quicksearch",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "library",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "orgsFilter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "reposFilter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pipelines",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeInvitees",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "discussionId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "discussionCollectionName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "spacesTags",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Quick search for models, datasets, spaces, orgs, users, papers, collections, and buckets"
+        },
+        {
+          "info": {
+            "name": "Quick search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/quicksearch",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lang",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "library",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "orgsFilter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "reposFilter",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pipelines",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "exclude",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "includeInvitees",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "discussionId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "discussionCollectionName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "spacesTags",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Quick search for models, datasets, spaces, orgs, users, papers, collections, and buckets"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

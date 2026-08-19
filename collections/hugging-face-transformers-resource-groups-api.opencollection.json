@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning resource-groups API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "resource-groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get resource groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/resource-groups",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve accessible resource groups. Get all resource groups the user has access to.\n\nRequires the org to be Enterprise"
+        },
+        {
+          "info": {
+            "name": "Create a resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/organizations/:name/resource-groups",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new resource group in the organization.\n\nRequires the org to be Enterprise"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

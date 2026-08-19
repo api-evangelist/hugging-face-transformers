@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning sql-console API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "sql-console",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update embed",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/sql-console/embed/:id",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update SQL Console embed"
+        },
+        {
+          "info": {
+            "name": "Delete embed",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/sql-console/embed/:id",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete SQL Console embed"
+        },
+        {
+          "info": {
+            "name": "Create embed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/:repoType/:namespace/:repo/sql-console/embed",
+            "params": [
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create SQL Console embed"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,246 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning notifications API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "notifications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/notifications",
+            "params": [
+              {
+                "name": "p",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "readStatus",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "postAuthor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "paperId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "articleId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mention",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lastUpdate",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List notifications for the user"
+        },
+        {
+          "info": {
+            "name": "Delete notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/notifications",
+            "params": [
+              {
+                "name": "p",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "readStatus",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "postAuthor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "paperId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "articleId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mention",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lastUpdate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "applyToAll",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete notifications, either by specifying discussionIds or by applying to all notifications with search parameters"
+        },
+        {
+          "info": {
+            "name": "Change read status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/notifications/mark-as-read",
+            "params": [
+              {
+                "name": "p",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "readStatus",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repoName",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "postAuthor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "paperId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "articleId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mention",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lastUpdate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "applyToAll",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mark discussions as read or unread. If `applyToAll` is true, all notifications for the user matching the search parameters will be marked as read or unread."
+        },
+        {
+          "info": {
+            "name": "Update notification settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://huggingface.co/api/settings/notifications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update notification settings for the user"
+        },
+        {
+          "info": {
+            "name": "Update watch settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://huggingface.co/api/settings/watch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update watch settings for the user. Get notified when discussions happen on your watched items."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

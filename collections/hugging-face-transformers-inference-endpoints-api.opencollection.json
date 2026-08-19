@@ -1,0 +1,135 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning inference-endpoints API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "inference-endpoints",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/inference-endpoints/:namespace/auth-check/:perms",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "perms",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "own",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "is_creator",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "creator_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "incur_cost",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "resource_group_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repo_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Check if the user has access to the inference endpoint"
+        },
+        {
+          "info": {
+            "name": "Check access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/inference-endpoints/:namespace/:endpoint/auth-check/:perms",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "endpoint",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "perms",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "own",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "is_creator",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "creator_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "incur_cost",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "resource_group_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "repo_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Check if the user has access to the inference endpoint"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

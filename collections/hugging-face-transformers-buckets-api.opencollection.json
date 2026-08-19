@@ -1,0 +1,407 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning buckets API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "buckets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Duplicate xet files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/lfs-files/duplicate",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Duplicate xet-stored files from this repo (source) into another repo (target) by xet hash, without re-uploading file bytes. The caller must then commit the files with their sha256/size as usual."
+        },
+        {
+          "info": {
+            "name": "Xet write token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/xet-write-token",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a write short-lived access token for XET upload"
+        },
+        {
+          "info": {
+            "name": "Xet read token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/xet-read-token",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a read short-lived access token for XET"
+        },
+        {
+          "info": {
+            "name": "Get resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/resource-group",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get resource group"
+        },
+        {
+          "info": {
+            "name": "Add resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/resource-group",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add the repository to a resource group"
+        },
+        {
+          "info": {
+            "name": "Get bucket details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get bucket details"
+        },
+        {
+          "info": {
+            "name": "Create bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create bucket"
+        },
+        {
+          "info": {
+            "name": "Delete bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete bucket"
+        },
+        {
+          "info": {
+            "name": "Update bucket settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/settings",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update bucket settings"
+        },
+        {
+          "info": {
+            "name": "List namespace buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/buckets/:namespace",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List namespace buckets"
+        },
+        {
+          "info": {
+            "name": "Retrieve information about a file in a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/buckets/:namespace/:repo/resolve/:path",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "noContentDisposition",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "download",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns file metadata including size, hash, and links to XET authentication"
+        },
+        {
+          "info": {
+            "name": "Batch file operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/batch",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Accepts NDJSON (newline-delimited JSON) where each line is an addFile, copyFile, or deleteFile instruction.\nAll add/copy operations must come before all delete operations.\n\nJSON-lines payload:\n```json\n\t'{\"type\":\"addFile\",\"path\":\"...\",\"xetHash\":\"...\",\"mtime\":...,\"contentType\":\"...\"}' +\n\t'{\"type\":\"copyFile\",\"path\":\"...\",\"xetHash\":\"...\",\"sourceRepoType\":\"...\",\"sourceRepoId\":\"...\"}' +\n\t'{\"type\":\"deleteFile\",\"path\":\"...\"}'\n```"
+        },
+        {
+          "info": {
+            "name": "List files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/tree/:path",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recursive",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List files"
+        },
+        {
+          "info": {
+            "name": "List paths info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/buckets/:namespace/:repo/paths-info",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List paths info"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

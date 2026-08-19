@@ -1,0 +1,505 @@
+{
+  "item": [
+    {
+      "id": "4df36a4e-f020-4bb2-9468-23d75d80fd69",
+      "name": "inference-endpoints",
+      "description": {
+        "content": "Manage inference endpoints.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ff4cd84b-399e-415d-861f-ef47bb48760c",
+          "name": "Check access",
+          "request": {
+            "name": "Check access",
+            "description": {
+              "content": "Check if the user has access to the inference endpoint",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "inference-endpoints",
+                ":namespace",
+                "auth-check",
+                ":perms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "creator_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "resource_group_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "repo_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "perms",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc94b444-aa9b-4eba-b331-fe95a98f5ac3",
+              "name": "The user has access to the inference endpoint/resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "inference-endpoints",
+                    ":namespace",
+                    "auth-check",
+                    ":perms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "creator_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_group_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "perms",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69cef93e-6beb-4cce-b666-40b866b917c7",
+              "name": "The user has access to the resource, but the endpoint name is restricted by pattern restrictions. Can only be returned if `endpoint` is not provided in the path",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "inference-endpoints",
+                    ":namespace",
+                    "auth-check",
+                    ":perms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "creator_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_group_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "perms",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf1ffaad-59a6-44bc-86d2-83730281edc3",
+          "name": "Check access",
+          "request": {
+            "name": "Check access",
+            "description": {
+              "content": "Check if the user has access to the inference endpoint",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "inference-endpoints",
+                ":namespace",
+                ":endpoint",
+                "auth-check",
+                ":perms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "creator_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "resource_group_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "repo_id",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "endpoint",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "perms",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "025bf802-0a65-4a48-86be-2c9cb6af5bd5",
+              "name": "The user has access to the inference endpoint/resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "inference-endpoints",
+                    ":namespace",
+                    ":endpoint",
+                    "auth-check",
+                    ":perms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "creator_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_group_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpoint",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "perms",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "613dba82-127e-4e8b-be54-b27d6568f79a",
+              "name": "The user has access to the resource, but the endpoint name is restricted by pattern restrictions. Can only be returned if `endpoint` is not provided in the path",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "inference-endpoints",
+                    ":namespace",
+                    ":endpoint",
+                    "auth-check",
+                    ":perms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "creator_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "resource_group_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "repo_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "endpoint",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "perms",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://huggingface.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7bdf7660-7d44-471c-9908-f639c3e11de9",
+    "name": "Hub API Endpoints agentic-provisioning inference-endpoints API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!\n\nThe base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).\n\nIf you're an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).\n",
+      "type": "text/plain"
+    }
+  }
+}

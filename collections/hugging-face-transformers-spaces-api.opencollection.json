@@ -1,0 +1,1249 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning spaces API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "spaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get folder size",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/treesize/:rev/:path",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the total size of a repository at a given revision, optionally under a specific subpath. Returns the total size in bytes of all files under the specified path (recursively). If a file is stored via Xet/LFS, the LFS file size is used."
+        },
+        {
+          "info": {
+            "name": "List Large files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/lfs-files",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "xet",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Xet/LFS files for a repo"
+        },
+        {
+          "info": {
+            "name": "Delete Large files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/lfs-files/batch",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete Xet/LFS files in batch"
+        },
+        {
+          "info": {
+            "name": "Delete Large file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/lfs-files/:sha",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "sha",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rewriteHistory",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete a Xet/LFS file"
+        },
+        {
+          "info": {
+            "name": "Duplicate xet files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/lfs-files/duplicate",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Duplicate xet-stored files from this repo (source) into another repo (target) by xet hash, without re-uploading file bytes. The caller must then commit the files with their sha256/size as usual."
+        },
+        {
+          "info": {
+            "name": "List commits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/commits/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "p",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List commits"
+        },
+        {
+          "info": {
+            "name": "List references",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/refs",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include_prs",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List references"
+        },
+        {
+          "info": {
+            "name": "Get a compare rev",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/compare/:compare",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "compare",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "raw",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a compare rev"
+        },
+        {
+          "info": {
+            "name": "List paths info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/paths-info/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List paths info"
+        },
+        {
+          "info": {
+            "name": "Check upload method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/preupload/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check if a file should be uploaded through the Large File mechanism or directly."
+        },
+        {
+          "info": {
+            "name": "Xet write token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/xet-write-token/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a write short-lived access token for XET upload"
+        },
+        {
+          "info": {
+            "name": "Xet read token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/xet-read-token/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a read short-lived access token for XET"
+        },
+        {
+          "info": {
+            "name": "Commit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/commit/:rev",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "create_pr",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "hot_reload",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "For legacy reason, we support both `application/json` and `application/x-ndjson` but we recommend using `application/x-ndjson` to create a commit.\n\nJSON-lines payload:\n```json\n{\n  \"key\": \"header\",\n  \"value\": {\n    \"summary\": \"string (REQUIRED)\",\n    \"description\": \"string (OPTIONAL - defaults to empty string)\",\n    \"parentCommit\": \"string (OPTIONAL - 40-character hex SHA)\"\n  }\n}\n{\n  \"key\": \"file\",\n  \"value\": {\n    \"path\": \"string (REQUIRED)\",\n    \"content\": \"string (OPTIONAL - required if oldPat"
+        },
+        {
+          "info": {
+            "name": "Create tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/tag/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create tag"
+        },
+        {
+          "info": {
+            "name": "Delete a tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/tag/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a tag"
+        },
+        {
+          "info": {
+            "name": "Create branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/branch/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create branch"
+        },
+        {
+          "info": {
+            "name": "Delete a branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/branch/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a branch"
+        },
+        {
+          "info": {
+            "name": "Get resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/resource-group",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get resource group"
+        },
+        {
+          "info": {
+            "name": "Add resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/resource-group",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add the repository to a resource group"
+        },
+        {
+          "info": {
+            "name": "Squash ref",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/super-squash/:rev",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Squash all commits in the current ref into a single commit with the given message. Action is irreversible."
+        },
+        {
+          "info": {
+            "name": "Update repo settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/settings",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the settings of a repo"
+        },
+        {
+          "info": {
+            "name": "List folder content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/tree/:rev/:path",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "expand",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "recursive",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List the content of a repository tree, with pagination support."
+        },
+        {
+          "info": {
+            "name": "Get notebook URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/notebook/:rev/:path",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a jupyter notebook URL for the requested file"
+        },
+        {
+          "info": {
+            "name": "Get security status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/scan",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the security status of a repo"
+        },
+        {
+          "info": {
+            "name": "Generate JWT",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/jwt",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "write",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "expiration",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "encrypted",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "inference_api",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_pro_status",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "billing_details",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Generate a JWT token for accessing a repository. Supports optional write access for spaces in dev mode, custom expiration, and encryption."
+        },
+        {
+          "info": {
+            "name": "Get trending",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/trending",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the trending repositories"
+        },
+        {
+          "info": {
+            "name": "List space hardware",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/hardware"
+          },
+          "docs": "Get available space hardware"
+        },
+        {
+          "info": {
+            "name": "List secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/secrets",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List a Space's secret keys. Values are never returned."
+        },
+        {
+          "info": {
+            "name": "Upsert secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/secrets",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert Spaces's secret"
+        },
+        {
+          "info": {
+            "name": "Delete secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/secrets",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete Spaces's secret"
+        },
+        {
+          "info": {
+            "name": "List variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/variables",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List a Space's variables with their values."
+        },
+        {
+          "info": {
+            "name": "Upsert variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/variables",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upsert Spaces's variable"
+        },
+        {
+          "info": {
+            "name": "Delete variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/variables",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete Spaces's variable"
+        },
+        {
+          "info": {
+            "name": "Resolve a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/spaces/:namespace/:repo/resolve/:rev/:path",
+            "headers": [
+              {
+                "name": "Range",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "This endpoint requires to follow redirection"
+        },
+        {
+          "info": {
+            "name": "Resolve a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/resolve-cache/spaces/:namespace/:repo/:rev/:path",
+            "headers": [
+              {
+                "name": "Range",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rev",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "This endpoint requires to follow redirection"
+        },
+        {
+          "info": {
+            "name": "Set Space volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/volumes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set Space volumes"
+        },
+        {
+          "info": {
+            "name": "Delete Space volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/volumes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Space volumes"
+        },
+        {
+          "info": {
+            "name": "Stream logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/logs/:logType",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "logType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tail",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get logs for a specific Space in a streaming fashion, with SSE protocol"
+        },
+        {
+          "info": {
+            "name": "Stream events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/events",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "session_uuid",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get status updates for a specific Space in a streaming fashion, with SSE protocol"
+        },
+        {
+          "info": {
+            "name": "Stream metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/spaces/:namespace/:repo/metrics",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repo",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get live metrics for a specific Space in a streaming fashion, with SSE protocol, such as current Zero-GPU usage"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

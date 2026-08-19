@@ -1,0 +1,259 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning users API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get MCP tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/settings/mcp"
+          },
+          "docs": "Get the MCP tools for the current user"
+        },
+        {
+          "info": {
+            "name": "List user repositories with storage info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/settings/repositories",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List user repositories with storage info"
+        },
+        {
+          "info": {
+            "name": "Get user usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/settings/billing/usage",
+            "params": [
+              {
+                "name": "periodId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get user usage for a given period"
+        },
+        {
+          "info": {
+            "name": "Get user usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/settings/billing/usage-v2",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get user usage for a given period"
+        },
+        {
+          "info": {
+            "name": "Get jobs usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/settings/billing/usage/jobs"
+          },
+          "docs": "Get user Jobs usage for current subscription period"
+        },
+        {
+          "info": {
+            "name": "Stream usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/settings/billing/usage/live"
+          },
+          "docs": "Get live usage for user"
+        },
+        {
+          "info": {
+            "name": "Stream usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/users/:username/billing/usage/live",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get live usage for user"
+        },
+        {
+          "info": {
+            "name": "User overview",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/users/:username/overview",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "User overview"
+        },
+        {
+          "info": {
+            "name": "Get social handles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/users/:username/socials",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a user's social media handles"
+        },
+        {
+          "info": {
+            "name": "Retrieve user avatar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/users/:username/avatar",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "redirect",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a JSON with the avatar URL for the user.\n\nIf called with the `Sec-Fetch-Dest: image` header, it instead redirects to the avatar URL"
+        },
+        {
+          "info": {
+            "name": "List user likes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/users/:username/likes",
+            "params": [
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List public repos liked by a user"
+        },
+        {
+          "info": {
+            "name": "Get avatar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/avatars/:namespace",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Display the avatar for any user or organization. This endpoint redirects to the avatar URL for either a user or an organization"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

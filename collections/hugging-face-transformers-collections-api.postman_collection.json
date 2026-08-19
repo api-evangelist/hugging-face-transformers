@@ -1,0 +1,1389 @@
+{
+  "item": [
+    {
+      "id": "bc202e7e-2c24-4635-921d-dbbf2bafabef",
+      "name": "collections",
+      "description": {
+        "content": "Use Collections to group repositories from the Hub (Models, Datasets, Spaces and Papers) on a dedicated page.\n\nYou can learn more about it in the Collections [guide](https://huggingface.co/docs/hub/collections). Collections can also be managed using the Python client (see [guide](https://huggingface.co/docs/huggingface_hub/main/en/guides/collections)).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d26a9509-789f-4640-a400-29f94b514738",
+          "name": "Get a collection",
+          "request": {
+            "name": "Get a collection",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                "{{slug}}-{{id}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a5ab9d4b-6469-4984-8386-bcd3f90785eb",
+              "name": "The collection data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections",
+                    ":namespace",
+                    "{{slug}}-{{id}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0d91f3b-a14e-471d-b2d4-de120be95769",
+          "name": "Update a collection",
+          "request": {
+            "name": "Update a collection",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                "{{slug}}-{{id}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f515c75e-1f77-401b-a6cb-f4622707f0bd",
+              "name": "The updated collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections",
+                    ":namespace",
+                    "{{slug}}-{{id}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "null",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "632016f5-ba03-4ab9-be17-252000ed8d5c",
+          "name": "Delete a collection",
+          "request": {
+            "name": "Delete a collection",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                "{{slug}}-{{id}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50d35bde-01a2-492d-bad1-82d19177f9e8",
+          "name": "Get a collection",
+          "request": {
+            "name": "Get a collection",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e943f263-d341-4452-9b50-e4f3a80203fb",
+              "name": "The collection data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db5e6eb6-eaa9-4a4f-aaef-9728dd13903a",
+          "name": "Update a collection",
+          "request": {
+            "name": "Update a collection",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "620b1fec-1544-42cc-bb09-b4f05a77b369",
+              "name": "The updated collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections",
+                    ":namespace",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "null",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dc1b16b1-e7ab-46c8-b068-8b1ace8c0a3f",
+          "name": "Delete a collection",
+          "request": {
+            "name": "Delete a collection",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8fbf38a8-ed21-4151-8394-c0e71b7e0d08",
+          "name": "Add item",
+          "request": {
+            "name": "Add item",
+            "description": {
+              "content": "Add an item to a collection",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                "{{slug}}-{{id}}",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1fd0ec7c-e999-4bc3-90a3-38228e6e9509",
+              "name": "The updated collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections",
+                    ":namespace",
+                    "{{slug}}-{{id}}",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "null",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db415da7-a53b-4e8c-aac3-94b3848b99c6",
+          "name": "Add item",
+          "request": {
+            "name": "Add item",
+            "description": {
+              "content": "Add an item to a collection",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                ":slug",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe6e6d6a-e17b-4e65-9a81-8390be4ac65b",
+              "name": "The updated collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections",
+                    ":namespace",
+                    ":slug",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "null",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "51a77329-d372-48ca-bcca-d7e23d364bc7",
+          "name": "Batch update items",
+          "request": {
+            "name": "Batch update items",
+            "description": {
+              "content": "Batch update items in a collection",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                "{{slug}}-{{id}}",
+                "items",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e570a60e-8ae5-40bf-b98c-c67eb03d725b",
+          "name": "Batch update items",
+          "request": {
+            "name": "Batch update items",
+            "description": {
+              "content": "Batch update items in a collection",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                ":slug",
+                "items",
+                "batch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70fc36c8-4389-400a-9bba-3ae55e1d0d24",
+          "name": "Delete item",
+          "request": {
+            "name": "Delete item",
+            "description": {
+              "content": "Delete an item from a collection",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                "{{slug}}-{{id}}",
+                "items",
+                ":itemId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "itemId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef7b7a40-db4c-4c76-a480-b8943eb22788",
+          "name": "Delete item",
+          "request": {
+            "name": "Delete item",
+            "description": {
+              "content": "Delete an item from a collection",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "collections",
+                ":namespace",
+                ":slug",
+                "items",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8219024e-6d49-46b5-9e32-4dbc75ec2491",
+          "name": "Create a collection",
+          "request": {
+            "name": "Create a collection",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "collections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "null",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7b4c244f-63c4-4abd-b83a-7e7aab80c26a",
+              "name": "The created collection",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "null",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4ac2cf7-d663-4bb8-a5e6-9258b7d1b898",
+              "name": "The collection already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "null",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57c3cf4a-8696-4e1b-a301-709ed8bc75aa",
+          "name": "Get collections",
+          "request": {
+            "name": "Get collections",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "collections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "item",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "item",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "trending"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c07abd4-9a21-4972-89c5-698698d87f41",
+              "name": "The collection data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "item",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "item",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "trending"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "expand",
+                      "value": "true"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Link header for pagination, can contain a `rel=\"next\"` link",
+                  "key": "Link",
+                  "value": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"slug\": \"string\",\n    \"title\": \"string\",\n    \"lastUpdated\": \"0898-12-31T18:24:26Z\",\n    \"gating\": {},\n    \"owner\": {\n      \"_id\": \"6bc53c5103d939f0a03d1cd1\",\n      \"avatarUrl\": \"string\",\n      \"fullname\": \"string\",\n      \"name\": \"string\",\n      \"isHf\": true,\n      \"isHfAdmin\": true,\n      \"isMod\": true,\n      \"type\": {},\n      \"followerCount\": 2723.412443197204,\n      \"plan\": \"string\",\n      \"isUserFollowing\": true\n    },\n    \"theme\": \"string\",\n    \"private\": true,\n    \"upvotes\": 5034.60477465209,\n    \"isUpvotedByUser\": true,\n    \"items\": [\n      {\n        \"_id\": \"string\",\n        \"author\": \"string\",\n        \"downloads\": 4063.943867439339,\n        \"gated\": {},\n        \"id\": \"string\",\n        \"isLikedByUser\": false,\n        \"lastModified\": \"8108-02-29T03:47:45.375Z\",\n        \"likes\": 8161.21443099623,\n        \"position\": 3521.614934359671,\n        \"private\": false,\n        \"repoType\": {},\n        \"type\": {},\n        \"note\": {\n          \"html\": \"string\",\n          \"text\": \"string\"\n        },\n        \"gallery\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datasetsServerInfo\": {\n          \"viewer\": \"string\",\n          \"numRows\": 4277.544061944462,\n          \"libraries\": [\n            \"string\",\n            \"string\"\n          ],\n          \"formats\": [\n            \"string\",\n            \"string\"\n          ],\n          \"modalities\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"resourceGroup\": {\n          \"id\": \"9086058b6f3bcaa381bb8790\",\n          \"name\": \"string\",\n          \"numUsers\": 8963.891649575942\n        },\n        \"isBenchmark\": false,\n        \"isTraces\": true\n      },\n      {\n        \"_id\": \"string\",\n        \"author\": \"string\",\n        \"downloads\": 6448.404182842539,\n        \"gated\": {},\n        \"id\": \"string\",\n        \"isLikedByUser\": false,\n        \"lastModified\": \"7208-02-29T20:54:31Z\",\n        \"likes\": 9574.103538826772,\n        \"position\": 9152.68721373643,\n        \"private\": false,\n        \"repoType\": {},\n        \"type\": {},\n        \"note\": {\n          \"html\": \"string\",\n          \"text\": \"string\"\n        },\n        \"gallery\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datasetsServerInfo\": {\n          \"viewer\": \"string\",\n          \"numRows\": 9755.637207333482,\n          \"libraries\": [\n            \"string\",\n            \"string\"\n          ],\n          \"formats\": [\n            \"string\",\n            \"string\"\n          ],\n          \"modalities\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"resourceGroup\": {\n          \"id\": \"82d1cf8d3e74f76e0a3b28e5\",\n          \"name\": \"string\",\n          \"numUsers\": 3349.585396327144\n        },\n        \"isBenchmark\": true,\n        \"isTraces\": true\n      }\n    ],\n    \"description\": \"string\"\n  },\n  {\n    \"slug\": \"string\",\n    \"title\": \"string\",\n    \"lastUpdated\": \"2608-02-29T12:23:49Z\",\n    \"gating\": {},\n    \"owner\": {\n      \"_id\": \"47b54d71f9e0468bfbd5b77f\",\n      \"avatarUrl\": \"string\",\n      \"fullname\": \"string\",\n      \"name\": \"string\",\n      \"isHf\": false,\n      \"isHfAdmin\": false,\n      \"isMod\": true,\n      \"type\": {},\n      \"followerCount\": 1615.6389148684214,\n      \"plan\": \"string\",\n      \"isUserFollowing\": true\n    },\n    \"theme\": \"string\",\n    \"private\": false,\n    \"upvotes\": 4703.646149452879,\n    \"isUpvotedByUser\": false,\n    \"items\": [\n      {\n        \"_id\": \"string\",\n        \"author\": \"string\",\n        \"downloads\": 9398.80518562739,\n        \"gated\": {},\n        \"id\": \"string\",\n        \"isLikedByUser\": true,\n        \"lastModified\": \"5404-02-29T17:50:26.381289080Z\",\n        \"likes\": 9078.266174012399,\n        \"position\": 2901.3715068243464,\n        \"private\": true,\n        \"repoType\": {},\n        \"type\": {},\n        \"note\": {\n          \"html\": \"string\",\n          \"text\": \"string\"\n        },\n        \"gallery\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datasetsServerInfo\": {\n          \"viewer\": \"string\",\n          \"numRows\": 8816.848491218945,\n          \"libraries\": [\n            \"string\",\n            \"string\"\n          ],\n          \"formats\": [\n            \"string\",\n            \"string\"\n          ],\n          \"modalities\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"resourceGroup\": {\n          \"id\": \"225c2e0e25f6b14dec1e7fb1\",\n          \"name\": \"string\",\n          \"numUsers\": 8902.230975595809\n        },\n        \"isBenchmark\": false,\n        \"isTraces\": false\n      },\n      {\n        \"_id\": \"string\",\n        \"author\": \"string\",\n        \"downloads\": 8178.173812770428,\n        \"gated\": {},\n        \"id\": \"string\",\n        \"isLikedByUser\": false,\n        \"lastModified\": \"3404-02-29T20:27:05Z\",\n        \"likes\": 7052.076906657827,\n        \"position\": 6519.8118278211105,\n        \"private\": true,\n        \"repoType\": {},\n        \"type\": {},\n        \"note\": {\n          \"html\": \"string\",\n          \"text\": \"string\"\n        },\n        \"gallery\": [\n          \"string\",\n          \"string\"\n        ],\n        \"datasetsServerInfo\": {\n          \"viewer\": \"string\",\n          \"numRows\": 5485.278463414754,\n          \"libraries\": [\n            \"string\",\n            \"string\"\n          ],\n          \"formats\": [\n            \"string\",\n            \"string\"\n          ],\n          \"modalities\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"resourceGroup\": {\n          \"id\": \"f520b8d63178d7a6a6d4bb75\",\n          \"name\": \"string\",\n          \"numUsers\": 1582.574072477856\n        },\n        \"isBenchmark\": false,\n        \"isTraces\": false\n      }\n    ],\n    \"description\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://huggingface.co",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) ",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "slug"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) ",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "id"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "774ea258-3490-4076-afb3-82e103746168",
+    "name": "Hub API Endpoints agentic-provisioning collections API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!\n\nThe base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).\n\nIf you're an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).\n",
+      "type": "text/plain"
+    }
+  }
+}

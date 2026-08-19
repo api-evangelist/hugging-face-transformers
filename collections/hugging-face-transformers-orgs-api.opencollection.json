@@ -1,0 +1,373 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hub API Endpoints agentic-provisioning orgs API",
+    "version": "0.0.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "orgs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Revoke a member's access token from the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://huggingface.co/api/organizations/:name/settings/tokens/revoke",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "An org admin can revoke a token's access to the org. The token itself isn't deleted, it still works outside the org. Requires the raw token value. Enterprise only."
+        },
+        {
+          "info": {
+            "name": "List organization repositories with storage info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/settings/repositories",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List organization repositories with storage info"
+        },
+        {
+          "info": {
+            "name": "Export the audit log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/audit-log/export",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Export the audit log events in JSON format for a Team or Enterprise organization. The export is limited to the last 100,000 events."
+        },
+        {
+          "info": {
+            "name": "Get network security settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/settings/network-security",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the network security settings for an organization."
+        },
+        {
+          "info": {
+            "name": "Update network security settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://huggingface.co/api/organizations/:name/settings/network-security",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the network security settings for an organization."
+        },
+        {
+          "info": {
+            "name": "Get avatar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/avatar",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "redirect",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve organization avatar. This endpoint returns a JSON with the avatar URL for the organization.\n\nIf called with the `Sec-Fetch-Dest: image` header, it instead redirects to the avatar URL"
+        },
+        {
+          "info": {
+            "name": "Get organization members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/members",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a list of members for the organization with optional search and pagination."
+        },
+        {
+          "info": {
+            "name": "Change member role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://huggingface.co/api/organizations/:name/members/:username/role",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the role of a member in the organization. Need a paid plan."
+        },
+        {
+          "info": {
+            "name": "Get org usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/billing/usage",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "periodId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get org usage for a given period"
+        },
+        {
+          "info": {
+            "name": "Get org usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/billing/usage-v2",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get org usage for a given period"
+        },
+        {
+          "info": {
+            "name": "Get org usage by resource group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/billing/usage-by-resource-group",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get org usage breakdown per resource group for a given period (max 3 months)"
+        },
+        {
+          "info": {
+            "name": "Stream usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/billing/usage/live",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get live usage for org"
+        },
+        {
+          "info": {
+            "name": "Get social handles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/organizations/:name/socials",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an organization's social media handles"
+        },
+        {
+          "info": {
+            "name": "Get avatar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://huggingface.co/api/avatars/:namespace",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Display the avatar for any user or organization. This endpoint redirects to the avatar URL for either a user or an organization"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
