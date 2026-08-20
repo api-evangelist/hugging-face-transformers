@@ -24,6 +24,14 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/hugging-face-transformers.png
 tags:
   - Artificial Intelligence
+  - Computer-Vision
+  - Deep Learning
+  - Machine-Learning
+  - Natural Language Processing
+  - Open-Source
+  - Transformers
+tags_raw:
+  - Artificial Intelligence
   - Computer Vision
   - Deep Learning
   - Machine Learning
@@ -45,6 +53,11 @@ apis:
     and many other tasks.
   humanURL: https://huggingface.co/docs/transformers/index
   tags:
+  - Library
+  - Open-Source
+  - Pipelines
+  - Python
+  tags_raw:
   - Library
   - Open Source
   - Pipelines
@@ -147,6 +160,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Authentication
+  tags_raw:
   - auth
   properties:
   - type: OpenAPI
@@ -169,6 +184,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Buckets
+  tags_raw:
   - buckets
   properties:
   - type: OpenAPI
@@ -195,6 +212,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Collection
+  tags_raw:
   - collections
   properties:
   - type: OpenAPI
@@ -215,6 +234,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Datasets
+  tags_raw:
   - datasets
   properties:
   - type: OpenAPI
@@ -235,6 +256,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Discussions
+  tags_raw:
   - discussions
   properties:
   - type: OpenAPI
@@ -255,6 +278,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Docs
+  tags_raw:
   - docs
   properties:
   - type: OpenAPI
@@ -275,6 +300,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Inference Endpoints
+  tags_raw:
   - inference-endpoints
   properties:
   - type: OpenAPI
@@ -295,6 +322,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Job
+  tags_raw:
   - jobs
   properties:
   - type: OpenAPI
@@ -315,6 +344,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Kernel
+  tags_raw:
   - kernels
   properties:
   - type: OpenAPI
@@ -335,6 +366,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Models
+  tags_raw:
   - models
   properties:
   - type: OpenAPI
@@ -355,6 +388,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Notification
+  tags_raw:
   - notifications
   properties:
   - type: OpenAPI
@@ -375,6 +410,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Authentication
+  tags_raw:
   - oauth
   properties:
   - type: OpenAPI
@@ -395,6 +432,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Organization
+  tags_raw:
   - orgs
   properties:
   - type: OpenAPI
@@ -415,6 +454,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Papers
+  tags_raw:
   - papers
   properties:
   - type: OpenAPI
@@ -457,6 +498,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Repos
+  tags_raw:
   - repos
   properties:
   - type: OpenAPI
@@ -478,6 +521,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Resource Groups
+  tags_raw:
   - resource-groups
   properties:
   - type: OpenAPI
@@ -507,6 +552,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - SCIM
+  tags_raw:
   - scim
   properties:
   - type: OpenAPI
@@ -527,6 +574,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Spaces
+  tags_raw:
   - spaces
   properties:
   - type: OpenAPI
@@ -567,6 +616,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
@@ -587,6 +638,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Webhook
+  tags_raw:
   - webhooks
   properties:
   - type: OpenAPI
