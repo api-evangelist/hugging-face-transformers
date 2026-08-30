@@ -198,7 +198,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Buckets
+  - buckets
   tags_raw:
   - buckets
   properties:
@@ -270,7 +270,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Discussions
+  - discussions
   tags_raw:
   - discussions
   properties:
@@ -314,7 +314,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Inference Endpoints
+  - inference-endpoints
   tags_raw:
   - inference-endpoints
   properties:
@@ -358,7 +358,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Kernel
+  - kernels
   tags_raw:
   - kernels
   properties:
@@ -446,7 +446,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Organization
+  - orgs
   tags_raw:
   - orgs
   properties:
@@ -468,7 +468,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Papers
+  - papers
   tags_raw:
   - papers
   properties:
@@ -512,7 +512,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Repos
+  - repos
   tags_raw:
   - repos
   properties:
@@ -535,7 +535,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Resource Groups
+  - resource-groups
   tags_raw:
   - resource-groups
   properties:
@@ -588,7 +588,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Spaces
+  - spaces
   tags_raw:
   - spaces
   properties:
