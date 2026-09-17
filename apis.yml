@@ -418,28 +418,6 @@ apis:
     url: https://huggingface.co/docs/hub/api
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
-- aid: hugging-face-transformers:hugging-face-transformers-oauth-api
-  name: Hugging Face Transformers oauth API
-  description: The following endpoints are for use with OAuth.
-  humanURL: https://huggingface.co/docs/transformers/index
-  baseURL: https://api-inference.huggingface.co
-  tags:
-  - Authentication
-  tags_raw:
-  - oauth
-  properties:
-  - type: OpenAPI
-    url: openapi/hugging-face-transformers-oauth-api-openapi.yml
-  - type: Documentation
-    url: https://huggingface.co/docs/huggingface_hub/index
-  - type: Python Client
-    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
-  - type: JavaScript Client
-    url: https://huggingface.co/docs/huggingface.js/index
-  - type: APIReference
-    url: https://huggingface.co/docs/hub/api
-  - type: GitHub
-    url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-orgs-api
   name: Hugging Face Transformers orgs API
   description: The following endpoints let you interact with Hub Organizations and their members.
@@ -658,6 +636,26 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/hugging-face-transformers-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://huggingface.co/docs/huggingface_hub/index
+  - type: Python Client
+    url: https://huggingface.co/docs/huggingface_hub/package_reference/overview
+  - type: JavaScript Client
+    url: https://huggingface.co/docs/huggingface.js/index
+  - type: APIReference
+    url: https://huggingface.co/docs/hub/api
+  - type: GitHub
+    url: https://github.com/huggingface/huggingface_hub
+- aid: hugging-face-transformers:hugging-face-transformers-oauth-api
+  name: Hugging Face Transformers OAUTH API
+  description: The following endpoints are for use with OAuth.
+  humanURL: https://huggingface.co/docs/transformers/index
+  baseURL: https://api-inference.huggingface.co
+  tags:
+  - oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/hugging-face-transformers-oauth-api-openapi.yml
   - type: Documentation
     url: https://huggingface.co/docs/huggingface_hub/index
   - type: Python Client
