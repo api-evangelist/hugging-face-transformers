@@ -118,6 +118,12 @@ apis:
   - Demos
   - Deployment
   - Gradio
+  - Space
+  - Streamlit
+  tags_raw:
+  - Demos
+  - Deployment
+  - Gradio
   - Spaces
   - Streamlit
   properties:
@@ -446,7 +452,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Papers
+  - Paper
   tags_raw:
   - papers
   properties:
@@ -566,7 +572,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
-  - Spaces
+  - Space
   tags_raw:
   - spaces
   properties:
@@ -652,6 +658,8 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Authentication
+  tags_raw:
   - oauth
   properties:
   - type: OpenAPI
