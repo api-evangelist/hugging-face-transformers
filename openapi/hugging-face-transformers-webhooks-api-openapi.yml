@@ -1,23 +1,15 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Hub API Endpoints agentic-provisioning webhooks API
+  title: Hub API Endpoints Webhooks API
   version: 0.0.1
-  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
-
-
-    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
-
-
-    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
-
-    '
+  description: We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos.
 servers:
 - url: https://huggingface.co
   description: Hub
 security:
 - bearerAuth: []
 tags:
-- name: webhooks
+- name: Webhooks
   x-displayName: Webhooks
   description: The following endpoints are for use with webhooks.
 paths:
@@ -25,7 +17,7 @@ paths:
     get:
       summary: List webhooks
       tags:
-      - webhooks
+      - Webhooks
       responses:
         '200':
           content:
@@ -174,10 +166,12 @@ paths:
                   - domains
                   additionalProperties: false
           description: Webhooks
+      operationId: getApiSettingsWebhooks
+      x-operation-id-source: derived
     post:
       summary: Create webhook
       tags:
-      - webhooks
+      - Webhooks
       requestBody:
         content:
           application/json:
@@ -501,11 +495,13 @@ paths:
                 - webhook
                 additionalProperties: false
           description: Created webhook
+      operationId: postApiSettingsWebhooks
+      x-operation-id-source: derived
   /api/settings/webhooks/{webhookId}:
     get:
       summary: Get webhook
       tags:
-      - webhooks
+      - Webhooks
       responses:
         '200':
           content:
@@ -665,10 +661,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiSettingsWebhooksByWebhookId
+      x-operation-id-source: derived
     post:
       summary: Update webhook
       tags:
-      - webhooks
+      - Webhooks
       requestBody:
         content:
           application/json:
@@ -999,10 +997,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiSettingsWebhooksByWebhookId
+      x-operation-id-source: derived
     delete:
       summary: Delete webhook
       tags:
-      - webhooks
+      - Webhooks
       responses:
         '200':
           content:
@@ -1019,11 +1019,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiSettingsWebhooksByWebhookId
+      x-operation-id-source: derived
   /api/settings/webhooks/{webhookId}/{action}:
     post:
       summary: Enable/disable webhook
       tags:
-      - webhooks
+      - Webhooks
       responses:
         '200':
           content:
@@ -1191,11 +1193,13 @@ paths:
           enum:
           - enable
           - disable
+      operationId: postApiSettingsWebhooksByWebhookIdByAction
+      x-operation-id-source: derived
   /api/settings/webhooks/{webhookId}/replay/{logId}:
     post:
       summary: Replay webhook log
       tags:
-      - webhooks
+      - Webhooks
       responses:
         '200':
           content:
@@ -1222,6 +1226,8 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiSettingsWebhooksByWebhookIdReplayByLogId
+      x-operation-id-source: derived
 components:
   securitySchemes:
     bearerAuth:

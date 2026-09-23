@@ -1,23 +1,15 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Hub API Endpoints agentic-provisioning buckets API
+  title: Hub API Endpoints Buckets API
   version: 0.0.1
-  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
-
-
-    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
-
-
-    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
-
-    '
+  description: We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos.
 servers:
 - url: https://huggingface.co
   description: Hub
 security:
 - bearerAuth: []
 tags:
-- name: buckets
+- name: Buckets
   x-displayName: Buckets
   description: Git-free storage buckets for files, powered by Xet. Buckets provide simple file storage without git versioning.
 paths:
@@ -26,7 +18,7 @@ paths:
       description: Duplicate xet-stored files from this repo (source) into another repo (target) by xet hash, without re-uploading file bytes. The caller must then commit the files with their sha256/size as usual.
       summary: Duplicate xet files
       tags:
-      - buckets
+      - Buckets
       requestBody:
         content:
           application/json:
@@ -181,12 +173,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBucketsByNamespaceByRepoLfsFilesDuplicate
+      x-operation-id-source: derived
   /api/buckets/{namespace}/{repo}/xet-write-token:
     get:
       description: Get a write short-lived access token for XET upload
       summary: Xet write token
       tags:
-      - buckets
+      - Buckets
       responses:
         '200':
           content:
@@ -231,12 +225,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiBucketsByNamespaceByRepoXetWriteToken
+      x-operation-id-source: derived
   /api/buckets/{namespace}/{repo}/xet-read-token:
     get:
       description: Get a read short-lived access token for XET
       summary: Xet read token
       tags:
-      - buckets
+      - Buckets
       responses:
         '200':
           content:
@@ -281,12 +277,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiBucketsByNamespaceByRepoXetReadToken
+      x-operation-id-source: derived
   /api/buckets/{namespace}/{repo}/resource-group:
     post:
       description: Add the repository to a resource group
       summary: Add resource group
       tags:
-      - buckets
+      - Buckets
       requestBody:
         content:
           application/json:
@@ -343,10 +341,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBucketsByNamespaceByRepoResourceGroup
+      x-operation-id-source: derived
     get:
       summary: Get resource group
       tags:
-      - buckets
+      - Buckets
       responses:
         '200':
           content:
@@ -380,11 +380,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiBucketsByNamespaceByRepoResourceGroup
+      x-operation-id-source: derived
   /api/buckets/{namespace}/{repo}:
     post:
       summary: Create bucket
       tags:
-      - buckets
+      - Buckets
       requestBody:
         content:
           application/json:
@@ -481,10 +483,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBucketsByNamespaceByRepo
+      x-operation-id-source: derived
     delete:
       summary: Delete bucket
       tags:
-      - buckets
+      - Buckets
       parameters:
       - name: namespace
         in: path
@@ -496,10 +500,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiBucketsByNamespaceByRepo
+      x-operation-id-source: derived
     get:
       summary: Get bucket details
       tags:
-      - buckets
+      - Buckets
       responses:
         '200':
           content:
@@ -593,11 +599,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiBucketsByNamespaceByRepo
+      x-operation-id-source: derived
   /api/buckets/{namespace}/{repo}/settings:
     put:
       summary: Update bucket settings
       tags:
-      - buckets
+      - Buckets
       requestBody:
         content:
           application/json:
@@ -669,11 +677,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: putApiBucketsByNamespaceByRepoSettings
+      x-operation-id-source: derived
   /api/buckets/{namespace}:
     get:
       summary: List namespace buckets
       tags:
-      - buckets
+      - Buckets
       responses:
         '200':
           content:
@@ -770,12 +780,14 @@ paths:
         schema:
           type: string
         required: false
+      operationId: getApiBucketsByNamespace
+      x-operation-id-source: derived
   /buckets/{namespace}/{repo}/resolve/{path}:
     get:
       description: Returns file metadata including size, hash, and links to XET authentication
       summary: Retrieve information about a file in a bucket
       tags:
-      - buckets
+      - Buckets
       responses:
         '200':
           content:
@@ -873,12 +885,29 @@ paths:
           $schema: https://json-schema.org/draft/2020-12/schema
           description: Returns json information about the XET file info
           const: application/vnd.xet-fileinfo+json
+      operationId: getBucketsByNamespaceByRepoResolveByPath
+      x-operation-id-source: derived
   /api/buckets/{namespace}/{repo}/batch:
     post:
-      description: "Accepts NDJSON (newline-delimited JSON) where each line is an addFile, copyFile, or deleteFile instruction.\nAll add/copy operations must come before all delete operations.\n\nJSON-lines payload:\n```json\n\t'{\"type\":\"addFile\",\"path\":\"...\",\"xetHash\":\"...\",\"mtime\":...,\"contentType\":\"...\"}' +\n\t'{\"type\":\"copyFile\",\"path\":\"...\",\"xetHash\":\"...\",\"sourceRepoType\":\"...\",\"sourceRepoId\":\"...\"}' +\n\t'{\"type\":\"deleteFile\",\"path\":\"...\"}'\n```"
+      description: 'Accepts NDJSON (newline-delimited JSON) where each line is an addFile, copyFile, or deleteFile instruction.
+
+        All add/copy operations must come before all delete operations.
+
+
+        JSON-lines payload:
+
+        ```json
+
+        ''{"type":"addFile","path":"...","xetHash":"...","mtime":...,"contentType":"..."}'' +
+
+        ''{"type":"copyFile","path":"...","xetHash":"...","sourceRepoType":"...","sourceRepoId":"..."}'' +
+
+        ''{"type":"deleteFile","path":"..."}''
+
+        ```'
       summary: Batch file operations
       tags:
-      - buckets
+      - Buckets
       responses:
         '200':
           content:
@@ -977,11 +1006,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBucketsByNamespaceByRepoBatch
+      x-operation-id-source: derived
   /api/buckets/{namespace}/{repo}/tree/{path}:
     get:
       summary: List files
       tags:
-      - buckets
+      - Buckets
       responses:
         '200':
           content:
@@ -1064,11 +1095,13 @@ paths:
           description: 'When false, returns collapsed directory entries instead of listing all files recursively. The number of entries returned can then be less than the limit, but there will always be a pagination link if there are more entries. Note: non-recursive listing hasn''t a strong consistency guarantees.'
           default: true
         required: false
+      operationId: getApiBucketsByNamespaceByRepoTreeByPath
+      x-operation-id-source: derived
   /api/buckets/{namespace}/{repo}/paths-info:
     post:
       summary: List paths info
       tags:
-      - buckets
+      - Buckets
       requestBody:
         content:
           application/json:
@@ -1135,6 +1168,8 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBucketsByNamespaceByRepoPathsInfo
+      x-operation-id-source: derived
 components:
   securitySchemes:
     bearerAuth:

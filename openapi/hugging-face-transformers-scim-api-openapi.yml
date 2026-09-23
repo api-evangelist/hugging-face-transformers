@@ -1,32 +1,24 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Hub API Endpoints agentic-provisioning scim API
+  title: Hub API Endpoints SCIM API
   version: 0.0.1
-  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
-
-
-    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
-
-
-    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
-
-    '
+  description: We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos.
 servers:
 - url: https://huggingface.co
   description: Hub
 security:
 - bearerAuth: []
 tags:
-- name: scim
+- name: SCIM
   x-displayName: SCIM
-  description: "Use the SCIM API to control and manage your hub Enterprise organization manage members' access.\n## Authentication\n\n- Must be organization owner\n- Use Access token with write permission on organization\n- Organization must be Enterprise Plus\n\n## Key Attribute Matching\n\n- Microsoft Entra ID (Azure AD)\n\t* SAML: `http://schemas.microsoft.com/identity/claims/objectidentifier`\n\t* SCIM: `externalId`\n- Other Identity Providers\n\t* SAML: `NameID` or `unique identifier`\n\t* SCIM: `externalId`\n\n## Supported SCIM User Attributes\n\n| Attribute | Description |\n|---|---|\n| `userName` | Username for the user |\n| `name.givenName` | First name |\n| `name.familyName` | Last name |\n| `emails` | Array of user emails; we don't support email types |\n| `externalId` | IDP provider's unique identifier |\n| `id` | Hugging Face SCIM endpoint identifier |\n| `active` | Boolean for provisioning status |\n\n"
+  description: Use the SCIM API to control and manage your hub Enterprise organization manage members' access.
 paths:
   /api/organizations/{name}/scim/v2/ServiceProviderConfig:
     get:
       description: Returns the SCIM 2.0 Service Provider configuration, describing the server's capabilities and supported authentication schemes.
       summary: Get SCIM Service Provider Configuration
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -150,12 +142,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiOrganizationsByNameScimV2ServiceProviderConfig
+      x-operation-id-source: derived
   /api/organizations/{name}/scim/v2/ResourceTypes:
     get:
       description: Returns the list of SCIM 2.0 resource types supported by this server (User and Group).
       summary: Get SCIM Resource Types
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -207,12 +201,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiOrganizationsByNameScimV2ResourceTypes
+      x-operation-id-source: derived
   /api/organizations/{name}/scim/v2/Schemas:
     get:
       description: Returns the SCIM 2.0 schema definitions for User and Group resources.
       summary: Get SCIM Schemas
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -262,12 +258,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiOrganizationsByNameScimV2Schemas
+      x-operation-id-source: derived
   /api/organizations/{name}/scim/v2/Schemas/{schemaId}:
     get:
       description: Returns a single SCIM 2.0 schema definition by its schema URI.
       summary: Get SCIM Schema by ID
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -320,12 +318,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiOrganizationsByNameScimV2SchemasBySchemaId
+      x-operation-id-source: derived
   /api/organizations/{name}/scim/v2/Users:
     get:
       description: Retrieves a paginated list of all organization members who have been set up, including disabled users. If you provide the filter parameter, the resources for all matching members are returned.
       summary: List SCIM users
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -503,11 +503,13 @@ paths:
           default: ''
           type: string
         required: false
+      operationId: getApiOrganizationsByNameScimV2Users
+      x-operation-id-source: derived
     post:
       description: Creates a new user in the organization. If the user already exists, only `active` field will be updated to provision the user.
       summary: Create a SCIM user
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -687,12 +689,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiOrganizationsByNameScimV2Users
+      x-operation-id-source: derived
   /api/organizations/{name}/scim/v2/Users/{userId}:
     get:
       description: Retrieves a SCIM user by their ID.
       summary: Get a SCIM user
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -814,11 +818,17 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiOrganizationsByNameScimV2UsersByUserId
+      x-operation-id-source: derived
     patch:
-      description: "Update an attribute of a SCIM user. Modify individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `externalId` is supported), or replace operations.\n If you set `active` to `false`, the user will be deprovisioned from the organization. \nComplicated SCIM `path` values are not supported like `emails[type eq 'work'].value`."
+      description: 'Update an attribute of a SCIM user. Modify individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `externalId` is supported), or replace operations.
+
+        If you set `active` to `false`, the user will be deprovisioned from the organization.
+
+        Complicated SCIM `path` values are not supported like `emails[type eq ''work''].value`.'
       summary: Update SCIM user
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -982,11 +992,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: patchApiOrganizationsByNameScimV2UsersByUserId
+      x-operation-id-source: derived
     put:
       description: Updates a provisioned user, you'll need to provide all their information fresh - just like setting them up for the first time. Any details you don't include will be automatically removed, so make sure to include everything they need to keep their account running smoothly. Setting `active` to `false` will deprovision the user from the organization.
       summary: Update a SCIM user
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -1169,10 +1181,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: putApiOrganizationsByNameScimV2UsersByUserId
+      x-operation-id-source: derived
     delete:
       summary: Delete a SCIM user
       tags:
-      - scim
+      - SCIM
       responses:
         '204':
           content:
@@ -1191,12 +1205,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiOrganizationsByNameScimV2UsersByUserId
+      x-operation-id-source: derived
   /api/organizations/{name}/scim/v2/Groups:
     get:
       description: Get a list of SCIM groups. Retrieves a paginated list of all organization groups. If you provide the filter parameter, the resources for all matching groups are returned.
       summary: List SCIM groups
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -1334,11 +1350,13 @@ paths:
         schema:
           const: members
         required: false
+      operationId: getApiOrganizationsByNameScimV2Groups
+      x-operation-id-source: derived
     post:
       description: Creates a new group in the organization. The group name must be unique within the organization.
       summary: Create a SCIM group
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -1445,12 +1463,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiOrganizationsByNameScimV2Groups
+      x-operation-id-source: derived
   /api/organizations/{name}/scim/v2/Groups/{groupId}:
     get:
       description: Retrieves a group by its ID. If you provide the `excludedAttributes` parameter, the `members` attribute is not returned.
       summary: Get a SCIM group
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -1533,11 +1553,13 @@ paths:
         schema:
           const: members
         required: false
+      operationId: getApiOrganizationsByNameScimV2GroupsByGroupId
+      x-operation-id-source: derived
     put:
       description: Updates a group by its ID. The group name must be unique within the organization.
       summary: Update a SCIM group
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -1650,11 +1672,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: putApiOrganizationsByNameScimV2GroupsByGroupId
+      x-operation-id-source: derived
     patch:
       description: Update attributes of a SCIM group. Updates individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `members` is supported), or replace operations.
       summary: Update SCIM group
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -1782,10 +1806,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: patchApiOrganizationsByNameScimV2GroupsByGroupId
+      x-operation-id-source: derived
     delete:
       summary: Delete a SCIM group
       tags:
-      - scim
+      - SCIM
       responses:
         '204':
           content:
@@ -1804,12 +1830,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiOrganizationsByNameScimV2GroupsByGroupId
+      x-operation-id-source: derived
   /api/organizations/{name}/scim-provisioning/v2/Users:
     get:
       description: Retrieves a paginated list of organization members and pending invitations managed by SCIM for non-managed organizations.
       summary: List SCIM-managed users
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -1987,11 +2015,13 @@ paths:
           default: ''
           type: string
         required: false
+      operationId: getApiOrganizationsByNameScimProvisioningV2Users
+      x-operation-id-source: derived
     post:
       description: Creates an invitation for a user to join the organization. The user must have an existing Hugging Face account.
       summary: Create a SCIM provisioning user invitation
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -2152,12 +2182,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiOrganizationsByNameScimProvisioningV2Users
+      x-operation-id-source: derived
   /api/organizations/{name}/scim-provisioning/v2/Users/{userId}:
     get:
       description: Retrieves a SCIM user by their ID for non-managed organizations.
       summary: Get a SCIM provisioning user
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -2279,11 +2311,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiOrganizationsByNameScimProvisioningV2UsersByUserId
+      x-operation-id-source: derived
     patch:
       description: Modify individual attributes for non-managed organizations. Only the `active` field can be modified. User profile fields are not editable via SCIM.
       summary: Update an attribute of a SCIM provisioning user
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -2445,11 +2479,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: patchApiOrganizationsByNameScimProvisioningV2UsersByUserId
+      x-operation-id-source: derived
     put:
       description: Updates a provisioned user's invitation for non-managed organizations. User profile fields are not editable via SCIM for non-managed organizations.
       summary: Update a SCIM provisioning user
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -2599,11 +2635,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: putApiOrganizationsByNameScimProvisioningV2UsersByUserId
+      x-operation-id-source: derived
     delete:
       description: Removes a user from the organization and deletes any pending invitations for non-managed organizations.
       summary: Delete a SCIM provisioning user
       tags:
-      - scim
+      - SCIM
       responses:
         '204':
           content:
@@ -2628,12 +2666,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiOrganizationsByNameScimProvisioningV2UsersByUserId
+      x-operation-id-source: derived
   /api/organizations/{name}/scim-provisioning/v2/Groups:
     get:
       description: Get a list of SCIM groups. Retrieves a paginated list of all organization groups. If you provide the filter parameter, the resources for all matching groups are returned.
       summary: List SCIM groups
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -2771,11 +2811,13 @@ paths:
         schema:
           const: members
         required: false
+      operationId: getApiOrganizationsByNameScimProvisioningV2Groups
+      x-operation-id-source: derived
     post:
       description: Creates a new group in the organization. The group name must be unique within the organization.
       summary: Create a SCIM group
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -2882,12 +2924,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiOrganizationsByNameScimProvisioningV2Groups
+      x-operation-id-source: derived
   /api/organizations/{name}/scim-provisioning/v2/Groups/{groupId}:
     get:
       description: Retrieves a group by its ID. If you provide the `excludedAttributes` parameter, the `members` attribute is not returned.
       summary: Get a SCIM group
       tags:
-      - scim
+      - SCIM
       responses:
         '200':
           content:
@@ -2970,11 +3014,13 @@ paths:
         schema:
           const: members
         required: false
+      operationId: getApiOrganizationsByNameScimProvisioningV2GroupsByGroupId
+      x-operation-id-source: derived
     put:
       description: Updates a group by its ID. The group name must be unique within the organization.
       summary: Update a SCIM group
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -3087,11 +3133,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: putApiOrganizationsByNameScimProvisioningV2GroupsByGroupId
+      x-operation-id-source: derived
     patch:
       description: Update attributes of a SCIM group. Updates individual attributes using Operations format. Just provide the changes you want to make using add, remove (only `members` is supported), or replace operations.
       summary: Update SCIM group
       tags:
-      - scim
+      - SCIM
       requestBody:
         content:
           application/json:
@@ -3219,10 +3267,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: patchApiOrganizationsByNameScimProvisioningV2GroupsByGroupId
+      x-operation-id-source: derived
     delete:
       summary: Delete a SCIM group
       tags:
-      - scim
+      - SCIM
       responses:
         '204':
           content:
@@ -3241,6 +3291,8 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiOrganizationsByNameScimProvisioningV2GroupsByGroupId
+      x-operation-id-source: derived
 components:
   securitySchemes:
     bearerAuth:

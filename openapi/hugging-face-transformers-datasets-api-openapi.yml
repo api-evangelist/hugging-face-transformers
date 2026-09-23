@@ -1,23 +1,15 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Hub API Endpoints agentic-provisioning datasets API
+  title: Hub API Endpoints Datasets API
   version: 0.0.1
-  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
-
-
-    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
-
-
-    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
-
-    '
+  description: We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos.
 servers:
 - url: https://huggingface.co
   description: Hub
 security:
 - bearerAuth: []
 tags:
-- name: datasets
+- name: Datasets
   x-displayName: Datasets
   description: Get information from all datasets on the Hub.
 paths:
@@ -26,7 +18,7 @@ paths:
       description: Get the total size of a repository at a given revision, optionally under a specific subpath. Returns the total size in bytes of all files under the specified path (recursively). If a file is stored via Xet/LFS, the LFS file size is used.
       summary: Get folder size
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -70,12 +62,14 @@ paths:
         schema:
           type: string
           description: Wildcard path parameter
+      operationId: getApiDatasetsByNamespaceByRepoTreesizeByRevByPath
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/lfs-files:
     get:
       description: List Xet/LFS files for a repo
       summary: List Large files
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -227,12 +221,14 @@ paths:
         in: query
         schema: {}
         required: false
+      operationId: getApiDatasetsByNamespaceByRepoLfsFiles
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/lfs-files/batch:
     post:
       description: Delete Xet/LFS files in batch
       summary: Delete Large files
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -267,12 +263,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoLfsFilesBatch
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/lfs-files/{sha}:
     delete:
       description: Delete a Xet/LFS file
       summary: Delete Large file
       tags:
-      - datasets
+      - Datasets
       parameters:
       - name: namespace
         in: path
@@ -294,12 +292,14 @@ paths:
         schema:
           default: true
         required: false
+      operationId: deleteApiDatasetsByNamespaceByRepoLfsFilesBySha
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/lfs-files/duplicate:
     post:
       description: Duplicate xet-stored files from this repo (source) into another repo (target) by xet hash, without re-uploading file bytes. The caller must then commit the files with their sha256/size as usual.
       summary: Duplicate xet files
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -454,11 +454,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoLfsFilesDuplicate
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/commits/{rev}:
     get:
       summary: List commits
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -562,11 +564,13 @@ paths:
           minimum: 1
           maximum: 1000
         required: false
+      operationId: getApiDatasetsByNamespaceByRepoCommitsByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/refs:
     get:
       summary: List references
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -661,11 +665,13 @@ paths:
         schema:
           default: false
         required: false
+      operationId: getApiDatasetsByNamespaceByRepoRefs
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/compare/{compare}:
     get:
       summary: Get a compare rev
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -695,11 +701,13 @@ paths:
         schema:
           default: false
         required: false
+      operationId: getApiDatasetsByNamespaceByRepoCompareByCompare
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/paths-info/{rev}:
     post:
       summary: List paths info
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -1018,12 +1026,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoPathsInfoByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/preupload/{rev}:
     post:
       description: Check if a file should be uploaded through the Large File mechanism or directly.
       summary: Check upload method
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -1113,12 +1123,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoPreuploadByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/xet-write-token/{rev}:
     get:
       description: Get a write short-lived access token for XET upload
       summary: Xet write token
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -1168,12 +1180,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiDatasetsByNamespaceByRepoXetWriteTokenByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/xet-read-token/{rev}:
     get:
       description: Get a read short-lived access token for XET
       summary: Xet read token
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -1223,12 +1237,148 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiDatasetsByNamespaceByRepoXetReadTokenByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/commit/{rev}:
     post:
-      description: "For legacy reason, we support both `application/json` and `application/x-ndjson` but we recommend using `application/x-ndjson` to create a commit.\n\nJSON-lines payload:\n```json\n{\n  \"key\": \"header\",\n  \"value\": {\n    \"summary\": \"string (REQUIRED)\",\n    \"description\": \"string (OPTIONAL - defaults to empty string)\",\n    \"parentCommit\": \"string (OPTIONAL - 40-character hex SHA)\"\n  }\n}\n{\n  \"key\": \"file\",\n  \"value\": {\n    \"path\": \"string (REQUIRED)\",\n    \"content\": \"string (OPTIONAL - required if oldPath not set)\",\n    \"encoding\": \"utf-8 | base64 (OPTIONAL - defaults to utf-8)\",\n    \"oldPath\": \"string (OPTIONAL - for move/rename operations)\"\n  }\n}\n{\n  \"key\": \"deletedEntry\",\n  \"value\": {\n    \"path\": \"string (REQUIRED)\"\n  }\n}\n{\n  \"key\": \"lfsFile\",\n  \"value\": {\n    \"path\": \"string (REQUIRED - max 1000 chars)\",\n    \"oid\": \"string (OPTIONAL - required if oldPath not set, 64 hex chars)\",\n    \"algo\": \"sha256 (OPTIONAL - only sha256 supported)\",\n    \"size\": \"number (OPTIONAL - required if oldPath is set)\",\n    \"oldPath\": \"string (OPTIONAL - for move/rename operations)\"\n  }\n}\n```\n\nJSON payload:\n```json\n{\n  \"summary\": \"string (REQUIRED)\",\n  \"description\": \"string (OPTIONAL - defaults to empty string)\",\n  \"parentCommit\": \"string (OPTIONAL - 40-character hex SHA)\"\n  \"files\": [\n    {\n      \"path\": \"string (REQUIRED)\",\n      \"content\": \"string (OPTIONAL - required if oldPath not set)\",\n      \"encoding\": \"utf-8 | base64 (OPTIONAL - defaults to utf-8)\",\n      \"oldPath\": \"string (OPTIONAL - for move/rename operations)\"\n    }\n  ],\n  \"deletedEntries\": [\n    {\n      \"path\": \"string (REQUIRED)\"\n    }\n  ],\n  \"lfsFiles\": [\n    {\n      \"path\": \"string (REQUIRED - max 1000 chars)\",\n      \"oid\": \"string (OPTIONAL - required if oldPath not set, 64 hex chars)\",\n      \"algo\": \"sha256 (OPTIONAL - only sha256 supported)\",\n      \"size\": \"number (OPTIONAL - required if oldPath is set)\",\n      \"oldPath\": \"string (OPTIONAL - for move/rename operations)\"\n    }\n  ]\n}\n```\n"
+      description: 'For legacy reason, we support both `application/json` and `application/x-ndjson` but we recommend using `application/x-ndjson` to create a commit.
+
+
+        JSON-lines payload:
+
+        ```json
+
+        {
+
+        "key": "header",
+
+        "value": {
+
+        "summary": "string (REQUIRED)",
+
+        "description": "string (OPTIONAL - defaults to empty string)",
+
+        "parentCommit": "string (OPTIONAL - 40-character hex SHA)"
+
+        }
+
+        }
+
+        {
+
+        "key": "file",
+
+        "value": {
+
+        "path": "string (REQUIRED)",
+
+        "content": "string (OPTIONAL - required if oldPath not set)",
+
+        "encoding": "utf-8 | base64 (OPTIONAL - defaults to utf-8)",
+
+        "oldPath": "string (OPTIONAL - for move/rename operations)"
+
+        }
+
+        }
+
+        {
+
+        "key": "deletedEntry",
+
+        "value": {
+
+        "path": "string (REQUIRED)"
+
+        }
+
+        }
+
+        {
+
+        "key": "lfsFile",
+
+        "value": {
+
+        "path": "string (REQUIRED - max 1000 chars)",
+
+        "oid": "string (OPTIONAL - required if oldPath not set, 64 hex chars)",
+
+        "algo": "sha256 (OPTIONAL - only sha256 supported)",
+
+        "size": "number (OPTIONAL - required if oldPath is set)",
+
+        "oldPath": "string (OPTIONAL - for move/rename operations)"
+
+        }
+
+        }
+
+        ```
+
+
+        JSON payload:
+
+        ```json
+
+        {
+
+        "summary": "string (REQUIRED)",
+
+        "description": "string (OPTIONAL - defaults to empty string)",
+
+        "parentCommit": "string (OPTIONAL - 40-character hex SHA)"
+
+        "files": [
+
+        {
+
+        "path": "string (REQUIRED)",
+
+        "content": "string (OPTIONAL - required if oldPath not set)",
+
+        "encoding": "utf-8 | base64 (OPTIONAL - defaults to utf-8)",
+
+        "oldPath": "string (OPTIONAL - for move/rename operations)"
+
+        }
+
+        ],
+
+        "deletedEntries": [
+
+        {
+
+        "path": "string (REQUIRED)"
+
+        }
+
+        ],
+
+        "lfsFiles": [
+
+        {
+
+        "path": "string (REQUIRED - max 1000 chars)",
+
+        "oid": "string (OPTIONAL - required if oldPath not set, 64 hex chars)",
+
+        "algo": "sha256 (OPTIONAL - only sha256 supported)",
+
+        "size": "number (OPTIONAL - required if oldPath is set)",
+
+        "oldPath": "string (OPTIONAL - for move/rename operations)"
+
+        }
+
+        ]
+
+        }
+
+        ```'
       summary: Commit
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -1294,11 +1444,13 @@ paths:
           enum:
           - application/json
           - application/x-ndjson
+      operationId: postApiDatasetsByNamespaceByRepoCommitByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/tag/{rev}:
     post:
       summary: Create tag
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -1328,10 +1480,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoTagByRev
+      x-operation-id-source: derived
     delete:
       summary: Delete a tag
       tags:
-      - datasets
+      - Datasets
       parameters:
       - name: namespace
         in: path
@@ -1348,11 +1502,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiDatasetsByNamespaceByRepoTagByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/branch/{rev}:
     post:
       summary: Create branch
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -1387,10 +1543,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoBranchByRev
+      x-operation-id-source: derived
     delete:
       summary: Delete a branch
       tags:
-      - datasets
+      - Datasets
       parameters:
       - name: namespace
         in: path
@@ -1407,12 +1565,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiDatasetsByNamespaceByRepoBranchByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/resource-group:
     post:
       description: Add the repository to a resource group
       summary: Add resource group
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -1469,10 +1629,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoResourceGroup
+      x-operation-id-source: derived
     get:
       summary: Get resource group
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -1506,12 +1668,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiDatasetsByNamespaceByRepoResourceGroup
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/super-squash/{rev}:
     post:
       description: Squash all commits in the current ref into a single commit with the given message. Action is irreversible.
       summary: Squash ref
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -1553,12 +1717,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoSuperSquashByRev
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/settings:
     put:
       description: Update the settings of a repo
       summary: Update repo settings
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -1651,12 +1817,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: putApiDatasetsByNamespaceByRepoSettings
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/tree/{rev}/{path}:
     get:
       description: List the content of a repository tree, with pagination support.
       summary: List folder content
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -2000,12 +2168,14 @@ paths:
         schema:
           type: string
         required: false
+      operationId: getApiDatasetsByNamespaceByRepoTreeByRevByPath
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/notebook/{rev}/{path}:
     get:
       description: Get a jupyter notebook URL for the requested file
       summary: Get notebook URL
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -2057,12 +2227,14 @@ paths:
         schema:
           type: string
           description: Wildcard path parameter
+      operationId: getApiDatasetsByNamespaceByRepoNotebookByRevByPath
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/scan:
     get:
       description: Get the security status of a repo
       summary: Get security status
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -2109,12 +2281,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiDatasetsByNamespaceByRepoScan
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/leaderboard:
     get:
       description: Returns the evaluation results ranked by score for a dataset/task
       summary: Get the leaderboard for a dataset
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -2435,12 +2609,14 @@ paths:
         schema:
           type: string
         required: false
+      operationId: getApiDatasetsByNamespaceByRepoLeaderboard
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/jwt:
     get:
       description: Generate a JWT token for accessing a repository. Supports optional write access for spaces in dev mode, custom expiration, and encryption.
       summary: Generate JWT
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -2517,12 +2693,14 @@ paths:
         in: query
         schema: {}
         required: false
+      operationId: getApiDatasetsByNamespaceByRepoJwt
+      x-operation-id-source: derived
   /api/datasets-tags-by-type:
     get:
       description: Get all possible tags used for datasets, grouped by tag type. Optionally restrict to only one tag type
       summary: Get dataset tags
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -2613,12 +2791,14 @@ paths:
           - multilinguality
           - source_datasets
         required: false
+      operationId: getApiDatasetsTagsByType
+      x-operation-id-source: derived
   /api/trending:
     get:
       description: Get the trending repositories
       summary: Get trending
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -3634,12 +3814,14 @@ paths:
           minimum: 1
           maximum: 20
         required: false
+      operationId: getApiTrending
+      x-operation-id-source: derived
   /datasets/{namespace}/{repo}/resolve/{rev}/{path}:
     get:
       description: This endpoint requires to follow redirection
       summary: Resolve a file
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -3723,12 +3905,14 @@ paths:
           $schema: https://json-schema.org/draft/2020-12/schema
           description: Returns json information about the XET file info - if the file is a xet file
           const: application/vnd.xet-fileinfo+json
+      operationId: getDatasetsByNamespaceByRepoResolveByRevByPath
+      x-operation-id-source: derived
   /api/resolve-cache/datasets/{namespace}/{repo}/{rev}/{path}:
     get:
       description: This endpoint requires to follow redirection
       summary: Resolve a file
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -3812,12 +3996,14 @@ paths:
           $schema: https://json-schema.org/draft/2020-12/schema
           description: Returns json information about the XET file info - if the file is a xet file
           const: application/vnd.xet-fileinfo+json
+      operationId: getApiResolveCacheDatasetsByNamespaceByRepoByRevByPath
+      x-operation-id-source: derived
   /datasets/{namespace}/{repo}/ask-access:
     post:
       description: Request access to a gated repository. The fields requested by repository card metadata (https://huggingface.co/docs/hub/en/models-gated#customize-requested-information)
       summary: Request access
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -3845,12 +4031,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postDatasetsByNamespaceByRepoAskAccess
+      x-operation-id-source: derived
   /datasets/{namespace}/{repo}/user-access-report:
     get:
       description: Export a report of all access requests for a gated repository
       summary: Export access report
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -3876,12 +4064,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getDatasetsByNamespaceByRepoUserAccessReport
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/user-access-request/cancel:
     post:
       description: Cancel the current user's access request to a gated repository
       summary: Cancel access request
       tags:
-      - datasets
+      - Datasets
       parameters:
       - name: namespace
         in: path
@@ -3893,12 +4083,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoUserAccessRequestCancel
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/user-access-request/{status}:
     get:
       description: List access requests for a gated repository
       summary: List access requests
       tags:
-      - datasets
+      - Datasets
       responses:
         '200':
           content:
@@ -4132,12 +4324,14 @@ paths:
           format: date-time
           pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
         required: false
+      operationId: getApiDatasetsByNamespaceByRepoUserAccessRequestByStatus
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/user-access-request/handle:
     post:
       description: Handle a user's access request to a gated repository
       summary: Handle access request
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -4175,12 +4369,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoUserAccessRequestHandle
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/user-access-request/batch:
     post:
       description: Accept or reject up to 100 access requests for a single gated repository in one call. The same `status` (and optional `rejectionReason`) is applied to every request in the list.
       summary: Handle access requests in batch
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -4249,12 +4445,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoUserAccessRequestBatch
+      x-operation-id-source: derived
   /api/datasets/{namespace}/{repo}/user-access-request/grant:
     post:
       description: Grant access to a user for a gated repository
       summary: Grant access
       tags:
-      - datasets
+      - Datasets
       requestBody:
         content:
           application/json:
@@ -4281,6 +4479,8 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiDatasetsByNamespaceByRepoUserAccessRequestGrant
+      x-operation-id-source: derived
 components:
   securitySchemes:
     bearerAuth:

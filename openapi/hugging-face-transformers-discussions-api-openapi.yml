@@ -1,23 +1,15 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Hub API Endpoints agentic-provisioning discussions API
+  title: Hub API Endpoints Discussions API
   version: 0.0.1
-  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
-
-
-    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
-
-
-    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
-
-    '
+  description: We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos.
 servers:
 - url: https://huggingface.co
   description: Hub
 security:
 - bearerAuth: []
 tags:
-- name: discussions
+- name: Discussions
   x-displayName: Discussions
   description: The following endpoints manage discussions.
 paths:
@@ -25,7 +17,7 @@ paths:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -457,11 +449,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBlogBySlugComment
+      x-operation-id-source: derived
   /api/blog/{slug}/comment/{commentId}/reply:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -898,11 +892,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBlogBySlugCommentByCommentIdReply
+      x-operation-id-source: derived
   /api/blog/{namespace}/{slug}/comment:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -1339,11 +1335,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBlogByNamespaceBySlugComment
+      x-operation-id-source: derived
   /api/blog/{namespace}/{slug}/comment/{commentId}/reply:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -1785,12 +1783,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiBlogByNamespaceBySlugCommentByCommentIdReply
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions:
     get:
       description: Get discussions for a repo
       summary: List discussions
       tags:
-      - discussions
+      - Discussions
       responses:
         '200':
           content:
@@ -2091,10 +2091,12 @@ paths:
           - trending
           - reactions
         required: false
+      operationId: getApiByRepoTypeByNamespaceByRepoDiscussions
+      x-operation-id-source: derived
     post:
       summary: Create a new discussion
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -2165,11 +2167,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiByRepoTypeByNamespaceByRepoDiscussions
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions/{num}:
     get:
       summary: Get discussion details
       tags:
-      - discussions
+      - Discussions
       responses:
         '200':
           content:
@@ -6026,10 +6030,12 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiByRepoTypeByNamespaceByRepoDiscussionsByNum
+      x-operation-id-source: derived
     delete:
       summary: Delete a discussion
       tags:
-      - discussions
+      - Discussions
       parameters:
       - name: repoType
         in: path
@@ -6056,11 +6062,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiByRepoTypeByNamespaceByRepoDiscussionsByNum
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions/{num}/comment:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -6512,12 +6520,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiByRepoTypeByNamespaceByRepoDiscussionsByNumComment
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions/{num}/status:
     post:
       description: Change the status of a discussion
       summary: Change status
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -6761,12 +6771,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiByRepoTypeByNamespaceByRepoDiscussionsByNumStatus
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions/{num}/title:
     post:
       description: Change the title of a discussion
       summary: Change title
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -7005,11 +7017,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiByRepoTypeByNamespaceByRepoDiscussionsByNumTitle
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions/{num}/pin:
     post:
       summary: Pin a discussion
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -7047,11 +7061,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiByRepoTypeByNamespaceByRepoDiscussionsByNumPin
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions/{num}/merge:
     post:
       summary: Merge a pull request
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -7087,12 +7103,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiByRepoTypeByNamespaceByRepoDiscussionsByNumMerge
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions/{num}/ref:
     delete:
       description: Deletes the git ref for a closed/merged pull request to free up storage. LFS files unique to this PR will be garbage collected. The PR page and diff will still be viewable using stored commit data.
       summary: Delete PR ref
       tags:
-      - discussions
+      - Discussions
       parameters:
       - name: repoType
         in: path
@@ -7119,12 +7137,14 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiByRepoTypeByNamespaceByRepoDiscussionsByNumRef
+      x-operation-id-source: derived
   /api/{repoType}/{namespace}/{repo}/discussions/{num}/storage:
     get:
       description: Estimates the LFS storage used by a PR that could be freed if the ref is deleted.
       summary: PR storage estimate
       tags:
-      - discussions
+      - Discussions
       responses:
         '200':
           content:
@@ -7170,11 +7190,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: getApiByRepoTypeByNamespaceByRepoDiscussionsByNumStorage
+      x-operation-id-source: derived
   /api/papers/{paperId}/comment:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -7606,11 +7628,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiPapersByPaperIdComment
+      x-operation-id-source: derived
   /api/papers/{paperId}/comment/{commentId}/reply:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -8047,11 +8071,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiPapersByPaperIdCommentByCommentIdReply
+      x-operation-id-source: derived
   /api/posts/{username}/{postSlug}:
     delete:
       summary: Delete a discussion
       tags:
-      - discussions
+      - Discussions
       parameters:
       - name: username
         in: path
@@ -8063,11 +8089,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: deleteApiPostsByUsernameByPostSlug
+      x-operation-id-source: derived
   /api/posts/{username}/{postSlug}/comment:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -8504,11 +8532,13 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiPostsByUsernameByPostSlugComment
+      x-operation-id-source: derived
   /api/posts/{username}/{postSlug}/comment/{commentId}/reply:
     post:
       summary: Create a new comment
       tags:
-      - discussions
+      - Discussions
       requestBody:
         content:
           application/json:
@@ -8950,6 +8980,8 @@ paths:
         required: true
         schema:
           type: string
+      operationId: postApiPostsByUsernameByPostSlugCommentByCommentIdReply
+      x-operation-id-source: derived
 components:
   schemas:
     RepoId:

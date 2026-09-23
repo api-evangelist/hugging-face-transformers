@@ -1,29 +1,7 @@
 {
   "provider": "hugging-face-transformers",
   "sources": [
-    "hugging-face-transformers-agentic-provisioning-api-openapi.yml",
-    "hugging-face-transformers-auth-api-openapi.yml",
-    "hugging-face-transformers-buckets-api-openapi.yml",
-    "hugging-face-transformers-collections-api-openapi.yml",
-    "hugging-face-transformers-datasets-api-openapi.yml",
-    "hugging-face-transformers-discussions-api-openapi.yml",
-    "hugging-face-transformers-docs-api-openapi.yml",
-    "hugging-face-transformers-inference-endpoints-api-openapi.yml",
-    "hugging-face-transformers-jobs-api-openapi.yml",
-    "hugging-face-transformers-kernels-api-openapi.yml",
-    "hugging-face-transformers-models-api-openapi.yml",
-    "hugging-face-transformers-notifications-api-openapi.yml",
-    "hugging-face-transformers-oauth-api-openapi.yml",
-    "hugging-face-transformers-orgs-api-openapi.yml",
-    "hugging-face-transformers-papers-api-openapi.yml",
-    "hugging-face-transformers-repo-search-api-openapi.yml",
-    "hugging-face-transformers-repos-api-openapi.yml",
-    "hugging-face-transformers-resource-groups-api-openapi.yml",
-    "hugging-face-transformers-scim-api-openapi.yml",
-    "hugging-face-transformers-spaces-api-openapi.yml",
-    "hugging-face-transformers-sql-console-api-openapi.yml",
-    "hugging-face-transformers-users-api-openapi.yml",
-    "hugging-face-transformers-webhooks-api-openapi.yml"
+    "_original/hugging-face-transformers-openapi.json"
   ],
   "outputs": [
     "hugging-face-transformers-agentic-provisioning-api-openapi.yml",
@@ -50,9 +28,40 @@
     "hugging-face-transformers-users-api-openapi.yml",
     "hugging-face-transformers-webhooks-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "hugging-face-transformers-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: hugging-face-transformers-o-auth-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 27 total)"
+  ],
+  "skipped": [
+    "hugging-face-transformers-agentic-provisioning-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-buckets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-collections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-datasets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-discussions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-docs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-inference-endpoints-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-kernels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-notifications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-orgs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-papers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-repo-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-repos-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-resource-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-scim-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-spaces-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-sql-console-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hugging-face-transformers-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

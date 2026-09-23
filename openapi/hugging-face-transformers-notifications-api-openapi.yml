@@ -1,23 +1,15 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Hub API Endpoints agentic-provisioning notifications API
+  title: Hub API Endpoints Notifications API
   version: 0.0.1
-  description: 'We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos. We offer a wrapper Python client, [`huggingface_hub`](https://github.com/huggingface/huggingface_hub), and a JS client, [`huggingface.js`](https://github.com/huggingface/huggingface.js), that allow easy access to these endpoints. We also provide [webhooks](https://huggingface.co/docs/hub/webhooks) to receive real-time incremental info about repos. Enjoy!
-
-
-    The base URL for those endpoints below is `https://huggingface.co`. For example, to construct the `/api/models` call below, one can call the URL [https://huggingface.co/api/models](https://huggingface.co/api/models).
-
-
-    If you''re an Agent, you might prefer the [markdown version OpenAPI spec](https://huggingface.co/.well-known/openapi.md).
-
-    '
+  description: We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos.
 servers:
 - url: https://huggingface.co
   description: Hub
 security:
 - bearerAuth: []
 tags:
-- name: notifications
+- name: Notifications
   x-displayName: Notifications
   description: The following endpoints fetch Hub notifications.
 paths:
@@ -26,7 +18,7 @@ paths:
       description: List notifications for the user
       summary: List notifications
       tags:
-      - notifications
+      - Notifications
       responses:
         '200':
           content:
@@ -371,11 +363,13 @@ paths:
           format: date-time
           pattern: ^((\d\d[2468][048]|\d\d[13579][26]|\d\d0[48]|[02468][048]00|[13579][26]00)-02-29|\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\d|3[01])|(0[469]|11)-(0[1-9]|[12]\d|30)|(02)-(0[1-9]|1\d|2[0-8])))T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(\.\d+)?(Z)$
         required: false
+      operationId: getApiNotifications
+      x-operation-id-source: derived
     delete:
       description: Delete notifications, either by specifying discussionIds or by applying to all notifications with search parameters
       summary: Delete notifications
       tags:
-      - notifications
+      - Notifications
       requestBody:
         content:
           application/json:
@@ -459,12 +453,14 @@ paths:
         schema:
           default: false
         required: false
+      operationId: deleteApiNotifications
+      x-operation-id-source: derived
   /api/notifications/mark-as-read:
     post:
       description: Mark discussions as read or unread. If `applyToAll` is true, all notifications for the user matching the search parameters will be marked as read or unread.
       summary: Change read status
       tags:
-      - notifications
+      - Notifications
       requestBody:
         content:
           application/json:
@@ -548,12 +544,14 @@ paths:
         schema:
           default: false
         required: false
+      operationId: postApiNotificationsMarkAsRead
+      x-operation-id-source: derived
   /api/settings/notifications:
     patch:
       description: Update notification settings for the user
       summary: Update notification settings
       tags:
-      - notifications
+      - Notifications
       requestBody:
         content:
           application/json:
@@ -620,12 +618,14 @@ paths:
                   maxLength: 24
               required:
               - notifications
+      operationId: patchApiSettingsNotifications
+      x-operation-id-source: derived
   /api/settings/watch:
     patch:
       description: Update watch settings for the user. Get notified when discussions happen on your watched items.
       summary: Update watch settings
       tags:
-      - notifications
+      - Notifications
       requestBody:
         content:
           application/json:
@@ -665,6 +665,8 @@ paths:
                     required:
                     - id
                     - type
+      operationId: patchApiSettingsWatch
+      x-operation-id-source: derived
 components:
   schemas:
     RepoId:
