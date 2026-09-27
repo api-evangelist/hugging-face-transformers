@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Hub API Endpoints OAUTH API
+  title: Hub API Endpoints OAuth API
   version: 0.0.1
   description: We have open endpoints that you can use to retrieve information from the Hub as well as perform certain actions such as creating model, dataset or Space repos.
 servers:

@@ -38,11 +38,11 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/hugging-face-transformers.png
 tags:
   - Artificial Intelligence
-  - Computer-Vision
+  - Computer Vision
   - Deep Learning
-  - Machine-Learning
+  - Machine Learning
   - Natural Language Processing
-  - Open-Source
+  - Open Source
   - Transformers
 tags_raw:
   - Artificial Intelligence
@@ -52,6 +52,9 @@ tags_raw:
   - Natural Language Processing
   - Open Source
   - Transformers
+  - Computer-Vision
+  - Machine-Learning
+  - Open-Source
 url: >-
   https://raw.githubusercontent.com/api-evangelist/hugging-face-transformers/refs/heads/main/apis.yml
 created: '2024'
@@ -68,7 +71,7 @@ apis:
   humanURL: https://huggingface.co/docs/transformers/index
   tags:
   - Library
-  - Open-Source
+  - Open Source
   - Pipelines
   - Python
   tags_raw:
@@ -76,6 +79,7 @@ apis:
   - Open Source
   - Pipelines
   - Python
+  - Open-Source
   properties:
   - type: Documentation
     url: https://huggingface.co/docs/transformers/index
@@ -118,14 +122,16 @@ apis:
   - Demos
   - Deployment
   - Gradio
-  - Space
+  - Spaces
   - Streamlit
+  - Space
   tags_raw:
   - Demos
   - Deployment
   - Gradio
   - Spaces
   - Streamlit
+  - Space
   properties:
   - type: Documentation
     url: https://huggingface.co/docs/hub/spaces-overview
@@ -154,7 +160,7 @@ apis:
   - type: Supported Models
     url: https://huggingface.co/docs/text-generation-inference/supported_models
 - aid: hugging-face-transformers:hugging-face-transformers-agentic-provisioning-api
-  name: Hugging Face Transformers agentic-provisioning API
+  name: Hugging Face Transformers Agentic Provisioning API
   description: The following endpoints are for use with Agentic Provisioning Protocol.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -174,7 +180,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-auth-api
-  name: Hugging Face Transformers auth API
+  name: Hugging Face Transformers Auth API
   description: >-
     The following endpoints get information about your currently used user based on the passed token.
   humanURL: https://huggingface.co/docs/transformers/index
@@ -197,7 +203,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-buckets-api
-  name: Hugging Face Transformers buckets API
+  name: Hugging Face Transformers Buckets API
   description: >-
     Git-free storage buckets for files, powered by Xet. Buckets provide simple file storage without git
     versioning.
@@ -221,7 +227,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-collections-api
-  name: Hugging Face Transformers collections API
+  name: Hugging Face Transformers Collections API
   description: >-
     Use Collections to group repositories from the Hub (Models, Datasets, Spaces and Papers) on a dedicated
     page.
@@ -249,7 +255,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-datasets-api
-  name: Hugging Face Transformers datasets API
+  name: Hugging Face Transformers Datasets API
   description: Get information from all datasets on the Hub.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -271,7 +277,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-discussions-api
-  name: Hugging Face Transformers discussions API
+  name: Hugging Face Transformers Discussions API
   description: The following endpoints manage discussions.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -293,7 +299,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-docs-api
-  name: Hugging Face Transformers docs API
+  name: Hugging Face Transformers Docs API
   description: The following endpoints are for interacting with the Hub's documentation.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -315,7 +321,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-inference-endpoints-api
-  name: Hugging Face Transformers inference-endpoints API
+  name: Hugging Face Transformers Inference Endpoints API
   description: Manage inference endpoints.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -337,7 +343,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-jobs-api
-  name: Hugging Face Transformers jobs API
+  name: Hugging Face Transformers Jobs API
   description: The following endpoints manage jobs.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -359,7 +365,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-kernels-api
-  name: Hugging Face Transformers kernels API
+  name: Hugging Face Transformers Kernels API
   description: Get information from all kernels on the Hub.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -381,7 +387,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-models-api
-  name: Hugging Face Transformers models API
+  name: Hugging Face Transformers Models API
   description: Get information from all models on the Hub.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -403,7 +409,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-notifications-api
-  name: Hugging Face Transformers notifications API
+  name: Hugging Face Transformers Notifications API
   description: The following endpoints fetch Hub notifications.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -425,7 +431,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-orgs-api
-  name: Hugging Face Transformers orgs API
+  name: Hugging Face Transformers Orgs API
   description: The following endpoints let you interact with Hub Organizations and their members.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -447,7 +453,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-papers-api
-  name: Hugging Face Transformers papers API
+  name: Hugging Face Transformers Papers API
   description: The following endpoint gets information about papers.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -469,7 +475,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-repo-search-api
-  name: Hugging Face Transformers repo-search API
+  name: Hugging Face Transformers Repo Search API
   description: >-
     The following endpoints help get information about models, datasets, and Spaces stored on the Hub.
   humanURL: https://huggingface.co/docs/transformers/index
@@ -490,7 +496,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-repos-api
-  name: Hugging Face Transformers repos API
+  name: Hugging Face Transformers Repos API
   description: >-
     The following endpoints manage repository settings like creating and deleting a repository.
   humanURL: https://huggingface.co/docs/transformers/index
@@ -513,7 +519,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-resource-groups-api
-  name: Hugging Face Transformers resource-groups API
+  name: Hugging Face Transformers Resource Groups API
   description: >-
     The following endpoints manage resource groups. Resource groups are a Team or Enterprise feature.
   humanURL: https://huggingface.co/docs/transformers/index
@@ -536,7 +542,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-scim-api
-  name: Hugging Face Transformers scim API
+  name: Hugging Face Transformers SCIM API
   description: "Use the SCIM API to control and manage your hub Enterprise organization manage members'\
     \ access.\n## Authentication\n\n- Must be organization owner\n- Use Access token with write permission\
     \ on organization\n- Organization must be Enterprise Plus\n\n## Key Attribute Matching\n\n- Microsoft\
@@ -567,14 +573,16 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-spaces-api
-  name: Hugging Face Transformers spaces API
+  name: Hugging Face Transformers Spaces API
   description: Get information from all Spaces on the Hub.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
   tags:
+  - Spaces
   - Space
   tags_raw:
   - spaces
+  - Space
   properties:
   - type: OpenAPI
     url: openapi/hugging-face-transformers-spaces-api-openapi.yml
@@ -589,7 +597,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-sql-console-api
-  name: Hugging Face Transformers sql-console API
+  name: Hugging Face Transformers Sql Console API
   description: Get information from SQL Console embeds from a dataset.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -609,7 +617,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-users-api
-  name: Hugging Face Transformers users API
+  name: Hugging Face Transformers Users API
   description: User accounts are the base authoring entity on the Hub
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
@@ -631,7 +639,7 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 - aid: hugging-face-transformers:hugging-face-transformers-webhooks-api
-  name: Hugging Face Transformers webhooks API
+  name: Hugging Face Transformers Webhooks API
   description: The following endpoints are for use with webhooks.
   humanURL: https://huggingface.co/docs/transformers/index
   baseURL: https://api-inference.huggingface.co
