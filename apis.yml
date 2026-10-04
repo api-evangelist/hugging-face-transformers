@@ -683,6 +683,9 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 common:
+  - type: CapabilityMap
+    url: capabilities/hugging-face-transformers-capability-edges.yml
+    name: Hugging Face Transformers Business Capability Map
   - type: Releases
     url: https://github.com/huggingface/transformers/releases
   - type: SecurityPolicy
