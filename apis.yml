@@ -683,6 +683,12 @@ apis:
   - type: GitHub
     url: https://github.com/huggingface/huggingface_hub
 common:
+  - type: Plans
+    url: plans/hugging-face-transformers-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/hugging-face-transformers-rate-limits.yml
+  - type: FinOps
+    url: finops/hugging-face-transformers-finops.yml
   - type: CapabilityMap
     url: capabilities/hugging-face-transformers-capability-edges.yml
     name: Hugging Face Transformers Business Capability Map
