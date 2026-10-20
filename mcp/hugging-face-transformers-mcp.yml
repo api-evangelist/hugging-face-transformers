@@ -16,21 +16,53 @@ notes: Official Hugging Face remote MCP server. Connects MCP-compatible clients 
   VS Code, Zed, Codex, ChatGPT) to the Hub. Beyond the built-in tools below, users can add MCP-compatible
   Gradio Spaces as additional runtime tools from the settings page.
 tools:
-- name: Spaces Semantic Search
-  description: Find the best AI apps (Spaces) via natural language queries.
-- name: Papers Semantic Search
-  description: Find ML research papers via natural language queries.
-- name: Model Search
-  description: Search for ML models with filters for task, library, and more.
-- name: Dataset Search
-  description: Search for datasets with filters for author, tags, and more.
-- name: Documentation Semantic Search
-  description: Search the Hugging Face documentation using natural language across all Hugging Face libraries.
-- name: Run and Manage Jobs
-  description: Run, monitor, and schedule jobs on Hugging Face infrastructure.
-- name: Hub Repository Details
-  description: Get detailed information about models, datasets, and Spaces, optionally including README
-    content.
+- name: hf_whoami
+  description: Inspect the current Hugging Face authentication context, including the account, visible
+    organization memberships, and credential access details. Read-only and never returns credential values.
+- name: hub_repo_search
+  description: Search Hugging Face repositories with a shared query interface. You can target models,
+    datasets, spaces, or aggregate across multiple repo types in one call. Include links to repositories
+    in your response.
+- name: hub_repo_details
+  description: 'Get details for one or more Hugging Face repos (model, dataset, or space). Auto-detects
+    type unless specified. For datasets, use operations: overview, dataset_structure, dataset_preview.
+    Use dataset_structure first to discover configs, splits, sizes, and schema. Use dataset_preview only
+    when config and split are known, unless the dataset has a single config/split.'
+- name: hf_fs
+  description: "When to use: Hugging Face Hub models, datasets, Spaces, collections, papers, daily papers,\
+    \ today's trending models, current paper leaderboard, docs, and repository files.\n\nExamples:\n \
+    \ {\"operations\":[{\"cmd\":\"ls\",\"args\":[\"hf://models/trending\",\"--limit\",\"10\"]}]}\n  {\"\
+    operations\":[{\"cmd\":\"ls\",\"args\":[\"hf://papers/trending\"]}]}\n  {\"operations\":[{\"cmd\"\
+    :\"ls\",\"args\":[\"hf://papers/daily/latest\"]}]}\n  {\"operations\":[{\"cmd\":\"cat\",\"args\":[\"\
+    hf://papers/2501.00001/paper.md\"]}]}\n  {\"operations\":[{\"cmd\":\"search\",\"args\":[\"hf://models\"\
+    ,\"--tag\",\"base_model:finetune:org/repo\"]}]}\n\nUse hf_fs for Hugging Face Hub filesystem operations.\
+    \ Call it with operations, an array of {cmd, args} items; multiple operations may be submitted together.\n\
+    \nUsage:\n  {\"operations\":[{\"cmd\":\"ls\",\"args\":[\"hf://models/org/repo\"]}]}\n\nGrammar; each\
+    \ string below is one args array item:\n  ls     URI [--recursive] [--glob GLOB] [--type TYPE] [--sort\
+    \ SORT] [--limit N]\n  cat    URI [--offset N] [--max-bytes N]\n  attach URI [--max-bytes N]\n  stat\
+    \   URI\n  find   URI [--name GLOB] [--path GLOB] [--type TYPE] [--limit N]\n  search URI [QUERY]\
+    \ [--type TYPE] [--sort SORT] [--tag TAG] [--kind mcp] [--limit N]\n\nCOMMAND = ls|cat|attach|stat|find|search.\n\
+    TYPE = file|dir|repo|bucket|collection|paper|link.\nSORT = createdAt|downloads|likes|lastModified|likes30d|trendingScore|mainSize|id|trending|upvotes.\n\
+    URI is a canonical hf:// URI. QUERY and GLOB are each one string.\n\nUse search for resource discovery,\
+    \ not repository-content search; ls for a known directory, find for recursive file discovery by name/path\
+    \ (not file contents), stat for filesystem metadata or an uncertain target type, cat for text contents,\
+    \ and attach for a complete JPEG, PNG, or WebP image. When the request gives an exact text-file URI,\
+    \ use cat directly; do not add ls or stat first. stat does not read the contents of JSON, Markdown,\
+    \ or other text files.\n\nSearch scopes: hf://models[/OWNER], hf://datasets[/OWNER], hf://spaces[/OWNER],\
+    \ hf://collections[/OWNER], hf://papers, and hf://docs[/...]. Repository and repository-file scopes\
+    \ are not supported: search a resource root or owner scope to discover resources; use find for file\
+    \ discovery within a repository or cat for a known text file. Paper and documentation search require\
+    \ QUERY. --tag filters models, datasets, and Spaces by Hub tag (repeatable; all must match) and applies\
+    \ only to hf://models|datasets|spaces[/OWNER]; omit QUERY when the tag already identifies the target,\
+    \ because QUERY also filters repository names. Derived models carry base_model:ID and base_model:RELATION:ID\
+    \ tags, where RELATION is finetune, adapter, merge, or quantized. --kind applies only to hf://spaces[/OWNER];\
+    \ the only valid --kind value is mcp, which selects MCP Spaces. Tag families are documented at hf://README.md.\n\
+    Use ls hf://models/trending, hf://datasets/trending, hf://spaces/trending, or hf://papers/trending\
+    \ for trending listings.\nhf://papers/ID is a paper directory, not paper text. Use cat hf://papers/ID/paper.md\
+    \ for paper text and cat hf://papers/ID/metadata.json for metadata. No preliminary listing is needed\
+    \ for these known paths. Use ls hf://papers/ID to discover other resources.\nOmit --limit, --sort,\
+    \ and --type unless the request requires them. Limits and path-specific behavior are documented at\
+    \ hf://README.md. Issue one hf_fs call."
 deployment:
   mode: remote
   endpoint: https://huggingface.co/mcp
@@ -67,3 +99,4 @@ tool_quality:
   scored: false
   note: Facts from the saved tools/list capture (mcp_tool_quality.py); recorded, not scored. Checks learned
     from Glimind's agent-readiness audit.
+tools_count: 4
